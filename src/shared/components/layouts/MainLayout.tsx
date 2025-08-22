@@ -20,7 +20,7 @@ export default function MainLayout() {
             </Link>
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            CampToolkit
+            CampToolkit Панель администратора
           </Typography>
           <SidebarMenu />
         </Toolbar>

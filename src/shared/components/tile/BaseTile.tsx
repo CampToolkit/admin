@@ -1,8 +1,10 @@
 import { Box } from "@mui/material";
 import type { ReactNode } from "react";
+import type { SxProps, Theme } from "@mui/system";
 
 type BaseTilePropsType = {
   children: ReactNode;
+  sx?: SxProps<Theme>;
 };
 
 export default function BaseTile(props: BaseTilePropsType) {
@@ -18,10 +20,10 @@ export default function BaseTile(props: BaseTilePropsType) {
         height: "50vw",
         maxHeight: "250px",
 
-        backgroundColor: "primary.light",
         border: "1px solid",
-        borderColor: "primary.main",
+        bgcolor: "primary.main",
         borderRadius: 2,
+        color: "primary.contrastText",
 
         boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
         transition: "all 0.2s ease-in-out",
@@ -38,6 +40,7 @@ export default function BaseTile(props: BaseTilePropsType) {
           outlineColor: "primary.main",
           outlineOffset: "2px",
         },
+        ...props.sx,
       }}
     >
       {props.children}
