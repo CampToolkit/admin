@@ -1,6 +1,6 @@
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import type { ReactNode } from 'react';
-import { baseTheme } from './base-theme';
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import type { ReactNode } from "react";
+import { baseTheme } from "./base-theme";
 
 type AppThemeProviderType = {
   children: ReactNode;

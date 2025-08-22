@@ -1,6 +1,11 @@
 import { createTheme } from "@mui/material/styles";
+import { indigo, deepOrange } from "@mui/material/colors";
 
 const baseTheme = createTheme({
+  palette: {
+    primary: indigo,
+    secondary: deepOrange,
+  },
   components: {
     MuiLink: {
       styleOverrides: {
