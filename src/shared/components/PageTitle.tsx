@@ -1,10 +1,12 @@
 import { Typography, IconButton, Box } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
+import type { SxProps, Theme } from "@mui/system";
 
 type PageTitleType = {
   title: string;
   showBackButton?: boolean;
+  sx?: SxProps<Theme>;
 };
 
 export default function PageTitle(props: PageTitleType) {
@@ -24,6 +26,7 @@ export default function PageTitle(props: PageTitleType) {
             "&:hover": {
               backgroundColor: "primary.light",
             },
+            ...props.sx,
           }}
         >
           <ArrowBackIcon />
