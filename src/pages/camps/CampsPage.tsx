@@ -1,3 +1,4 @@
+
 import {
   MenuItem,
   Box,
@@ -7,6 +8,12 @@ import {
   Button,
 } from "@mui/material";
 
+import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
+
+import { Link } from "react-router-dom";
+
+
+import { Box, Button, Typography } from "@mui/material";
 import BaseTile from "@/shared/components/tile/BaseTile";
 import PageTitle from "@/shared/components/PageTitle";
 import { useState } from "react";
@@ -20,6 +27,7 @@ const CAMP_FILTER_OPTIONS = [
 type CampFilterValue = (typeof CAMP_FILTER_OPTIONS)[number]["value"];
 
 export default function CampsPage() {
+
   const [campsFilterStatus, setCampsFilterStatus] =
     useState<CampFilterValue>("all");
 
@@ -33,6 +41,16 @@ export default function CampsPage() {
 
   return (
     <div style={{ padding: "20px" }}>
+      
+            <Button
+        onClick={() => {
+          openModal({ content: <div>TEST</div> });
+        }}
+      >
+        open
+      </Button>
+      
+      
       <Box sx={{ mb: 5 }}>
         <Button
           variant="contained"
@@ -66,6 +84,14 @@ export default function CampsPage() {
           ))}
         </Select>
       </Box>
+
+
+  const { openModal } = useModal();
+
+  return (
+    <div style={{ padding: "20px" }}>
+
+      <PageTitle title="Сборы" />
 
       <Box
         sx={{
