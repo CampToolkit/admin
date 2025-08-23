@@ -1,4 +1,3 @@
-
 import {
   MenuItem,
   Box,
@@ -10,10 +9,6 @@ import {
 
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
 
-import { Link } from "react-router-dom";
-
-
-import { Box, Button, Typography } from "@mui/material";
 import BaseTile from "@/shared/components/tile/BaseTile";
 import PageTitle from "@/shared/components/PageTitle";
 import { useState } from "react";
@@ -27,7 +22,7 @@ const CAMP_FILTER_OPTIONS = [
 type CampFilterValue = (typeof CAMP_FILTER_OPTIONS)[number]["value"];
 
 export default function CampsPage() {
-
+  const { openModal } = useModal();
   const [campsFilterStatus, setCampsFilterStatus] =
     useState<CampFilterValue>("all");
 
@@ -36,21 +31,11 @@ export default function CampsPage() {
   };
 
   const onClickCreateCamp = async () => {
-    console.log("onClickCreateCamp");
+    openModal({ content: <div>TEST</div> });
   };
 
   return (
     <div style={{ padding: "20px" }}>
-      
-            <Button
-        onClick={() => {
-          openModal({ content: <div>TEST</div> });
-        }}
-      >
-        open
-      </Button>
-      
-      
       <Box sx={{ mb: 5 }}>
         <Button
           variant="contained"
@@ -85,42 +70,23 @@ export default function CampsPage() {
         </Select>
       </Box>
 
-
-  const { openModal } = useModal();
-
-  return (
-    <div style={{ padding: "20px" }}>
-
-      <PageTitle title="Сборы" />
-
-      <Box
+      <BaseTile
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "flex-start",
-          "@media (min-width: 992px)": {
-            justifyContent: "flex-start",
-          },
+          bgcolor: "background.paper",
+          color: "text.contrast",
         }}
       >
-        <BaseTile
+        <Box
           sx={{
-            bgcolor: "background.paper",
-            color: "text.contrast",
+            display: "flex",
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              height: "100%",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h4">Создать сбор</Typography>
-          </Box>
-        </BaseTile>
-      </Box>
+          <Typography variant="h4">Создать сбор</Typography>
+        </Box>
+      </BaseTile>
     </div>
   );
 }
