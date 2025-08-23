@@ -58,11 +58,17 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
+
+              display: "flex",
+              flexDirection: "column",
+
+              width: "90vw",
+              height: "90vh",
+
               bgcolor: "background.paper",
               boxShadow: 24,
               p: 4,
               borderRadius: 2,
-              minWidth: 300,
             }}
           >
             {modalOptions.title && (
@@ -70,9 +76,15 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
                 {modalOptions.title}
               </Typography>
             )}
-            <Box id="global-modal-content" sx={{ mb: 3 }}>
+            <Stack
+              id="global-modal-content"
+              sx={{
+                mb: 3,
+                flexGrow: 2,
+              }}
+            >
               {modalOptions?.content && modalOptions.content()}
-            </Box>
+            </Stack>
 
             <Stack direction="row" spacing={2} justifyContent="flex-end">
               {modalOptions.showCancelButton !== false && (

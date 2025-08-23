@@ -1,11 +1,22 @@
 import { useFormik, type FormikProps } from "formik";
 
-export interface CampFormValues {
+type Sportsman = {
+  lastName: string;
+  firstName: string;
+  patrName: string;
+};
+
+type CampType = {
   name: string;
-  dateStart: string | null;
-  dateEnd: string | null;
-  city: string | null;
-}
+  dateStart: string;
+  dateEnd: string;
+  city: string;
+};
+
+export type CampFormValues = {
+  camp: CampType;
+  sportsmen: Sportsman[];
+};
 
 interface UseCampFormProps {
   values: CampFormValues;
@@ -14,10 +25,13 @@ interface UseCampFormProps {
 export type CampFormFormikType = FormikProps<CampFormValues>;
 
 const initialValues: CampFormValues = {
-  name: "",
-  dateStart: null,
-  dateEnd: null,
-  city: null,
+  camp: {
+    name: "",
+    dateStart: "",
+    dateEnd: "",
+    city: "",
+  },
+  sportsmen: [{ lastName: "", firstName: "", patrName: "" }],
 };
 
 export function useCampForm(props?: UseCampFormProps): CampFormFormikType {

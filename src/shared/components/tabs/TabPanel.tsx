@@ -10,8 +10,16 @@ export default function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div role="tabpanel" hidden={value !== index} {...other}>
+    <Box
+      role="tabpanel"
+      hidden={value !== index}
+      {...other}
+      sx={{
+        flexGrow: 1,
+        minHeight: "100%",
+      }}
+    >
       {value === index && <Box sx={{ p: 2 }}>{children}</Box>}
-    </div>
+    </Box>
   );
 }

@@ -1,11 +1,12 @@
 import { useState, type SyntheticEvent } from "react";
 import { useCampForm } from "./use-camp-form.hook";
 
-import { Box, Tab, Tabs } from "@mui/material";
+import { Stack, Tab, Tabs } from "@mui/material";
 import TabPanel from "@/shared/components/tabs/TabPanel";
 import BaseInfo from "./BaseInfo";
 
 import type { CampFormFormikType } from "./use-camp-form.hook";
+import SportsmenForm from "./SportsmenForm";
 
 const TAB_LABELS = [
   {
@@ -29,16 +30,16 @@ const TAB_ELEMENT = [
   },
   {
     index: 1,
-    render: (formik: CampFormFormikType) => <BaseInfo formik={formik} />,
+    render: (formik: CampFormFormikType) => <SportsmenForm formik={formik} />,
   },
-  {
-    index: 2,
-    render: (formik: CampFormFormikType) => <BaseInfo formik={formik} />,
-  },
-  {
-    index: 3,
-    render: (formik: CampFormFormikType) => <BaseInfo formik={formik} />,
-  },
+  //   {
+  //     index: 2,
+  //     render: (formik: CampFormFormikType) => <BaseInfo formik={formik} />,
+  //   },
+  //   {
+  //     index: 3,
+  //     render: (formik: CampFormFormikType) => <BaseInfo formik={formik} />,
+  //   },
 ];
 
 export type TabPropsType = {
@@ -53,7 +54,7 @@ export default function CampForm() {
   };
 
   return (
-    <Box>
+    <Stack sx={{ flexGrow: 1 }}>
       <Tabs value={currentTabIndex} onChange={handleSwitchTabs}>
         {TAB_LABELS.map((tab, index) => (
           <Tab key={tab.name} label={tab.name} value={index} />
@@ -64,6 +65,6 @@ export default function CampForm() {
           {tab.render(campForm)}
         </TabPanel>
       ))}
-    </Box>
+    </Stack>
   );
 }

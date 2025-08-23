@@ -9,8 +9,8 @@ export default function NewCamp() {
   const onClickCreateCamp = async () => {
     openModal({
       content: newCamp,
-      showConfirmButton: true,
-      showCancelButton: true,
+      showConfirmButton: false,
+      showCancelButton: false,
     });
   };
   return (
