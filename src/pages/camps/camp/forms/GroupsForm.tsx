@@ -1,18 +1,17 @@
-import { Button, Stack, Box, Grid, TextField } from "@mui/material";
-import type { TabPropsType } from "./CampForm";
+import { Button, Stack, Grid, TextField } from "@mui/material";
+import type { TabPropsType } from "../CampForm";
 import { FieldArray, FormikProvider } from "formik";
+
+import TabLayout from "../components/TabLayout";
+import LeftLayoutItem from "../components/LeftLayoutItem";
+import RightLayoutItem from "../components/RightLayoutItem";
+import ManageFormButtonsBlock from "../components/ManageFormButtonsBlock";
 
 export default function GroupsForm({ formik }: TabPropsType) {
   return (
-    <Stack
-      direction="row"
-      spacing={1}
-      sx={{
-        minHeight: "100%",
-      }}
-    >
-      <Box sx={{ flexGrow: 2 }} component="form" onSubmit={formik.handleSubmit}>
-        <FormikProvider value={formik}>
+    <TabLayout>
+      <FormikProvider value={formik}>
+        <LeftLayoutItem>
           <FieldArray name="groups">
             {({ push, remove }) => (
               <>
@@ -48,22 +47,20 @@ export default function GroupsForm({ formik }: TabPropsType) {
               </>
             )}
           </FieldArray>
-        </FormikProvider>
-      </Box>
+        </LeftLayoutItem>
 
-      <Box>
-        <Stack gap={1} mb={3}>
-          <Button variant="outlined">Загрузить из базы данных</Button>
-        </Stack>
-        <Stack gap={1}>
-          <Button type="submit" variant="contained" fullWidth>
-            Сохранить
-          </Button>
-          <Button color="error" variant="outlined">
-            Очистить форму
-          </Button>
-        </Stack>
-      </Box>
-    </Stack>
+        <RightLayoutItem>
+          <>
+            <Stack gap={1} mb={3}>
+              <Button variant="outlined">Загрузить из базы данных</Button>
+            </Stack>
+            <ManageFormButtonsBlock
+              saveCallback={formik.handleSubmit}
+              clearCallback={formik.handleReset}
+            />
+          </>
+        </RightLayoutItem>
+      </FormikProvider>
+    </TabLayout>
   );
 }

@@ -2,27 +2,19 @@ import { FormikProvider, FieldArray } from "formik";
 import { Stack, Box, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
-import type { TabPropsType } from "./CampForm";
+import TabLayout from "../components/TabLayout";
+import LeftLayoutItem from "../components/LeftLayoutItem";
+import RightLayoutItem from "../components/RightLayoutItem";
+
+import type { TabPropsType } from "../CampForm";
+import ManageFormButtonsBlock from "../components/ManageFormButtonsBlock";
 
 export default function SportsmenForm({ formik }: TabPropsType) {
   return (
-    <Stack
-      direction="row"
-      spacing={1}
-      sx={{
-        minHeight: "100%",
-      }}
-    >
-      <Box sx={{ flexGrow: 2 }}>
-        <FormikProvider value={formik}>
-          <Box
-            component="form"
-            onSubmit={(event) => {
-              console.log("onsumit");
-
-              formik.handleSubmit(event);
-            }}
-          >
+    <TabLayout>
+      <FormikProvider value={formik}>
+        <LeftLayoutItem>
+          <Box component="form" onSubmit={formik.handleSubmit}>
             <FieldArray name="sportsmen">
               {({ push, remove }) => (
                 <>
@@ -83,29 +75,22 @@ export default function SportsmenForm({ formik }: TabPropsType) {
               )}
             </FieldArray>
           </Box>
-        </FormikProvider>
-      </Box>
+        </LeftLayoutItem>
 
-      <Box
-        sx={{
-          minHeight: "100%",
-          alignContent: "stretch",
-        }}
-      >
-        <Stack gap={1} mb={3}>
-          <Button variant="outlined">Загрузить из файла</Button>
-          <Button variant="outlined">Загрузить из базы данных</Button>
-        </Stack>
+        <RightLayoutItem>
+          <>
+            <Stack gap={1} mb={3}>
+              <Button variant="outlined">Загрузить из файла</Button>
+              <Button variant="outlined">Загрузить из базы данных</Button>
+            </Stack>
 
-        <Stack gap={1}>
-          <Button type="submit" variant="contained">
-            Сохранить
-          </Button>
-          <Button color="error" variant="outlined">
-            Очистить форму
-          </Button>
-        </Stack>
-      </Box>
-    </Stack>
+            <ManageFormButtonsBlock
+              saveCallback={formik.handleSubmit}
+              clearCallback={formik.handleReset}
+            />
+          </>
+        </RightLayoutItem>
+      </FormikProvider>
+    </TabLayout>
   );
 }
