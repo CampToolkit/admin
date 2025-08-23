@@ -7,6 +7,8 @@ import BaseInfo from "./BaseInfo";
 
 import type { CampFormFormikType } from "./use-camp-form.hook";
 import SportsmenForm from "./SportsmenForm";
+import GroupsForm from "./GroupsForm";
+import Schedule from "./Schedule";
 
 const TAB_LABELS = [
   {
@@ -32,14 +34,14 @@ const TAB_ELEMENT = [
     index: 1,
     render: (formik: CampFormFormikType) => <SportsmenForm formik={formik} />,
   },
-  //   {
-  //     index: 2,
-  //     render: (formik: CampFormFormikType) => <BaseInfo formik={formik} />,
-  //   },
-  //   {
-  //     index: 3,
-  //     render: (formik: CampFormFormikType) => <BaseInfo formik={formik} />,
-  //   },
+  {
+    index: 2,
+    render: (formik: CampFormFormikType) => <GroupsForm formik={formik} />,
+  },
+  {
+    index: 3,
+    render: (formik: CampFormFormikType) => <Schedule formik={formik} />,
+  },
 ];
 
 export type TabPropsType = {

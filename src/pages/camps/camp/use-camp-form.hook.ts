@@ -6,6 +6,10 @@ type Sportsman = {
   patrName: string;
 };
 
+type Group = {
+  name: string;
+};
+
 type CampType = {
   name: string;
   dateStart: string;
@@ -16,6 +20,7 @@ type CampType = {
 export type CampFormValues = {
   camp: CampType;
   sportsmen: Sportsman[];
+  groups: Group[];
 };
 
 interface UseCampFormProps {
@@ -32,6 +37,7 @@ const initialValues: CampFormValues = {
     city: "",
   },
   sportsmen: [{ lastName: "", firstName: "", patrName: "" }],
+  groups: [{ name: "" }],
 };
 
 export function useCampForm(props?: UseCampFormProps): CampFormFormikType {
