@@ -71,7 +71,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
               </Typography>
             )}
             <Box id="global-modal-content" sx={{ mb: 3 }}>
-              {modalOptions.content}
+              {modalOptions?.content && modalOptions.content()}
             </Box>
 
             <Stack direction="row" spacing={2} justifyContent="flex-end">
