@@ -2,7 +2,7 @@ import { createContext, useContext, type ReactNode } from "react";
 
 export type ModalOptions = {
   title?: string;
-  content: ReactNode;
+  content: () => ReactNode;
   onConfirm?: () => void;
   onCancel?: () => void;
   showConfirmButton?: boolean;
@@ -15,7 +15,8 @@ type ModalContextType = {
 };
 
 export const ModalContext = createContext<ModalContextType | undefined>(
-  undefined,
+  // eslint-disable-next-line
+  undefined
 );
 
 export const useModal = () => {

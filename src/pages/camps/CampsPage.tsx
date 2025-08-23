@@ -1,17 +1,17 @@
+import { useState } from "react";
+
 import {
   MenuItem,
   Box,
   Select,
   Typography,
   type SelectChangeEvent,
-  Button,
 } from "@mui/material";
-
-import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
 
 import BaseTile from "@/shared/components/tile/BaseTile";
 import PageTitle from "@/shared/components/PageTitle";
-import { useState } from "react";
+
+import NewCamp from "./camp/NewCamp";
 
 const CAMP_FILTER_OPTIONS = [
   { value: "all", label: "Все" },
@@ -22,7 +22,6 @@ const CAMP_FILTER_OPTIONS = [
 type CampFilterValue = (typeof CAMP_FILTER_OPTIONS)[number]["value"];
 
 export default function CampsPage() {
-  const { openModal } = useModal();
   const [campsFilterStatus, setCampsFilterStatus] =
     useState<CampFilterValue>("all");
 
@@ -30,21 +29,10 @@ export default function CampsPage() {
     setCampsFilterStatus(event.target.value as CampFilterValue);
   };
 
-  const onClickCreateCamp = async () => {
-    openModal({ content: <div>TEST</div> });
-  };
-
   return (
     <div style={{ padding: "20px" }}>
       <Box sx={{ mb: 5 }}>
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ fontSize: 16 }}
-          onClick={onClickCreateCamp}
-        >
-          Новый сбор
-        </Button>
+        <NewCamp />
       </Box>
 
       <Box
