@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   MenuItem,
@@ -12,6 +12,7 @@ import BaseTile from "@/shared/components/tile/BaseTile";
 import PageTitle from "@/shared/components/PageTitle";
 
 import NewCamp from "./camp/NewCamp";
+import { CampApi } from "@/shared/api/api-services.ts";
 
 const CAMP_FILTER_OPTIONS = [
   { value: "all", label: "Все" },
@@ -22,12 +23,23 @@ const CAMP_FILTER_OPTIONS = [
 type CampFilterValue = (typeof CAMP_FILTER_OPTIONS)[number]["value"];
 
 export default function CampsPage() {
+  const [camps, setCamps] = useState([]);
   const [campsFilterStatus, setCampsFilterStatus] =
     useState<CampFilterValue>("all");
 
   const handleFilterCamps = (event: SelectChangeEvent<CampFilterValue>) => {
     setCampsFilterStatus(event.target.value as CampFilterValue);
   };
+
+  async function getCamps() {
+    const camps = await CampApi.getAll();
+    console.log(camps.data);
+    setCamps(camps);
+  }
+
+  useEffect(() => {
+    getCamps();
+  }, []);
 
   return (
     <div style={{ padding: "20px" }}>
