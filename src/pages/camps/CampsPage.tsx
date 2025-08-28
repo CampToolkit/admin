@@ -1,18 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import {
-  MenuItem,
-  Box,
-  Select,
-  Typography,
-  type SelectChangeEvent,
-} from "@mui/material";
+import { MenuItem, Box, Select, type SelectChangeEvent } from "@mui/material";
 
-import BaseTile from "@/shared/components/tile/BaseTile";
 import PageTitle from "@/shared/components/PageTitle";
 
 import NewCamp from "./camp/NewCamp";
-import { CampApi } from "@/shared/api/api-services.ts";
+
+import { useCamps } from "@/pages/camps/hooks/use-camps.hook.ts";
 
 const CAMP_FILTER_OPTIONS = [
   { value: "all", label: "Все" },
@@ -23,23 +17,13 @@ const CAMP_FILTER_OPTIONS = [
 type CampFilterValue = (typeof CAMP_FILTER_OPTIONS)[number]["value"];
 
 export default function CampsPage() {
-  const [camps, setCamps] = useState([]);
+  const { camps } = useCamps();
   const [campsFilterStatus, setCampsFilterStatus] =
     useState<CampFilterValue>("all");
 
   const handleFilterCamps = (event: SelectChangeEvent<CampFilterValue>) => {
     setCampsFilterStatus(event.target.value as CampFilterValue);
   };
-
-  async function getCamps() {
-    const camps = await CampApi.getAll();
-    console.log(camps.data);
-    setCamps(camps);
-  }
-
-  useEffect(() => {
-    getCamps();
-  }, []);
 
   return (
     <div style={{ padding: "20px" }}>
@@ -69,24 +53,11 @@ export default function CampsPage() {
           ))}
         </Select>
       </Box>
-
-      <BaseTile
-        sx={{
-          bgcolor: "background.paper",
-          color: "text.contrast",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h4">Создать сбор</Typography>
-        </Box>
-      </BaseTile>
+      <div>
+        {camps.map((camp) => (
+          <div key={camp.id}>{camp.name}</div>
+        ))}
+      </div>
     </div>
   );
 }
