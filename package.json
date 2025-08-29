@@ -21,7 +21,6 @@
     "@mui/system": "^7.3.1",
     "@mui/x-date-pickers": "^8.10.2",
     "@mui/x-date-pickers-pro": "^8.10.2",
-    "@types/axios": "^0.9.36",
     "axios": "^1.11.0",
     "dayjs": "^1.11.13",
     "formik": "^2.4.6",
@@ -32,6 +31,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
+    "@types/axios": "^0.9.36",
     "@types/node": "^24.3.0",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
