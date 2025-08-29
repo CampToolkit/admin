@@ -21,6 +21,14 @@ type CampType = {
   city: string;
 };
 
+type SlotType = {
+  startDate: "string";
+  endDate: "string";
+  slotTypeId: number;
+  campId: number;
+  auditoriumId: number;
+};
+
 export type CampFormValues = {
   camp: CampType;
   sportsmen: SportsmanType[];
