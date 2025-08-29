@@ -1,43 +1,41 @@
 import { useState, type SyntheticEvent } from "react";
 import { useCampForm } from "./use-camp-form.hook";
 
-import { Box, Tab, Tabs } from "@mui/material";
+import { Stack, Tab, Tabs } from "@mui/material";
 import TabPanel from "@/shared/components/tabs/TabPanel";
-import BaseInfo from "./BaseInfo";
+import BaseInfo from "./forms/BaseInfo";
 
 import type { CampFormFormikType } from "./use-camp-form.hook";
+import SportsmenForm from "./forms/SportsmenForm";
+import GroupsForm from "./forms/GroupsForm";
+import Schedule from "./forms/Schedule";
+import LocationsForm from "./forms/LocationsForm";
 
-const TAB_LABELS = [
-  {
-    name: "Общая информация",
-  },
-  {
-    name: "Спортсмены",
-  },
-  {
-    name: "Группы",
-  },
-  {
-    name: "Расписание",
-  },
-];
-
-const TAB_ELEMENT = [
+const TABS = [
   {
     index: 0,
+    name: "Общая информация",
     render: (formik: CampFormFormikType) => <BaseInfo formik={formik} />,
   },
   {
     index: 1,
-    render: (formik: CampFormFormikType) => <BaseInfo formik={formik} />,
+    name: "Спортсмены",
+    render: (formik: CampFormFormikType) => <SportsmenForm formik={formik} />,
   },
   {
     index: 2,
-    render: (formik: CampFormFormikType) => <BaseInfo formik={formik} />,
+    name: "Группы",
+    render: (formik: CampFormFormikType) => <GroupsForm formik={formik} />,
   },
   {
     index: 3,
-    render: (formik: CampFormFormikType) => <BaseInfo formik={formik} />,
+    name: "Локации",
+    render: (formik: CampFormFormikType) => <LocationsForm formik={formik} />,
+  },
+  {
+    index: 4,
+    name: "Расписание",
+    render: (formik: CampFormFormikType) => <Schedule formik={formik} />,
   },
 ];
 
@@ -53,17 +51,17 @@ export default function CampForm() {
   };
 
   return (
-    <Box>
+    <Stack sx={{ flexGrow: 1 }}>
       <Tabs value={currentTabIndex} onChange={handleSwitchTabs}>
-        {TAB_LABELS.map((tab, index) => (
+        {TABS.map((tab, index) => (
           <Tab key={tab.name} label={tab.name} value={index} />
         ))}
       </Tabs>
-      {TAB_ELEMENT.map((tab) => (
+      {TABS.map((tab) => (
         <TabPanel key={tab.index} value={currentTabIndex} index={tab.index}>
           {tab.render(campForm)}
         </TabPanel>
       ))}
-    </Box>
+    </Stack>
   );
 }

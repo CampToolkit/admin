@@ -1,11 +1,40 @@
 import { useFormik, type FormikProps } from "formik";
 
-export interface CampFormValues {
+type SportsmanType = {
+  lastName: string;
+  firstName: string;
+  patrName: string;
+};
+
+type GroupType = {
   name: string;
-  dateStart: string | null;
-  dateEnd: string | null;
-  city: string | null;
-}
+};
+
+type LocationType = {
+  name: string;
+};
+
+type CampType = {
+  name: string;
+  dateStart: string;
+  dateEnd: string;
+  city: string;
+};
+
+type SlotType = {
+  startDate: "string";
+  endDate: "string";
+  slotTypeId: number;
+  campId: number;
+  auditoriumId: number;
+};
+
+export type CampFormValues = {
+  camp: CampType;
+  sportsmen: SportsmanType[];
+  groups: GroupType[];
+  locations: LocationType[];
+};
 
 interface UseCampFormProps {
   values: CampFormValues;
@@ -14,10 +43,15 @@ interface UseCampFormProps {
 export type CampFormFormikType = FormikProps<CampFormValues>;
 
 const initialValues: CampFormValues = {
-  name: "",
-  dateStart: null,
-  dateEnd: null,
-  city: null,
+  camp: {
+    name: "",
+    dateStart: "",
+    dateEnd: "",
+    city: "",
+  },
+  sportsmen: [{ lastName: "", firstName: "", patrName: "" }],
+  groups: [{ name: "" }],
+  locations: [{ name: "" }],
 };
 
 export function useCampForm(props?: UseCampFormProps): CampFormFormikType {
