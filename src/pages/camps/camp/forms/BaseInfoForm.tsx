@@ -13,25 +13,26 @@ import "dayjs/locale/ru";
 
 dayjs.locale("ru");
 
-interface BaseInfoFormValues {
+export interface BaseInfoFormValues {
   name: string;
   startDate: Dayjs;
   endDate: Dayjs;
   city: string;
 }
 
-const initialValues = {
-  name: "",
-  startDate: dayjs(),
-  endDate: dayjs(),
-  city: "",
+type BaseInfoFormProps = {
+  initialValues: BaseInfoFormValues;
+  onSubmit: (data: BaseInfoFormValues) => void;
 };
 
-export default function BaseInfo() {
+export default function BaseInfoForm(props: BaseInfoFormProps) {
+  const { onSubmit, initialValues } = props;
   const formik = useFormik<BaseInfoFormValues>({
     initialValues,
-    onSubmit: async (values) => {
-      console.log(values);
+    onSubmit,
+    enableReinitialize: true,
+    onReset: () => {
+      console.log("onReset");
     },
   });
 

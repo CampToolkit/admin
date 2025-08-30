@@ -4,10 +4,11 @@ import MainLayout from "@/shared/components/layouts/MainLayout.tsx";
 import CampsPage from "@/pages/camps/CampsPage";
 import CampFormPage from "@/pages/camps/CampFormPage.tsx";
 import GroupsForm from "@/pages/camps/camp/forms/GroupsForm.tsx";
-import BaseInfo from "@/pages/camps/camp/forms/BaseInfo.tsx";
+
 import SportsmenForm from "@/pages/camps/camp/forms/SportsmenForm.tsx";
 import Schedule from "@/pages/camps/camp/forms/Schedule";
 import LocationsForm from "@/pages/camps/camp/forms/LocationsForm.tsx";
+import BaseInfo from "@/pages/camps/camp/sections/BaseInfo.tsx";
 
 const campChildren = [
   {

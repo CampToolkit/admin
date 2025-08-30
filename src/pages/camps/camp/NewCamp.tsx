@@ -1,9 +1,39 @@
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
+import { CampApi } from "@/shared/api/camp/CampApi.ts";
+import dayjs from "dayjs";
+
 import { Button } from "@mui/material";
 
+import BaseInfoForm, {
+  type BaseInfoFormValues,
+} from "@/pages/camps/camp/forms/BaseInfoForm.tsx";
+
+import type { CreateCampDto } from "@/shared/api/camp/CampApi.dto.ts";
+
+const initialValues = {
+  name: "",
+  startDate: dayjs(),
+  endDate: dayjs(),
+  city: "",
+};
+
 export default function NewCamp() {
-  const { openModal } = useModal();
-  const newCamp = () => <div></div>;
+  const { openModal, closeModal } = useModal();
+
+  const handleCreate = async (values: BaseInfoFormValues) => {
+    const dto: CreateCampDto = {
+      name: values.name,
+      city: values.city,
+      startDate: values.startDate.toISOString(),
+      endDate: values.endDate.toISOString(),
+    };
+    await CampApi.create(dto);
+    closeModal();
+  };
+
+  const newCamp = () => (
+    <BaseInfoForm onSubmit={handleCreate} initialValues={initialValues} />
+  );
 
   const onClickCreateCamp = async () => {
     openModal({

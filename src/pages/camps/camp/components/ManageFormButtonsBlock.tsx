@@ -11,7 +11,12 @@ export default function ManageFormButtonsBlock(props: PropsType) {
       <Button type="submit" variant="contained" onClick={props.saveCallback}>
         Сохранить
       </Button>
-      <Button color="error" variant="outlined" onClick={props.saveCallback}>
+      <Button
+        type="reset"
+        color="error"
+        variant="outlined"
+        onClick={props.clearCallback}
+      >
         Очистить форму
       </Button>
     </Stack>
