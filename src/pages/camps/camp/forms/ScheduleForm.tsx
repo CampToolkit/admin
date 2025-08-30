@@ -56,7 +56,7 @@ const initialValues: ScheduleFormValues = {
   lessons: [defaultItem],
 };
 
-export default function Schedule() {
+export default function ScheduleForm() {
   const formik = useFormik<ScheduleFormValues>({
     initialValues,
     onSubmit: (values: ScheduleFormValues) => {

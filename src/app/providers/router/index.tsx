@@ -2,11 +2,11 @@ import { createBrowserRouter } from "react-router-dom";
 import HomePage from "@/pages/home/HomePage.tsx";
 import MainLayout from "@/shared/components/layouts/MainLayout.tsx";
 import CampsPage from "@/pages/camps/CampsPage";
-import CampFormPage from "@/pages/camps/CampFormPage.tsx";
+import CampPage from "@/pages/camps/CampPage.tsx";
 import GroupsForm from "@/pages/camps/camp/forms/GroupsForm.tsx";
 
 import SportsmenForm from "@/pages/camps/camp/forms/SportsmenForm.tsx";
-import Schedule from "@/pages/camps/camp/forms/Schedule";
+import ScheduleForm from "@/pages/camps/camp/forms/ScheduleForm.tsx";
 import LocationsForm from "@/pages/camps/camp/forms/LocationsForm.tsx";
 import BaseInfo from "@/pages/camps/camp/sections/BaseInfo.tsx";
 
@@ -29,7 +29,7 @@ const campChildren = [
   },
   {
     path: "schedule",
-    element: <Schedule />,
+    element: <ScheduleForm />,
   },
 ];
 
@@ -48,12 +48,12 @@ const router = createBrowserRouter([
       },
       {
         path: "camps/:campId",
-        element: <CampFormPage />,
+        element: <CampPage />,
         children: campChildren,
       },
       {
         path: "camps/:campId",
-        element: <CampFormPage />,
+        element: <CampPage />,
         children: campChildren,
       },
     ],
