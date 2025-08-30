@@ -4,7 +4,7 @@ import { MenuItem, Box, Select, type SelectChangeEvent } from "@mui/material";
 
 import PageTitle from "@/shared/components/PageTitle";
 
-import NewCamp from "./camp/NewCamp";
+import CreateCampButton from "./camp/components/CreateCampButton.tsx";
 
 import { useCamps } from "@/pages/camps/hooks/use-camps.hook.ts";
 
@@ -17,7 +17,7 @@ const CAMP_FILTER_OPTIONS = [
 type CampFilterValue = (typeof CAMP_FILTER_OPTIONS)[number]["value"];
 
 export default function CampsPage() {
-  const { camps } = useCamps();
+  const { camps, refreshCamps } = useCamps();
   const [campsFilterStatus, setCampsFilterStatus] =
     useState<CampFilterValue>("all");
 
@@ -28,7 +28,7 @@ export default function CampsPage() {
   return (
     <div style={{ padding: "20px" }}>
       <Box sx={{ mb: 5 }}>
-        <NewCamp />
+        <CreateCampButton onCampCreated={refreshCamps} />
       </Box>
 
       <Box

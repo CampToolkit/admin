@@ -17,7 +17,12 @@ const initialValues = {
   city: "",
 };
 
-export default function NewCamp() {
+type NewCampPropsType = {
+  onCampCreated?: () => void;
+};
+
+export default function CreateCampButton(props: NewCampPropsType) {
+  const { onCampCreated = () => {} } = props;
   const { openModal, closeModal } = useModal();
 
   const handleCreate = async (values: BaseInfoFormValues) => {
@@ -29,6 +34,7 @@ export default function NewCamp() {
     };
     await CampApi.create(dto);
     closeModal();
+    onCampCreated();
   };
 
   const newCamp = () => (
