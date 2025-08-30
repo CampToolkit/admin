@@ -11,3 +11,11 @@ export interface UpdateSportsmanDto {
   patrName?: string;
   birthDate?: string;
 }
+
+export interface RemoveSportsmanFromCampDto {
+  campId: number;
+}
+
+export interface AddSportsmanToCampDto {
+  campId: number;
+}

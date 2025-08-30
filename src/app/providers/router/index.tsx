@@ -5,10 +5,10 @@ import CampsPage from "@/pages/camps/CampsPage";
 import CampPage from "@/pages/camps/CampPage.tsx";
 import GroupsForm from "@/pages/camps/camp/forms/GroupsForm.tsx";
 
-import SportsmenForm from "@/pages/camps/camp/forms/SportsmenForm.tsx";
-import ScheduleForm from "@/pages/camps/camp/forms/ScheduleForm.tsx";
-import LocationsForm from "@/pages/camps/camp/forms/LocationsForm.tsx";
 import BaseInfoSection from "@/pages/camps/camp/sections/BaseInfoSection.tsx";
+import LocationsSection from "@/pages/camps/camp/sections/LocationsSection.tsx";
+import SportsmenSection from "@/pages/camps/camp/sections/SportsmenSection.tsx";
+import ScheduleSection from "@/pages/camps/camp/sections/ScheduleSection.tsx";
 
 const campChildren = [
   {
@@ -21,15 +21,15 @@ const campChildren = [
   },
   {
     path: "sportsmen",
-    element: <SportsmenForm />,
+    element: <SportsmenSection />,
   },
   {
     path: "locations",
-    element: <LocationsForm />,
+    element: <LocationsSection />,
   },
   {
     path: "schedule",
-    element: <ScheduleForm />,
+    element: <ScheduleSection />,
   },
 ];
 
@@ -49,12 +49,7 @@ const router = createBrowserRouter([
       {
         path: "camps/:campId",
         element: <CampPage />,
-        children: campChildren,
-      },
-      {
-        path: "camps/:campId",
-        element: <CampPage />,
-        children: campChildren,
+        // children: campChildren,
       },
     ],
   },

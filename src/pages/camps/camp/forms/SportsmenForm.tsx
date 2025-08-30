@@ -8,32 +8,26 @@ import RightLayoutItem from "../components/RightLayoutItem";
 
 import FormActions from "../components/FormActions.tsx";
 
-interface SportsmenFormValues {
-  sportsmen: [
-    {
-      firstName: string;
-      lastName: string;
-      patrName: string;
-    },
-  ];
+export interface SportsmenFormValues {
+  sportsmen: {
+    firstName: string;
+    lastName: string;
+    patrName: string;
+  }[];
 }
 
-const defaultItem = {
-  firstName: "",
-  lastName: "",
-  patrName: "",
+export type SportsmenFormPropsType = {
+  initialValues: SportsmenFormValues;
+  onSubmit: (values: SportsmenFormValues) => void;
 };
 
-const initialValues: SportsmenFormValues = {
-  sportsmen: [defaultItem],
-};
-
-export default function SportsmenForm() {
+export default function SportsmenForm(props: SportsmenFormPropsType) {
+  console.log(props.initialValues, "SportsmenForm");
+  const { initialValues, onSubmit } = props;
   const formik = useFormik<SportsmenFormValues>({
+    enableReinitialize: true,
     initialValues,
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit,
   });
   return (
     <TabLayout>
@@ -43,7 +37,7 @@ export default function SportsmenForm() {
             <FieldArray name="sportsmen">
               {({ push, remove }) => (
                 <>
-                  {formik.values.sportsmen.map((_, index) => (
+                  {formik.values?.sportsmen?.map((_, index) => (
                     <Grid
                       container
                       columnSpacing={1}
@@ -88,7 +82,10 @@ export default function SportsmenForm() {
                       </Grid>
                     </Grid>
                   ))}
-                  <Button type="button" onClick={() => push(defaultItem)}>
+                  <Button
+                    type="button"
+                    onClick={() => push(initialValues.sportsmen[0])}
+                  >
                     Добавить спортсмена
                   </Button>
                 </>
