@@ -1,13 +1,24 @@
 import { Button, Stack, Grid, TextField } from "@mui/material";
-import type { TabPropsType } from "../CampForm";
-import { FieldArray, FormikProvider } from "formik";
+import { FieldArray, FormikProvider, useFormik } from "formik";
 
 import TabLayout from "../components/TabLayout";
 import LeftLayoutItem from "../components/LeftLayoutItem";
 import RightLayoutItem from "../components/RightLayoutItem";
 import ManageFormButtonsBlock from "../components/ManageFormButtonsBlock";
 
-export default function LocationsForm({ formik }: TabPropsType) {
+interface LocationsFormValues {
+  locations: { name: string }[];
+}
+
+const initialValues = {
+  locations: [{ name: "" }],
+};
+export default function LocationsForm() {
+  const formik = useFormik<LocationsFormValues>({
+    initialValues,
+    onSubmit: async (value) => console.log(value),
+  });
+
   return (
     <TabLayout>
       <FormikProvider value={formik}>
@@ -27,7 +38,7 @@ export default function LocationsForm({ formik }: TabPropsType) {
                         size="small"
                         fullWidth
                         label="Название"
-                        name={`camp.locations.${index}.name`}
+                        name={`locations.${index}.name`}
                         value={formik.values.locations[index].name}
                         onChange={(event) => {
                           formik.handleChange(event);

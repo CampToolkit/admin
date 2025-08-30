@@ -1,4 +1,4 @@
-import { FormikProvider, FieldArray } from "formik";
+import { FormikProvider, FieldArray, useFormik } from "formik";
 import { Stack, Box, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
@@ -6,10 +6,35 @@ import TabLayout from "../components/TabLayout";
 import LeftLayoutItem from "../components/LeftLayoutItem";
 import RightLayoutItem from "../components/RightLayoutItem";
 
-import type { TabPropsType } from "../CampForm";
 import ManageFormButtonsBlock from "../components/ManageFormButtonsBlock";
 
-export default function SportsmenForm({ formik }: TabPropsType) {
+interface SportsmenFormValues {
+  sportsmen: [
+    {
+      firstName: string;
+      lastName: string;
+      patrName: string;
+    },
+  ];
+}
+
+const defaultItem = {
+  firstName: "",
+  lastName: "",
+  patrName: "",
+};
+
+const initialValues: SportsmenFormValues = {
+  sportsmen: [defaultItem],
+};
+
+export default function SportsmenForm() {
+  const formik = useFormik<SportsmenFormValues>({
+    initialValues,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
   return (
     <TabLayout>
       <FormikProvider value={formik}>
@@ -63,12 +88,7 @@ export default function SportsmenForm({ formik }: TabPropsType) {
                       </Grid>
                     </Grid>
                   ))}
-                  <Button
-                    type="button"
-                    onClick={() =>
-                      push({ lastName: "", firstName: "", patrName: "" })
-                    }
-                  >
+                  <Button type="button" onClick={() => push(defaultItem)}>
                     Добавить спортсмена
                   </Button>
                 </>

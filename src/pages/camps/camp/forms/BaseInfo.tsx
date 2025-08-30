@@ -1,73 +1,97 @@
 import { Box, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import type { CampFormFormikType } from "../use-camp-form.hook";
 import TabLayout from "../components/TabLayout";
 import LeftLayoutItem from "../components/LeftLayoutItem";
 import RightLayoutItem from "../components/RightLayoutItem";
 import ManageFormButtonsBlock from "../components/ManageFormButtonsBlock";
+import { useFormik } from "formik";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs, { Dayjs } from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import "dayjs/locale/ru";
 
-interface BaseInfoProps {
-  formik: CampFormFormikType;
+dayjs.locale("ru");
+
+interface BaseInfoFormValues {
+  name: string;
+  startDate: Dayjs;
+  endDate: Dayjs;
+  city: string;
 }
 
-export default function BaseInfo({ formik }: BaseInfoProps) {
+const initialValues = {
+  name: "",
+  startDate: dayjs(),
+  endDate: dayjs(),
+  city: "",
+};
+
+export default function BaseInfo() {
+  const formik = useFormik<BaseInfoFormValues>({
+    initialValues,
+    onSubmit: async (values) => {
+      console.log(values);
+    },
+  });
+
   return (
     <TabLayout>
-      <LeftLayoutItem>
-        <Box component="form" onSubmit={formik.handleSubmit}>
-          <Grid container rowSpacing={1}>
-            <Grid size={12}>
-              <TextField
-                size="small"
-                fullWidth
-                label="Название"
-                name="camp.name"
-                value={formik.values.camp.name}
-                onChange={(event) => {
-                  formik.handleChange(event);
-                }}
-              />
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"ru"}>
+        <LeftLayoutItem>
+          <Box component="form" onSubmit={formik.handleSubmit}>
+            <Grid container rowSpacing={2} columnSpacing={2}>
+              <Grid size={12}>
+                <TextField
+                  size="small"
+                  fullWidth
+                  label="Название"
+                  name="name"
+                  value={formik.values.name}
+                  onChange={(event) => {
+                    formik.handleChange(event);
+                  }}
+                />
+              </Grid>
+              <Grid size={6}>
+                <DatePicker
+                  sx={{ width: "100%" }}
+                  label="Дата начала"
+                  name={`formik.values.startDate`}
+                  value={formik.values.startDate}
+                  onChange={formik.handleChange}
+                />
+              </Grid>
+              <Grid size={6}>
+                <DatePicker
+                  sx={{ width: "100%" }}
+                  label="Дата окончания"
+                  name={`formik.values.endDate`}
+                  value={formik.values.endDate}
+                  onChange={formik.handleChange}
+                />
+              </Grid>
+              <Grid size={12}>
+                <TextField
+                  size="small"
+                  fullWidth
+                  label="Город"
+                  name="city"
+                  value={formik.values.city}
+                  onChange={formik.handleChange}
+                />
+              </Grid>
             </Grid>
-            <Grid size={12}>
-              <TextField
-                size="small"
-                fullWidth
-                label="Дата начала"
-                name="camp.dateStart"
-                value={formik.values.camp.dateStart}
-                onChange={formik.handleChange}
-              />
-            </Grid>
-            <Grid size={12}>
-              <TextField
-                size="small"
-                fullWidth
-                label="Дата окончания"
-                name="camp.dateEnd"
-                value={formik.values.camp.dateEnd}
-                onChange={formik.handleChange}
-              />
-            </Grid>
-            <Grid size={12}>
-              <TextField
-                size="small"
-                fullWidth
-                label="Город"
-                name="camp.city"
-                value={formik.values.camp.city}
-                onChange={formik.handleChange}
-              />
-            </Grid>
-          </Grid>
-        </Box>
-      </LeftLayoutItem>
+          </Box>
+        </LeftLayoutItem>
 
-      <RightLayoutItem>
-        <ManageFormButtonsBlock
-          saveCallback={formik.handleSubmit}
-          clearCallback={formik.handleReset}
-        />
-      </RightLayoutItem>
+        <RightLayoutItem>
+          <ManageFormButtonsBlock
+            saveCallback={formik.handleSubmit}
+            clearCallback={formik.handleReset}
+          />
+        </RightLayoutItem>
+      </LocalizationProvider>
     </TabLayout>
   );
 }

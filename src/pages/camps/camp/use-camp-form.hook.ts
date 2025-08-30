@@ -1,4 +1,4 @@
-import { useFormik, type FormikProps } from "formik";
+import { type FormikProps, useFormik } from "formik";
 
 type SportsmanType = {
   lastName: string;
@@ -34,6 +34,7 @@ export type CampFormValues = {
   sportsmen: SportsmanType[];
   groups: GroupType[];
   locations: LocationType[];
+  slots: SlotType[];
 };
 
 interface UseCampFormProps {
@@ -52,17 +53,16 @@ const initialValues: CampFormValues = {
   sportsmen: [{ lastName: "", firstName: "", patrName: "" }],
   groups: [{ name: "" }],
   locations: [{ name: "" }],
+  slots: [],
 };
 
 export function useCampForm(props?: UseCampFormProps): CampFormFormikType {
   const values = props?.values ?? initialValues;
 
-  const formik = useFormik<CampFormValues>({
+  return useFormik<CampFormValues>({
     initialValues: values,
     onSubmit: (values) => {
       console.log("Submitting form:", values);
     },
   });
-
-  return formik;
 }
