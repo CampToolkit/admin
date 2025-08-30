@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Camp } from "@/shared/api/camp/CampApi.types.ts";
+import type { Camp } from "@/shared/api/camp/CampApi.type.ts";
 import { CampApi } from "@/shared/api/camp/CampApi.ts";
 
 export function useCamp(id: number) {

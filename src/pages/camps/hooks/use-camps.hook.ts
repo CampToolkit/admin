@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { CampApi } from "@/shared/api/camp/CampApi.ts";
-import type { Camp } from "@/shared/api/camp/CampApi.types.ts";
+import type { Camp } from "@/shared/api/camp/CampApi.type.ts";
 
 export function useCamps() {
   const [camps, setCamps] = useState<Camp[]>([]);
