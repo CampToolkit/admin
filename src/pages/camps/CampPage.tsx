@@ -1,11 +1,11 @@
 import { Tab, Tabs } from "@mui/material";
 import { useCampTabs } from "@/pages/camps/hooks/use-camp-tabs.hook.ts";
 
-import BaseInfo from "./camp/sections/BaseInfo";
-import Sportsmen from "@/pages/camps/camp/sections/Sportsmen.tsx";
-import Groups from "./camp/sections/Groups";
-import Locations from "./camp/sections/Locations";
-import Schedule from "@/pages/camps/camp/sections/Schedule.tsx";
+import BaseInfoSection from "./camp/sections/BaseInfoSection.tsx";
+import SportsmenSection from "@/pages/camps/camp/sections/SportsmenSection.tsx";
+import GroupsSection from "./camp/sections/GroupsSection.tsx";
+import LocationsSection from "./camp/sections/LocationsSection.tsx";
+import ScheduleSection from "@/pages/camps/camp/sections/ScheduleSection.tsx";
 import PageTitle from "@/shared/components/PageTitle.tsx";
 
 const TABS = [
@@ -13,31 +13,31 @@ const TABS = [
     index: 0,
     name: "Общая информация",
     path: "base-info",
-    component: <BaseInfo />,
+    component: <BaseInfoSection />,
   },
   {
     index: 1,
     name: "Спортсмены",
     path: "sportsmen",
-    component: <Sportsmen />,
+    component: <SportsmenSection />,
   },
   {
     index: 2,
     name: "Группы",
     path: "groups",
-    component: <Groups />,
+    component: <GroupsSection />,
   },
   {
     index: 3,
     name: "Локации",
     path: "locations",
-    component: <Locations />,
+    component: <LocationsSection />,
   },
   {
     index: 4,
     name: "Расписание",
     path: "schedule",
-    component: <Schedule />,
+    component: <ScheduleSection />,
   },
 ];
 

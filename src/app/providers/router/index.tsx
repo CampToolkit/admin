@@ -8,12 +8,12 @@ import GroupsForm from "@/pages/camps/camp/forms/GroupsForm.tsx";
 import SportsmenForm from "@/pages/camps/camp/forms/SportsmenForm.tsx";
 import ScheduleForm from "@/pages/camps/camp/forms/ScheduleForm.tsx";
 import LocationsForm from "@/pages/camps/camp/forms/LocationsForm.tsx";
-import BaseInfo from "@/pages/camps/camp/sections/BaseInfo.tsx";
+import BaseInfoSection from "@/pages/camps/camp/sections/BaseInfoSection.tsx";
 
 const campChildren = [
   {
     path: "base-info",
-    element: <BaseInfo />,
+    element: <BaseInfoSection />,
   },
   {
     path: "groups",
