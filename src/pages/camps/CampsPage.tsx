@@ -41,6 +41,7 @@ export default function CampsPage() {
       >
         <PageTitle title="Сборы" sx={{ m: 0 }} />
         <Select
+          size={"small"}
           labelId="status-select-label"
           value={campsFilterStatus}
           onChange={handleFilterCamps}
