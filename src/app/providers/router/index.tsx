@@ -52,7 +52,7 @@ const router = createBrowserRouter([
         children: campChildren,
       },
       {
-        path: "camps/new",
+        path: "camps/:campId",
         element: <CampFormPage />,
         children: campChildren,
       },

@@ -1,7 +1,8 @@
-import PageTitle from "@/shared/components/PageTitle.tsx";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Tab, Tabs } from "@mui/material";
-import { type SyntheticEvent, useState } from "react";
+import { useCampTabs } from "@/pages/camps/hooks/use-camp-tabs.hook.ts";
+
+import PageTitle from "@/shared/components/PageTitle.tsx";
 
 const TABS = [
   {
@@ -32,13 +33,8 @@ const TABS = [
 ];
 
 export default function CampFormPage() {
-  const [currentTabIndex, setCurrentTabIndex] = useState(0);
-  const navigate = useNavigate();
-  const { campId = "new" } = useParams();
-  const handleSwitchTabs = (_event: SyntheticEvent, newValue: number) => {
-    setCurrentTabIndex(newValue);
-    navigate(`/camps/${campId}/${TABS[newValue].path}`);
-  };
+  const { currentTabIndex, handleSwitchTabs } = useCampTabs(TABS);
+
   return (
     <div>
       <PageTitle title="Camp Page" showBackButton={true} />
