@@ -12,7 +12,7 @@ export const CampApi = {
   },
 
   getOne: async (id: number) => {
-    const { data } = await axiosConfig.get<Camp[]>(`/camp/${id}`);
+    const { data } = await axiosConfig.get<Camp>(`/camp/${id}`);
     return data;
   },
 
