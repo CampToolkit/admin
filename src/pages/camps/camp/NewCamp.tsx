@@ -1,10 +1,9 @@
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
 import { Button } from "@mui/material";
-import CampForm from "../camp/CampForm";
 
 export default function NewCamp() {
   const { openModal } = useModal();
-  const newCamp = () => <CampForm />;
+  const newCamp = () => <div></div>;
 
   const onClickCreateCamp = async () => {
     openModal({

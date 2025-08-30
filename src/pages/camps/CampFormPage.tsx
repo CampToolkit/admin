@@ -31,7 +31,7 @@ const TABS = [
   },
 ];
 
-export default function CampPage() {
+export default function CampFormPage() {
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
   const navigate = useNavigate();
   const { campId = "new" } = useParams();

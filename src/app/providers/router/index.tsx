@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import HomePage from "@/pages/home/HomePage.tsx";
 import MainLayout from "@/shared/components/layouts/MainLayout.tsx";
 import CampsPage from "@/pages/camps/CampsPage";
-import CampPage from "@/pages/camps/CampPage.tsx";
+import CampFormPage from "@/pages/camps/CampFormPage.tsx";
 import GroupsForm from "@/pages/camps/camp/forms/GroupsForm.tsx";
 import BaseInfo from "@/pages/camps/camp/forms/BaseInfo.tsx";
 import SportsmenForm from "@/pages/camps/camp/forms/SportsmenForm.tsx";
@@ -47,12 +47,12 @@ const router = createBrowserRouter([
       },
       {
         path: "camps/:campId",
-        element: <CampPage />,
+        element: <CampFormPage />,
         children: campChildren,
       },
       {
         path: "camps/new",
-        element: <CampPage />,
+        element: <CampFormPage />,
         children: campChildren,
       },
     ],
