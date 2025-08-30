@@ -1,12 +1,23 @@
 import { useState } from "react";
 
-import { MenuItem, Box, Select, type SelectChangeEvent } from "@mui/material";
+import {
+  MenuItem,
+  Box,
+  Select,
+  type SelectChangeEvent,
+  Typography,
+  Grid,
+} from "@mui/material";
 
 import PageTitle from "@/shared/components/PageTitle";
 
 import CreateCampButton from "./camp/components/CreateCampButton.tsx";
 
 import { useCamps } from "@/pages/camps/hooks/use-camps.hook.ts";
+import BaseAspectCard from "@/shared/components/BaseAspectCard.tsx";
+import dayjs from "dayjs";
+import { formatDate } from "@/shared/utils/formatDate.ts";
+import { Link } from "react-router-dom";
 
 const CAMP_FILTER_OPTIONS = [
   { value: "all", label: "Все" },
@@ -54,11 +65,27 @@ export default function CampsPage() {
           ))}
         </Select>
       </Box>
-      <div>
+
+      <Grid container spacing={2}>
         {camps.map((camp) => (
-          <div key={camp.id}>{camp.name}</div>
+          <Link to={`/camps/${camp.id}`} style={{ textDecoration: "none" }}>
+            <BaseAspectCard key={camp.id}>
+              <Box
+                sx={{
+                  padding: 3,
+                }}
+              >
+                <Typography variant="h6">{camp.name}</Typography>
+                <Typography variant="body2" color="textSecondary">
+                  даты: {formatDate(camp.startDate)} -{" "}
+                  {formatDate(camp.startDate)}
+                </Typography>
+                <Typography variant="body2">город: {camp.city}</Typography>
+              </Box>
+            </BaseAspectCard>
+          </Link>
         ))}
-      </div>
+      </Grid>
     </div>
   );
 }
