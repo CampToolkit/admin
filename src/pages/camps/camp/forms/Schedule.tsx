@@ -1,51 +1,77 @@
-import { FieldArray, FormikProvider } from "formik";
+import { FieldArray, FormikProvider, useFormik } from "formik";
 import {
   Stack,
-  Box,
   Button,
-  TextField,
   Grid,
   Select,
   MenuItem,
   FormControl,
   InputLabel,
-  Typography,
 } from "@mui/material";
 
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 import TabLayout from "../components/TabLayout";
 import LeftLayoutItem from "../components/LeftLayoutItem";
 import RightLayoutItem from "../components/RightLayoutItem";
 
-import type { TabPropsType } from "../CampForm";
 import ManageFormButtonsBlock from "../components/ManageFormButtonsBlock";
 
-export default function Schedule({ formik }: TabPropsType) {
-  const auditoriumTypes = [
-    { value: "ice-rink", label: "Лед" },
-    { value: "gym", label: "Зал офп" },
-    { value: "choreography-hall", label: "Зал хореографии" },
-  ];
+const auditoriums = [
+  { value: 1, label: "Лед" },
+  { value: 2, label: "Зал офп" },
+  { value: 3, label: "Зал хореографии" },
+];
 
-  const slotType = [
-    { value: 1, label: "Основная" },
-    { value: "2", label: "Дополнительная" },
-  ];
+const lessonType = [
+  { value: 1, label: "Основная" },
+  { value: 2, label: "Дополнительная" },
+];
 
+interface LessonItem {
+  date: Dayjs;
+  startTime: Dayjs;
+  endTime: Dayjs;
+  sessionTypeId: number;
+  locationId: number;
+}
+
+interface ScheduleFormValues {
+  lessons: LessonItem[];
+}
+
+const defaultItem = {
+  date: dayjs(),
+  startTime: dayjs().set("hour", 0).set("minute", 0),
+  endTime: dayjs().set("hour", 0).set("minute", 0),
+  sessionTypeId: 1,
+  locationId: 1,
+};
+
+const initialValues: ScheduleFormValues = {
+  lessons: [defaultItem],
+};
+
+export default function Schedule() {
+  const formik = useFormik<ScheduleFormValues>({
+    initialValues,
+    onSubmit: (values: ScheduleFormValues) => {
+      console.log(values);
+    },
+  });
   return (
     <TabLayout>
       <FormikProvider value={formik}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <LeftLayoutItem>
-            <FieldArray name="groups">
+            <FieldArray name="lessons">
               {({ push, remove }) => (
                 <>
-                  {formik.values.groups.map((_, index) => (
+                  {formik.values.lessons.map((_, index) => (
                     <Grid
                       container
                       key={index}
@@ -56,25 +82,59 @@ export default function Schedule({ formik }: TabPropsType) {
                       <Grid size={2}>
                         <DatePicker
                           label="Дата"
-                          value={dayjs(new Date())}
-                          onChange={() => {}}
+                          name={`formik.values.lessons${index}.date`}
+                          value={formik.values.lessons[index].date}
+                          onChange={formik.handleChange}
                         />
                       </Grid>
                       <Grid size={2}>
                         <TimePicker
                           label="Начало"
-                          value={dayjs(`2024-01-01T${"00:00"}`)}
-                          onChange={() => {}}
+                          name={`formik.values.lessons${index}.date`}
+                          value={formik.values.lessons[index].date}
+                          onChange={formik.handleChange}
                         />
                       </Grid>
                       <Grid size={2}>
                         <TimePicker
                           label="Окончание"
-                          value={dayjs(`2024-01-01T${"00:00"}`)}
-                          onChange={() => {}}
+                          name={`formik.values.lessons${index}.date`}
+                          value={formik.values.lessons[index].date}
+                          onChange={formik.handleChange}
                         />
                       </Grid>
                       <Grid size={2}>
+                        <FormControl fullWidth>
+                          <InputLabel
+                            id="session-type-label"
+                            sx={{
+                              backgroundColor: "background.paper",
+                              px: 1,
+                              transform: "translate(14px, -9px) scale(0.75)",
+                              "&.Mui-focused": {
+                                color: "primary.main",
+                              },
+                            }}
+                          >
+                            Тип тренировки
+                          </InputLabel>
+                          <Select
+                            labelId="session-type-label"
+                            label="session-type"
+                            name={`lessons[${index}].sessionTypeId`}
+                            value={formik.values.lessons[index].sessionTypeId}
+                            onChange={formik.handleChange}
+                          >
+                            {lessonType.map((type) => (
+                              <MenuItem key={type.value} value={type.value}>
+                                {type.label}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Grid>
+
+                      <Grid size={3}>
                         <FormControl fullWidth>
                           <InputLabel
                             id="auditorium-type-label"
@@ -87,15 +147,16 @@ export default function Schedule({ formik }: TabPropsType) {
                               },
                             }}
                           >
-                            Локация
+                            Место проведения
                           </InputLabel>
                           <Select
                             labelId="auditorium-type-label"
-                            // value={selectedType}
-                            label="Локация"
-                            // onChange={}
+                            label="Место"
+                            name={`lessons[${index}].locationId`}
+                            value={formik.values.lessons[index].locationId}
+                            onChange={formik.handleChange}
                           >
-                            {auditoriumTypes.map((type) => (
+                            {auditoriums.map((type) => (
                               <MenuItem key={type.value} value={type.value}>
                                 {type.label}
                               </MenuItem>
@@ -111,7 +172,7 @@ export default function Schedule({ formik }: TabPropsType) {
                       </Grid>
                     </Grid>
                   ))}
-                  <Button type="button" onClick={() => push({ name: "" })}>
+                  <Button type="button" onClick={() => push(defaultItem)}>
                     Добавить слот
                   </Button>
                 </>

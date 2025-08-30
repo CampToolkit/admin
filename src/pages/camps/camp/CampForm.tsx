@@ -15,27 +15,22 @@ const TABS = [
   {
     index: 0,
     name: "Общая информация",
-    render: (formik: CampFormFormikType) => <BaseInfo formik={formik} />,
   },
   {
     index: 1,
     name: "Спортсмены",
-    render: (formik: CampFormFormikType) => <SportsmenForm formik={formik} />,
   },
   {
     index: 2,
     name: "Группы",
-    render: (formik: CampFormFormikType) => <GroupsForm formik={formik} />,
   },
   {
     index: 3,
     name: "Локации",
-    render: (formik: CampFormFormikType) => <LocationsForm formik={formik} />,
   },
   {
     index: 4,
     name: "Расписание",
-    render: (formik: CampFormFormikType) => <Schedule formik={formik} />,
   },
 ];
 

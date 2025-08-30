@@ -2,7 +2,7 @@ import { Stack, Button } from "@mui/material";
 
 type PropsType = {
   saveCallback: () => void;
-  clearCallback: () => void;
+  clearCallback: (e: any) => void;
 };
 
 export default function ManageFormButtonsBlock(props: PropsType) {
