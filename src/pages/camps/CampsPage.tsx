@@ -1,12 +1,24 @@
 import { useState } from "react";
 
-import { MenuItem, Box, Select, type SelectChangeEvent } from "@mui/material";
+import {
+  MenuItem,
+  Box,
+  Select,
+  type SelectChangeEvent,
+  Typography,
+  Grid,
+  CardActionArea,
+} from "@mui/material";
 
 import PageTitle from "@/shared/components/PageTitle";
 
-import NewCamp from "./camp/NewCamp";
+import CreateCampButton from "./camp/components/CreateCampButton.tsx";
 
 import { useCamps } from "@/pages/camps/hooks/use-camps.hook.ts";
+import BaseAspectCard from "@/shared/components/BaseAspectCard.tsx";
+
+import { formatDate } from "@/shared/utils/formatDate.ts";
+import { Link } from "react-router-dom";
 
 const CAMP_FILTER_OPTIONS = [
   { value: "all", label: "Все" },
@@ -17,7 +29,7 @@ const CAMP_FILTER_OPTIONS = [
 type CampFilterValue = (typeof CAMP_FILTER_OPTIONS)[number]["value"];
 
 export default function CampsPage() {
-  const { camps } = useCamps();
+  const { camps, refreshCamps } = useCamps();
   const [campsFilterStatus, setCampsFilterStatus] =
     useState<CampFilterValue>("all");
 
@@ -28,7 +40,7 @@ export default function CampsPage() {
   return (
     <div style={{ padding: "20px" }}>
       <Box sx={{ mb: 5 }}>
-        <NewCamp />
+        <CreateCampButton onCampCreated={refreshCamps} />
       </Box>
 
       <Box
@@ -41,6 +53,7 @@ export default function CampsPage() {
       >
         <PageTitle title="Сборы" sx={{ m: 0 }} />
         <Select
+          size={"small"}
           labelId="status-select-label"
           value={campsFilterStatus}
           onChange={handleFilterCamps}
@@ -53,11 +66,34 @@ export default function CampsPage() {
           ))}
         </Select>
       </Box>
-      <div>
+
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          flexWrap: "wrap",
+        }}
+      >
         {camps.map((camp) => (
-          <div key={camp.id}>{camp.name}</div>
+          <BaseAspectCard key={camp.id}>
+            <CardActionArea
+              component={Link}
+              to={`/camps/${camp.id}`}
+              sx={{
+                padding: 3,
+                width: "calc(100vw / 4)",
+              }}
+            >
+              <Typography variant="h6">{camp.name}</Typography>
+              <Typography variant="body2" color="textSecondary">
+                даты: {formatDate(camp.startDate)} -{" "}
+                {formatDate(camp.startDate)}
+              </Typography>
+              <Typography variant="body2">город: {camp.city}</Typography>
+            </CardActionArea>
+          </BaseAspectCard>
         ))}
-      </div>
+      </Grid>
     </div>
   );
 }

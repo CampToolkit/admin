@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import TabLayout from "../components/TabLayout";
 import LeftLayoutItem from "../components/LeftLayoutItem";
 import RightLayoutItem from "../components/RightLayoutItem";
-import ManageFormButtonsBlock from "../components/ManageFormButtonsBlock";
+import FormActions from "../components/FormActions.tsx";
 import { useFormik } from "formik";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
@@ -13,25 +13,26 @@ import "dayjs/locale/ru";
 
 dayjs.locale("ru");
 
-interface BaseInfoFormValues {
+export interface BaseInfoFormValues {
   name: string;
   startDate: Dayjs;
   endDate: Dayjs;
   city: string;
 }
 
-const initialValues = {
-  name: "",
-  startDate: dayjs(),
-  endDate: dayjs(),
-  city: "",
+type BaseInfoFormProps = {
+  initialValues: BaseInfoFormValues;
+  onSubmit: (data: BaseInfoFormValues) => void;
 };
 
-export default function BaseInfo() {
+export default function BaseInfoForm(props: BaseInfoFormProps) {
+  const { onSubmit, initialValues } = props;
   const formik = useFormik<BaseInfoFormValues>({
     initialValues,
-    onSubmit: async (values) => {
-      console.log(values);
+    onSubmit,
+    enableReinitialize: true,
+    onReset: () => {
+      console.log("onReset");
     },
   });
 
@@ -59,7 +60,7 @@ export default function BaseInfo() {
                   label="Дата начала"
                   name={`formik.values.startDate`}
                   value={formik.values.startDate}
-                  onChange={formik.handleChange}
+                  onChange={(date) => formik.setFieldValue("startDate", date)}
                 />
               </Grid>
               <Grid size={6}>
@@ -68,7 +69,7 @@ export default function BaseInfo() {
                   label="Дата окончания"
                   name={`formik.values.endDate`}
                   value={formik.values.endDate}
-                  onChange={formik.handleChange}
+                  onChange={(date) => formik.setFieldValue("endDate", date)}
                 />
               </Grid>
               <Grid size={12}>
@@ -86,7 +87,7 @@ export default function BaseInfo() {
         </LeftLayoutItem>
 
         <RightLayoutItem>
-          <ManageFormButtonsBlock
+          <FormActions
             saveCallback={formik.handleSubmit}
             clearCallback={formik.handleReset}
           />

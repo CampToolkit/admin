@@ -4,7 +4,7 @@ import { FieldArray, FormikProvider, useFormik } from "formik";
 import TabLayout from "../components/TabLayout";
 import LeftLayoutItem from "../components/LeftLayoutItem";
 import RightLayoutItem from "../components/RightLayoutItem";
-import ManageFormButtonsBlock from "../components/ManageFormButtonsBlock";
+import FormActions from "../components/FormActions.tsx";
 
 interface LocationsFormValues {
   locations: { name: string }[];
@@ -65,7 +65,7 @@ export default function LocationsForm() {
             <Stack gap={1} mb={3}>
               <Button variant="outlined">Загрузить из базы данных</Button>
             </Stack>
-            <ManageFormButtonsBlock
+            <FormActions
               saveCallback={formik.handleSubmit}
               clearCallback={formik.handleReset}
             />
