@@ -6,7 +6,7 @@ import TabLayout from "../components/TabLayout";
 import LeftLayoutItem from "../components/LeftLayoutItem";
 import RightLayoutItem from "../components/RightLayoutItem";
 
-import ManageFormButtonsBlock from "../components/ManageFormButtonsBlock";
+import FormActions from "../components/FormActions.tsx";
 
 interface SportsmenFormValues {
   sportsmen: [
@@ -104,7 +104,7 @@ export default function SportsmenForm() {
               <Button variant="outlined">Загрузить из базы данных</Button>
             </Stack>
 
-            <ManageFormButtonsBlock
+            <FormActions
               saveCallback={formik.handleSubmit}
               clearCallback={formik.handleReset}
             />

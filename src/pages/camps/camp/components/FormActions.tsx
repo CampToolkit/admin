@@ -5,7 +5,7 @@ type PropsType = {
   clearCallback: (e: any) => void;
 };
 
-export default function ManageFormButtonsBlock(props: PropsType) {
+export default function FormActions(props: PropsType) {
   return (
     <Stack gap={1}>
       <Button type="submit" variant="contained" onClick={props.saveCallback}>

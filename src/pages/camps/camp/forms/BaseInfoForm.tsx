@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import TabLayout from "../components/TabLayout";
 import LeftLayoutItem from "../components/LeftLayoutItem";
 import RightLayoutItem from "../components/RightLayoutItem";
-import ManageFormButtonsBlock from "../components/ManageFormButtonsBlock";
+import FormActions from "../components/FormActions.tsx";
 import { useFormik } from "formik";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
@@ -60,7 +60,7 @@ export default function BaseInfoForm(props: BaseInfoFormProps) {
                   label="Дата начала"
                   name={`formik.values.startDate`}
                   value={formik.values.startDate}
-                  onChange={formik.handleChange}
+                  onChange={(date) => formik.setFieldValue("startDate", date)}
                 />
               </Grid>
               <Grid size={6}>
@@ -69,7 +69,7 @@ export default function BaseInfoForm(props: BaseInfoFormProps) {
                   label="Дата окончания"
                   name={`formik.values.endDate`}
                   value={formik.values.endDate}
-                  onChange={formik.handleChange}
+                  onChange={(date) => formik.setFieldValue("endDate", date)}
                 />
               </Grid>
               <Grid size={12}>
@@ -87,7 +87,7 @@ export default function BaseInfoForm(props: BaseInfoFormProps) {
         </LeftLayoutItem>
 
         <RightLayoutItem>
-          <ManageFormButtonsBlock
+          <FormActions
             saveCallback={formik.handleSubmit}
             clearCallback={formik.handleReset}
           />

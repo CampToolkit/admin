@@ -7,6 +7,7 @@ import {
   type SelectChangeEvent,
   Typography,
   Grid,
+  CardActionArea,
 } from "@mui/material";
 
 import PageTitle from "@/shared/components/PageTitle";
@@ -15,7 +16,7 @@ import CreateCampButton from "./camp/components/CreateCampButton.tsx";
 
 import { useCamps } from "@/pages/camps/hooks/use-camps.hook.ts";
 import BaseAspectCard from "@/shared/components/BaseAspectCard.tsx";
-import dayjs from "dayjs";
+
 import { formatDate } from "@/shared/utils/formatDate.ts";
 import { Link } from "react-router-dom";
 
@@ -66,24 +67,31 @@ export default function CampsPage() {
         </Select>
       </Box>
 
-      <Grid container spacing={2}>
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          flexWrap: "wrap",
+        }}
+      >
         {camps.map((camp) => (
-          <Link to={`/camps/${camp.id}`} style={{ textDecoration: "none" }}>
-            <BaseAspectCard key={camp.id}>
-              <Box
-                sx={{
-                  padding: 3,
-                }}
-              >
-                <Typography variant="h6">{camp.name}</Typography>
-                <Typography variant="body2" color="textSecondary">
-                  даты: {formatDate(camp.startDate)} -{" "}
-                  {formatDate(camp.startDate)}
-                </Typography>
-                <Typography variant="body2">город: {camp.city}</Typography>
-              </Box>
-            </BaseAspectCard>
-          </Link>
+          <BaseAspectCard key={camp.id}>
+            <CardActionArea
+              component={Link}
+              to={`/camps/${camp.id}`}
+              sx={{
+                padding: 3,
+                width: "calc(100vw / 4)",
+              }}
+            >
+              <Typography variant="h6">{camp.name}</Typography>
+              <Typography variant="body2" color="textSecondary">
+                даты: {formatDate(camp.startDate)} -{" "}
+                {formatDate(camp.startDate)}
+              </Typography>
+              <Typography variant="body2">город: {camp.city}</Typography>
+            </CardActionArea>
+          </BaseAspectCard>
         ))}
       </Grid>
     </div>
