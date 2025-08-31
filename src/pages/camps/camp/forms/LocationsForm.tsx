@@ -6,17 +6,22 @@ import LeftLayoutItem from "../components/LeftLayoutItem";
 import RightLayoutItem from "../components/RightLayoutItem";
 import FormActions from "../components/FormActions.tsx";
 
-interface LocationsFormValues {
+export interface LocationsFormValues {
   locations: { name: string }[];
 }
 
 const initialValues = {
   locations: [{ name: "" }],
 };
-export default function LocationsForm() {
+
+interface Props {
+  onSubmit: (values: LocationsFormValues) => void;
+}
+
+export default function LocationsForm({ onSubmit }: Props) {
   const formik = useFormik<LocationsFormValues>({
     initialValues,
-    onSubmit: async (value) => console.log(value),
+    onSubmit,
   });
 
   return (

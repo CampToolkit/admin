@@ -8,12 +8,12 @@ import SportsmenForm, {
 
 import type { CreateSportsmanDto } from "@/shared/api/sportsman/SportsmanApi.dto.ts";
 
-type NewCampPropsType = {
+interface Props {
   onSportsmanCreated?: () => void;
   initialValues: SportsmanFormValues;
-};
+}
 
-export default function CreateCampButton(props: NewCampPropsType) {
+export default function CreateCampButton(props: Props) {
   const { onSportsmanCreated = () => {}, initialValues } = props;
 
   const { openModal, closeModal } = useModal();

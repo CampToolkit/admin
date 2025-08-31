@@ -9,7 +9,7 @@ import RightLayoutItem from "../components/RightLayoutItem";
 import FormActions from "../components/FormActions.tsx";
 
 export interface SportsmanFormValues {
-  sportsmen: {
+  form: {
     firstName: string;
     lastName: string;
     patrName: string;
@@ -33,10 +33,10 @@ export default function SportsmenForm(props: SportsmenFormPropsType) {
       <FormikProvider value={formik}>
         <LeftLayoutItem>
           <Box component="form" onSubmit={formik.handleSubmit}>
-            <FieldArray name="sportsmen">
+            <FieldArray name="form">
               {({ push, remove }) => (
                 <>
-                  {formik.values?.sportsmen?.map((_, index) => (
+                  {formik.values?.form?.map((_, index) => (
                     <Grid
                       container
                       columnSpacing={1}
@@ -49,8 +49,8 @@ export default function SportsmenForm(props: SportsmenFormPropsType) {
                           size="small"
                           fullWidth
                           label="Фамилия"
-                          name={`sportsmen.${index}.lastName`}
-                          value={formik.values.sportsmen[index].lastName}
+                          name={`form.${index}.lastName`}
+                          value={formik.values.form[index].lastName}
                           onChange={formik.handleChange}
                         />
                       </Grid>
@@ -59,8 +59,8 @@ export default function SportsmenForm(props: SportsmenFormPropsType) {
                           size="small"
                           fullWidth
                           label="Имя"
-                          name={`sportsmen.${index}.firstName`}
-                          value={formik.values.sportsmen[index].firstName}
+                          name={`form.${index}.firstName`}
+                          value={formik.values.form[index].firstName}
                           onChange={formik.handleChange}
                         />
                       </Grid>
@@ -69,8 +69,8 @@ export default function SportsmenForm(props: SportsmenFormPropsType) {
                           size="small"
                           fullWidth
                           label="Отчество"
-                          name={`sportsmen.${index}.patrName`}
-                          value={formik.values.sportsmen[index].patrName}
+                          name={`form.${index}.patrName`}
+                          value={formik.values.form[index].patrName}
                           onChange={formik.handleChange}
                         />
                       </Grid>
@@ -83,7 +83,7 @@ export default function SportsmenForm(props: SportsmenFormPropsType) {
                   ))}
                   <Button
                     type="button"
-                    onClick={() => push(initialValues.sportsmen[0])}
+                    onClick={() => push(initialValues.form[0])}
                   >
                     Добавить спортсмена
                   </Button>
