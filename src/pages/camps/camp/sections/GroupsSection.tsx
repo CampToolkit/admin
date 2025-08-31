@@ -1,3 +1,27 @@
+import GroupsTable from "@/pages/camps/camp/components/GroupsTable.tsx";
+import { useParams } from "react-router-dom";
+import CreateGroupsButton from "@/pages/camps/camp/components/CreateGroupsButton.tsx";
+
+const GROUP_LIST_TEST = [
+  {
+    id: 1,
+    name: "old",
+    parentId: 1,
+  },
+  {
+    id: 2,
+    name: "new",
+    parentId: null,
+  },
+];
+
 export default function GroupsSection() {
-  return <div>Groups</div>;
+  const { campId } = useParams();
+
+  return (
+    <div>
+      <CreateGroupsButton campId={Number(campId)} />
+      <GroupsTable campId={Number(campId)} list={GROUP_LIST_TEST} />
+    </div>
+  );
 }
