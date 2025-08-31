@@ -3,7 +3,7 @@ import type {
   CreateCampDto,
   UpdateCampDto,
 } from "@/shared/api/camp/CampApi.dto.ts";
-import type { Camp } from "@/shared/api/camp/CampApi.types.ts";
+import type { Camp } from "@/shared/api/camp/CampApi.type.ts";
 
 export const CampApi = {
   getAll: async () => {
