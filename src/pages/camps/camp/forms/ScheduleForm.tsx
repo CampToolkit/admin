@@ -16,10 +16,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
 
 import TabLayout from "../components/TabLayout";
-import LeftLayoutItem from "../components/LeftLayoutItem";
-import RightLayoutItem from "../components/RightLayoutItem";
+import LeftLayoutItem from "@/pages/camps/camp/forms/form-items/LeftLayoutItem.tsx";
+import RightLayoutItem from "@/pages/camps/camp/forms/form-items/RightLayoutItem.tsx";
 
-import FormActions from "../components/FormActions.tsx";
+import FormActions from "@/pages/camps/camp/forms/form-items/FormActions.tsx";
 
 const auditoriums = [
   { value: 1, label: "Лед" },

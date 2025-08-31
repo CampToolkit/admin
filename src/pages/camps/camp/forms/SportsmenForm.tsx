@@ -3,12 +3,12 @@ import { Stack, Box, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
 import TabLayout from "../components/TabLayout";
-import LeftLayoutItem from "../components/LeftLayoutItem";
-import RightLayoutItem from "../components/RightLayoutItem";
+import LeftLayoutItem from "@/pages/camps/camp/forms/form-items/LeftLayoutItem.tsx";
+import RightLayoutItem from "@/pages/camps/camp/forms/form-items/RightLayoutItem.tsx";
 
-import FormActions from "../components/FormActions.tsx";
+import FormActions from "@/pages/camps/camp/forms/form-items/FormActions.tsx";
 
-export interface SportsmanFormValues {
+export interface SportsmenFormValues {
   form: {
     firstName: string;
     lastName: string;
@@ -17,13 +17,13 @@ export interface SportsmanFormValues {
 }
 
 export type SportsmenFormPropsType = {
-  initialValues: SportsmanFormValues;
-  onSubmit: (values: SportsmanFormValues) => void;
+  initialValues: SportsmenFormValues;
+  onSubmit: (values: SportsmenFormValues) => void;
 };
 
 export default function SportsmenForm(props: SportsmenFormPropsType) {
   const { initialValues, onSubmit } = props;
-  const formik = useFormik<SportsmanFormValues>({
+  const formik = useFormik<SportsmenFormValues>({
     enableReinitialize: true,
     initialValues,
     onSubmit,

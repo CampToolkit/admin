@@ -11,7 +11,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import { LocationApi } from "@/shared/api/location/LocationApi.ts";
-import EditLocationButton from "@/pages/camps/camp/components/EditLocationButton.tsx";
+import EditLocationButton from "@/pages/camps/camp/components/call-modal-buttons/EditLocationButton.tsx";
 
 interface Props {
   campId: number;

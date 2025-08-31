@@ -3,16 +3,16 @@ import type { Camp } from "@/shared/api/camp/CampApi.type.ts";
 import { CampApi } from "@/shared/api/camp/CampApi.ts";
 
 export function useCamp(id: number) {
-  const [camp, setCamp] = useState<Camp | null>(null);
+  const [state, setState] = useState<Camp | null>(null);
 
-  const fetchCamp = useCallback(async (id: number) => {
-    const camp = await CampApi.getOne(id);
-    setCamp(camp);
+  const fetch = useCallback(async (id: number) => {
+    const item = await CampApi.getOne(id);
+    setState(item);
   }, []);
 
   useEffect(() => {
-    fetchCamp(id);
+    fetch(id);
   }, []);
 
-  return { camp, refreshCamp: fetchCamp };
+  return { camp: state, refreshCamp: fetch };
 }

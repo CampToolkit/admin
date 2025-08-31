@@ -15,7 +15,7 @@ ____ campApi.ts
 
 ___ types/
 
-____ camp.types.ts
+____ item.types.ts
 
 ___ components/
 

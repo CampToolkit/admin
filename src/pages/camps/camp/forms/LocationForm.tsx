@@ -2,10 +2,10 @@ import Grid from "@mui/material/Grid";
 import { TextField } from "@mui/material";
 
 import TabLayout from "@/pages/camps/camp/components/TabLayout.tsx";
-import LeftLayoutItem from "@/pages/camps/camp/components/LeftLayoutItem.tsx";
-import RightLayoutItem from "@/pages/camps/camp/components/RightLayoutItem.tsx";
+import LeftLayoutItem from "@/pages/camps/camp/forms/form-items/LeftLayoutItem.tsx";
+import RightLayoutItem from "@/pages/camps/camp/forms/form-items/RightLayoutItem.tsx";
 
-import FormActions from "@/pages/camps/camp/components/FormActions.tsx";
+import FormActions from "@/pages/camps/camp/forms/form-items/FormActions.tsx";
 
 import { useFormik } from "formik";
 

@@ -1,12 +1,13 @@
 import { Tab, Tabs } from "@mui/material";
 import { useCampTabs } from "@/pages/camps/hooks/use-camp-tabs.hook.ts";
 
-import BaseInfoSection from "./camp/sections/BaseInfoSection.tsx";
-import SportsmenSection from "@/pages/camps/camp/sections/SportsmenSection.tsx";
-import GroupsSection from "./camp/sections/GroupsSection.tsx";
-import LocationsSection from "./camp/sections/LocationsSection.tsx";
-import ScheduleSection from "@/pages/camps/camp/sections/ScheduleSection.tsx";
 import PageTitle from "@/shared/components/PageTitle.tsx";
+
+import BaseInfoSection from "@/pages/camps/camp/sections/BaseInfoSection.tsx";
+import SportsmenSection from "@/pages/camps/camp/sections/SportsmenSection.tsx";
+import GroupsSection from "@/pages/camps/camp/sections/GroupsSection.tsx";
+import LocationsSection from "@/pages/camps/camp/sections/LocationsSection.tsx";
+import ScheduleSection from "@/pages/camps/camp/sections/ScheduleSection.tsx";
 
 const TABS = [
   {
