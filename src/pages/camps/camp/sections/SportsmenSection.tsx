@@ -2,6 +2,7 @@ import CreateSportsmenButton from "../components/call-modal-buttons/CreateSports
 import { useCampSportsmen } from "@/pages/camps/hooks/use-camp-sportsmen.hook.ts";
 import { useParams } from "react-router-dom";
 import SportsmanTable from "@/pages/camps/camp/components/SportsmanTable.tsx";
+import TabHeader from "@/pages/camps/camp/components/TabHeader.tsx";
 
 const TEST_SPORTSMEN = [
   {
@@ -33,7 +34,9 @@ export default function SportsmenSection() {
   const { sportsmen } = useCampSportsmen(Number(campId));
   return (
     <div>
-      <CreateSportsmenButton initialValues={initialValues} />
+      <TabHeader>
+        <CreateSportsmenButton initialValues={initialValues} />
+      </TabHeader>
       <SportsmanTable campId={Number(campId)} sportsmen={TEST_SPORTSMEN} />
     </div>
   );

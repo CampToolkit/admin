@@ -1,6 +1,7 @@
 import GroupsTable from "@/pages/camps/camp/components/GroupsTable.tsx";
 import { useParams } from "react-router-dom";
 import CreateGroupsButton from "@/pages/camps/camp/components/call-modal-buttons/CreateGroupsButton.tsx";
+import TabHeader from "@/pages/camps/camp/components/TabHeader.tsx";
 
 const GROUP_LIST_TEST = [
   {
@@ -20,7 +21,9 @@ export default function GroupsSection() {
 
   return (
     <div>
-      <CreateGroupsButton campId={Number(campId)} />
+      <TabHeader>
+        <CreateGroupsButton campId={Number(campId)} />
+      </TabHeader>
       <GroupsTable campId={Number(campId)} list={GROUP_LIST_TEST} />
     </div>
   );
