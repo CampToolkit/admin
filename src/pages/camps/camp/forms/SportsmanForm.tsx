@@ -2,10 +2,10 @@ import { useFormik } from "formik";
 
 import Grid from "@mui/material/Grid";
 import { TextField } from "@mui/material";
-import LeftLayoutItem from "../components/LeftLayoutItem";
-import RightLayoutItem from "../components/RightLayoutItem";
+import LeftLayoutItem from "@/pages/camps/camp/forms/form-items/LeftLayoutItem.tsx";
+import RightLayoutItem from "@/pages/camps/camp/forms/form-items/RightLayoutItem.tsx";
 import TabLayout from "../components/TabLayout";
-import FormActions from "@/pages/camps/camp/components/FormActions.tsx";
+import FormActions from "@/pages/camps/camp/forms/form-items/FormActions.tsx";
 
 export interface SportsmanFormValues {
   firstName: string;

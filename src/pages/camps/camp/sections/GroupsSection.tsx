@@ -1,6 +1,6 @@
 import GroupsTable from "@/pages/camps/camp/components/GroupsTable.tsx";
 import { useParams } from "react-router-dom";
-import CreateGroupsButton from "@/pages/camps/camp/components/CreateGroupsButton.tsx";
+import CreateGroupsButton from "@/pages/camps/camp/components/call-modal-buttons/CreateGroupsButton.tsx";
 
 const GROUP_LIST_TEST = [
   {

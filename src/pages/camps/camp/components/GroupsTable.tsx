@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditGroupButton from "@/pages/camps/camp/components/EditGroupButton.tsx";
+import EditGroupButton from "@/pages/camps/camp/components/call-modal-buttons/EditGroupButton.tsx";
 
 interface Props {
   campId: number;

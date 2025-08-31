@@ -12,7 +12,7 @@ import {
 
 import PageTitle from "@/shared/components/PageTitle";
 
-import CreateCampButton from "./camp/components/CreateCampButton.tsx";
+import CreateCampButton from "./camp/components/call-modal-buttons/CreateCampButton.tsx";
 
 import { useCamps } from "@/pages/camps/hooks/use-camps.hook.ts";
 import BaseAspectCard from "@/shared/components/BaseAspectCard.tsx";

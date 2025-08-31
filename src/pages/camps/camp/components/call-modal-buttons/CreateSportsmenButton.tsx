@@ -3,14 +3,14 @@ import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
 
 import { Button } from "@mui/material";
 import SportsmenForm, {
-  type SportsmanFormValues,
+  type SportsmenFormValues,
 } from "@/pages/camps/camp/forms/SportsmenForm.tsx";
 
 import type { CreateSportsmanDto } from "@/shared/api/sportsman/SportsmanApi.dto.ts";
 
 interface Props {
   onSportsmanCreated?: () => void;
-  initialValues: SportsmanFormValues;
+  initialValues: SportsmenFormValues;
 }
 
 export default function CreateCampButton(props: Props) {
@@ -18,11 +18,11 @@ export default function CreateCampButton(props: Props) {
 
   const { openModal, closeModal } = useModal();
 
-  const handleCreate = async (values: SportsmanFormValues) => {
+  const handleCreate = async (values: SportsmenFormValues) => {
     const dto: CreateSportsmanDto = {
-      lastName: values.sportsmen[0].lastName,
-      firstName: values.sportsmen[0].firstName,
-      patrName: values.sportsmen[0].patrName,
+      lastName: values.form[0].lastName,
+      firstName: values.form[0].firstName,
+      patrName: values.form[0].patrName,
     };
     await SportsmanApi.create(dto);
     closeModal();

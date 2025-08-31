@@ -6,7 +6,7 @@ import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.t
 import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
 import SportsmanForm, {
   type SportsmanFormValues,
-} from "../forms/SportsmanForm";
+} from "../../forms/SportsmanForm.tsx";
 import type { UpdateSportsmanDto } from "@/shared/api/sportsman/SportsmanApi.dto.ts";
 
 type PropsType = {

@@ -1,4 +1,4 @@
-import CreateSportsmenButton from "../components/CreateSportsmenButton";
+import CreateSportsmenButton from "../components/call-modal-buttons/CreateSportsmenButton.tsx";
 import { useCampSportsmen } from "@/pages/camps/hooks/use-camp-sportsmen.hook.ts";
 import { useParams } from "react-router-dom";
 import SportsmanTable from "@/pages/camps/camp/components/SportsmanTable.tsx";
@@ -19,7 +19,7 @@ const TEST_SPORTSMEN = [
 ];
 
 const initialValues = {
-  sportsmen: [
+  form: [
     {
       firstName: "",
       lastName: "",

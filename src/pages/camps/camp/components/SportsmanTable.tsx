@@ -11,7 +11,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
-import EditSportsmanButton from "@/pages/camps/camp/components/EditSportsmanButton.tsx";
+import EditSportsmanButton from "@/pages/camps/camp/components/call-modal-buttons/EditSportsmanButton.tsx";
 
 type Sportsman = {
   id: number;
