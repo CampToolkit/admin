@@ -14,7 +14,7 @@ import LeftLayoutItem from "../components/LeftLayoutItem";
 import RightLayoutItem from "../components/RightLayoutItem";
 import FormActions from "../components/FormActions.tsx";
 
-interface GroupsFormValues {
+export interface GroupsFormValues {
   groups: {
     name: string;
     parentId: number | null;
@@ -48,12 +48,17 @@ const PARENT_GROUP_OPTIONS = [
   },
 ];
 
-export default function GroupsForm() {
+interface Props {
+  onSubmit: (values: GroupsFormValues) => void;
+}
+
+export default function GroupsForm(props: Props) {
+  const { onSubmit } = props;
+
   const formik = useFormik<GroupsFormValues>({
+    enableReinitialize: true,
     initialValues,
-    onSubmit: async (values) => {
-      console.log(values);
-    },
+    onSubmit,
   });
   return (
     <TabLayout>

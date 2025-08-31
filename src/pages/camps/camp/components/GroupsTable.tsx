@@ -9,10 +9,11 @@ import {
   TableRow,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditGroupButton from "@/pages/camps/camp/components/EditGroupButton.tsx";
 
 interface Props {
   campId: number;
-  list: { id: number; name: string }[];
+  list: { id: number; name: string; parentId: number | null }[];
 }
 
 export default function GroupsTable(props: Props) {
@@ -49,7 +50,9 @@ export default function GroupsTable(props: Props) {
                   <DeleteIcon />
                 </IconButton>
               </TableCell>
-              <TableCell>{/*todo editButton*/}</TableCell>
+              <TableCell>
+                <EditGroupButton groupId={item.id} initialValues={item} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
