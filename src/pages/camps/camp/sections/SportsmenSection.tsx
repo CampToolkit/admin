@@ -34,7 +34,7 @@ export default function SportsmenSection() {
   return (
     <div>
       <CreateSportsmenButton initialValues={initialValues} />
-      <SportsmanTable campId={Number(campId)} sportsmen={sportsmen} />
+      <SportsmanTable campId={Number(campId)} sportsmen={TEST_SPORTSMEN} />
     </div>
   );
 }

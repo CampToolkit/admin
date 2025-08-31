@@ -8,7 +8,7 @@ import RightLayoutItem from "../components/RightLayoutItem";
 
 import FormActions from "../components/FormActions.tsx";
 
-export interface SportsmenFormValues {
+export interface SportsmanFormValues {
   sportsmen: {
     firstName: string;
     lastName: string;
@@ -17,14 +17,13 @@ export interface SportsmenFormValues {
 }
 
 export type SportsmenFormPropsType = {
-  initialValues: SportsmenFormValues;
-  onSubmit: (values: SportsmenFormValues) => void;
+  initialValues: SportsmanFormValues;
+  onSubmit: (values: SportsmanFormValues) => void;
 };
 
 export default function SportsmenForm(props: SportsmenFormPropsType) {
-  console.log(props.initialValues, "SportsmenForm");
   const { initialValues, onSubmit } = props;
-  const formik = useFormik<SportsmenFormValues>({
+  const formik = useFormik<SportsmanFormValues>({
     enableReinitialize: true,
     initialValues,
     onSubmit,

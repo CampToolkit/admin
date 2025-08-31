@@ -1,5 +1,4 @@
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 
 import {
   Table,
@@ -12,6 +11,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
+import EditSportsmanButton from "@/pages/camps/camp/components/EditSportsmanButton.tsx";
 
 type Sportsman = {
   id: number;
@@ -27,11 +27,7 @@ interface Props {
 
 export default function SportsmanTable({ campId, sportsmen }: Props) {
   const removeFromCamp = async (sportsmanId: number) => {
-    await SportsmanApi.removeFromCamp({ sportsmanId, campId });
-  };
-
-  const editSportsman = async (sportsmanId: number) => {
-    console.log(sportsmanId);
+    await SportsmanApi.removeFromCamp(sportsmanId, { campId });
   };
 
   return (
@@ -66,17 +62,7 @@ export default function SportsmanTable({ campId, sportsmen }: Props) {
                 </IconButton>
               </TableCell>
               <TableCell>
-                <IconButton
-                  onClick={() => editSportsman(s.id)}
-                  sx={{
-                    color: "primary.main",
-                    "&:hover": {
-                      backgroundColor: "primary.light",
-                    },
-                  }}
-                >
-                  <EditIcon />
-                </IconButton>
+                <EditSportsmanButton sportsmanId={s.id} initialValues={s} />
               </TableCell>
             </TableRow>
           ))}
