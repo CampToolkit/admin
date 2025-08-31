@@ -38,8 +38,8 @@ export default function SportsmanTable({ campId, sportsmen }: Props) {
             <TableCell>Фамилия</TableCell>
             <TableCell>Имя</TableCell>
             <TableCell>Отчество</TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
+            <TableCell width={"1%"}></TableCell>
+            <TableCell width={"1%"}></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
