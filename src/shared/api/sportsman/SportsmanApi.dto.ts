@@ -5,17 +5,13 @@ export interface CreateSportsmanDto {
   birthDate?: string;
 }
 
-export interface UpdateSportsmanDto {
-  lastName?: string;
-  firstName?: string;
-  patrName?: string;
-  birthDate?: string;
-}
+// eslint-disable-next-line
+export interface UpdateSportsmanDto extends Partial<CreateSportsmanDto> {}
 
-export interface RemoveSportsmanFromCampDto {
-  campId: number;
-}
-
+// note sportsmanId
 export interface AddSportsmanToCampDto {
-  campId: number;
+  items: number[];
 }
+
+// eslint-disable-next-line
+export interface RemoveSportsmanFromCampDto extends AddSportsmanToCampDto {}

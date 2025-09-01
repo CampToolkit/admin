@@ -10,14 +10,7 @@ import type {
 
 export const SportsmanApi = {
   getAll: async () => {
-    const { data } = await axiosConfig.get<Sportsman[]>("/sportsman");
-    return data;
-  },
-
-  getCampSportsmen: async (campId: number) => {
-    const { data } = await axiosConfig.get<Sportsman[]>(
-      `/sportsman/camp/${campId}`,
-    );
+    const { data } = await axiosConfig.get<Sportsman[]>("sportsman");
     return data;
   },
 
@@ -39,24 +32,45 @@ export const SportsmanApi = {
     return data;
   },
 
-  addToCamp: async (id: number, dto: AddSportsmanToCampDto) => {
+  getCampSportsmen: async (campId: number) => {
+    const { data } = await axiosConfig.get<Sportsman[]>(
+      `/camp/${campId}/sportsman`,
+    );
+    return data;
+  },
+
+  addManyToCamp: async (campId: number, dto: AddSportsmanToCampDto) => {
     const { data } = await axiosConfig.post<Sportsman>(
-      `/sportsman/${id}/camp`,
+      `/camp/${campId}sportsman`,
       dto,
     );
     return data;
   },
 
-  removeFromCamp: async (id: number, dto: RemoveSportsmanFromCampDto) => {
-    const { data } = await axiosConfig.put<Sportsman>(
-      `/sportsman/${id}/camp`,
-      dto,
-    );
-    return data;
+  // note потому что axios не принимает body в delete
+  removeManyFromCamp: async (id: number, dto: RemoveSportsmanFromCampDto) => {
+    const res = await fetch(`/api/camp/${id}/sportsman`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(dto),
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`Failed to delete: ${res.status} ${errorText}`);
+    }
+
+    if (res.status !== 204) {
+      return res.json();
+    }
+
+    return null;
   },
 
   delete: async (id: number) => {
-    const data = await axiosConfig.delete(`/sportsman/${id}`);
+    const { data } = await axiosConfig.delete(`/sportsman/${id}`);
     return data;
   },
 };
