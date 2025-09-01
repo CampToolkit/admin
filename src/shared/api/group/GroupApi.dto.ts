@@ -8,3 +8,7 @@ export interface UpdateGroupDto {
   name?: string;
   parentId?: number;
 }
+
+export interface CreateGroupBulkDto {
+  items: CreateGroupDto[];
+}

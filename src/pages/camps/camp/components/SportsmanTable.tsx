@@ -27,7 +27,7 @@ interface Props {
 
 export default function SportsmanTable({ campId, sportsmen }: Props) {
   const removeFromCamp = async (sportsmanId: number) => {
-    await SportsmanApi.removeFromCamp(sportsmanId, { campId });
+    await SportsmanApi.removeManyFromCamp(sportsmanId, { campId });
   };
 
   return (
