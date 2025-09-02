@@ -1,10 +1,10 @@
-import CreateSportsmenButton from "../components/call-modal-buttons/CreateSportsmenButton.tsx";
 import { useCampSportsmen } from "@/pages/camps/hooks/use-camp-sportsmen.hook.ts";
 import { useParams } from "react-router-dom";
 import SportsmanTable from "@/pages/camps/camp/components/SportsmanTable.tsx";
 import TabHeader from "@/pages/camps/camp/components/TabHeader.tsx";
 import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
 import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
+import AddPersonToCamp from "@/pages/camps/camp/components/call-modal-buttons/AddPersonToCamp.tsx";
 
 // const TEST_SPORTSMEN = [
 //   {
@@ -38,7 +38,7 @@ export default function SportsmenSection() {
   return (
     <div>
       <TabHeader>
-        <CreateSportsmenButton onCreated={onCreated} />
+        <AddPersonToCamp onCreated={onCreated} />
       </TabHeader>
       <SportsmanTable campId={Number(campId)} sportsmen={sportsmen} />
     </div>
