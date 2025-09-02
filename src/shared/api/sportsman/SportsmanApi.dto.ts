@@ -5,6 +5,10 @@ export interface CreateSportsmanDto {
   birthDate?: string;
 }
 
+export interface CreateSportsmanBulkDto {
+  items: CreateSportsmanDto[];
+}
+
 // eslint-disable-next-line
 export interface UpdateSportsmanDto extends Partial<CreateSportsmanDto> {}
 

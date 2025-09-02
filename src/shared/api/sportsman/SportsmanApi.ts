@@ -3,6 +3,7 @@ import { axiosConfig } from "@/shared/api/axios-config.ts";
 import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
 import type {
   AddSportsmanToCampDto,
+  CreateSportsmanBulkDto,
   CreateSportsmanDto,
   RemoveSportsmanFromCampDto,
   UpdateSportsmanDto,
@@ -24,6 +25,15 @@ export const SportsmanApi = {
     return data;
   },
 
+  createMany: async (dto: CreateSportsmanBulkDto) => {
+    console.log(dto);
+    const { data } = await axiosConfig.post<Sportsman[]>(
+      `/sportsman/bulk/`,
+      dto,
+    );
+    return data;
+  },
+
   update: async (id: number, dto: UpdateSportsmanDto) => {
     const { data } = await axiosConfig.patch<Sportsman>(
       `/sportsman/${id}`,
@@ -41,7 +51,7 @@ export const SportsmanApi = {
 
   addManyToCamp: async (campId: number, dto: AddSportsmanToCampDto) => {
     const { data } = await axiosConfig.post<Sportsman>(
-      `/camp/${campId}sportsman`,
+      `/camp/${campId}/sportsman`,
       dto,
     );
     return data;

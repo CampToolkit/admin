@@ -6,31 +6,41 @@ import SportsmenForm, {
   type SportsmenFormValues,
 } from "@/pages/camps/camp/forms/SportsmenForm.tsx";
 
-import type { CreateSportsmanDto } from "@/shared/api/sportsman/SportsmanApi.dto.ts";
+import type { CreateSportsmanBulkDto } from "@/shared/api/sportsman/SportsmanApi.dto.ts";
+import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
+
+const INITIAL_VALUES = {
+  items: [
+    {
+      firstName: "",
+      lastName: "",
+      patrName: "",
+    },
+  ],
+};
 
 interface Props {
-  onSportsmanCreated?: () => void;
-  initialValues: SportsmenFormValues;
+  onCreated?: (data?: Sportsman[]) => Promise<void> | void;
 }
 
 export default function CreateCampButton(props: Props) {
-  const { onSportsmanCreated = () => {}, initialValues } = props;
+  const { onCreated = () => {} } = props;
 
   const { openModal, closeModal } = useModal();
 
   const handleCreate = async (values: SportsmenFormValues) => {
-    const dto: CreateSportsmanDto = {
-      lastName: values.form[0].lastName,
-      firstName: values.form[0].firstName,
-      patrName: values.form[0].patrName,
+    const dto: CreateSportsmanBulkDto = {
+      items: values.items.map((item) => ({
+        ...item,
+      })),
     };
-    await SportsmanApi.create(dto);
+    const created = await SportsmanApi.createMany(dto);
+    await onCreated?.(created);
     closeModal();
-    onSportsmanCreated();
   };
 
   const sportsmen = () => (
-    <SportsmenForm onSubmit={handleCreate} initialValues={initialValues} />
+    <SportsmenForm onSubmit={handleCreate} initialValues={INITIAL_VALUES} />
   );
 
   const onClickCreate = async () => {
