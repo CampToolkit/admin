@@ -26,7 +26,7 @@ export const SportsmanApi = {
   },
 
   createMany: async (dto: CreateSportsmanBulkDto) => {
-    console.log(dto);
+    console.log("createMany", dto);
     const { data } = await axiosConfig.post<Sportsman[]>(
       `/sportsman/bulk/`,
       dto,
@@ -50,6 +50,7 @@ export const SportsmanApi = {
   },
 
   addManyToCamp: async (campId: number, dto: AddSportsmanToCampDto) => {
+    console.log("addManyToCamp", dto);
     const { data } = await axiosConfig.post<Sportsman>(
       `/camp/${campId}/sportsman`,
       dto,

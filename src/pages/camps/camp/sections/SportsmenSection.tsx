@@ -26,9 +26,11 @@ export default function SportsmenSection() {
   const { sportsmen, refreshSportsmen } = useCampSportsmen(Number(campId));
 
   const onCreated = async (data: Sportsman[] | undefined) => {
+    console.log("Creating Sportsmen", data);
     if (!data) return;
+
     await SportsmanApi.addManyToCamp(Number(campId), {
-      items: sportsmen.map((sportsman) => sportsman.id),
+      items: data.map((sportsman) => sportsman.id),
     });
     await refreshSportsmen(Number(campId));
   };

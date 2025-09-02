@@ -35,6 +35,7 @@ export default function CreateCampButton(props: Props) {
       })),
     };
     const created = await SportsmanApi.createMany(dto);
+
     await onCreated?.(created);
     closeModal();
   };
@@ -57,7 +58,7 @@ export default function CreateCampButton(props: Props) {
       sx={{ fontSize: 16 }}
       onClick={onClickCreate}
     >
-      Добавить нового спортсмена
+      Добавить участника
     </Button>
   );
 }
