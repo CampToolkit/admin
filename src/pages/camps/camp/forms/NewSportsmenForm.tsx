@@ -1,5 +1,5 @@
 import { FormikProvider, FieldArray, useFormik } from "formik";
-import { Stack, Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
 import TabLayout from "../components/TabLayout";
@@ -21,7 +21,7 @@ export type SportsmenFormPropsType = {
   onSubmit: (values: SportsmenFormValues) => void;
 };
 
-export default function SportsmenForm(props: SportsmenFormPropsType) {
+export default function NewSportsmenForm(props: SportsmenFormPropsType) {
   const { initialValues, onSubmit } = props;
   const formik = useFormik<SportsmenFormValues>({
     enableReinitialize: true,
@@ -94,17 +94,10 @@ export default function SportsmenForm(props: SportsmenFormPropsType) {
         </LeftLayoutItem>
 
         <RightLayoutItem>
-          <>
-            <Stack gap={1} mb={3}>
-              <Button variant="outlined">Загрузить из файла</Button>
-              <Button variant="outlined">Загрузить из базы данных</Button>
-            </Stack>
-
-            <FormActions
-              saveCallback={formik.handleSubmit}
-              clearCallback={formik.handleReset}
-            />
-          </>
+          <FormActions
+            saveCallback={formik.handleSubmit}
+            clearCallback={formik.handleReset}
+          />
         </RightLayoutItem>
       </FormikProvider>
     </TabLayout>

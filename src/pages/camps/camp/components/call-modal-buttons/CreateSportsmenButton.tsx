@@ -2,9 +2,9 @@ import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.t
 import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
 
 import { Button } from "@mui/material";
-import SportsmenForm, {
+import NewSportsmenForm, {
   type SportsmenFormValues,
-} from "@/pages/camps/camp/forms/SportsmenForm.tsx";
+} from "@/pages/camps/camp/forms/NewSportsmenForm.tsx";
 
 import type { CreateSportsmanBulkDto } from "@/shared/api/sportsman/SportsmanApi.dto.ts";
 import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
@@ -41,7 +41,7 @@ export default function CreateCampButton(props: Props) {
   };
 
   const sportsmen = () => (
-    <SportsmenForm onSubmit={handleCreate} initialValues={INITIAL_VALUES} />
+    <NewSportsmenForm onSubmit={handleCreate} initialValues={INITIAL_VALUES} />
   );
 
   const onClickCreate = async () => {
