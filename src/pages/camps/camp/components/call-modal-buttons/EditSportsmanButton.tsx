@@ -12,10 +12,11 @@ import type { UpdateSportsmanDto } from "@/shared/api/sportsman/SportsmanApi.dto
 type PropsType = {
   sportsmanId: number;
   initialValues: SportsmanFormValues;
+  onDone?: () => Promise<void> | void;
 };
 
 export default function EditSportsmanButton(props: PropsType) {
-  const { initialValues, sportsmanId } = props;
+  const { initialValues, sportsmanId, onDone } = props;
   const { openModal, closeModal } = useModal();
 
   const onSubmit = async (data: SportsmanFormValues) => {
@@ -26,13 +27,14 @@ export default function EditSportsmanButton(props: PropsType) {
     };
     await SportsmanApi.update(sportsmanId, dto);
     closeModal();
+    onDone?.();
   };
 
   const form = () => (
     <SportsmanForm onSubmit={onSubmit} initialValues={initialValues} />
   );
 
-  const onClick = () => {
+  const onButtonClick = () => {
     openModal({
       content: form,
       showConfirmButton: false,
@@ -42,7 +44,7 @@ export default function EditSportsmanButton(props: PropsType) {
 
   return (
     <IconButton
-      onClick={onClick}
+      onClick={onButtonClick}
       sx={{
         color: "primary.main",
         "&:hover": {
