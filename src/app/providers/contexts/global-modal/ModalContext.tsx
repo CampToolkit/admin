@@ -64,6 +64,8 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
 
               width: "90vw",
               height: "90vh",
+              maxHeight: "90vh",
+              overflow: "hidden",
 
               bgcolor: "background.paper",
               boxShadow: 24,

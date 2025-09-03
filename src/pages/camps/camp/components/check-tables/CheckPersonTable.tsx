@@ -5,10 +5,12 @@ import {
   TableCell,
   TableBody,
   Checkbox,
+  Box,
 } from "@mui/material";
 import { useFormik, FormikProvider, Form } from "formik";
 import type { Person } from "@/shared/api/lib/types/Person.type.ts";
 import type { CheckTableFormValues } from "@/pages/camps/camp/components/check-tables/CheckTableFormValues.type.ts";
+import { scrollStyleChild } from "@/styles/scroll.ts";
 
 interface Props<T> {
   persons: T[];
@@ -32,43 +34,51 @@ export default function CheckPersonTableForm<T extends Person>(
   const { values, setFieldValue } = formik;
 
   return (
-    <FormikProvider value={formik}>
-      <Form id={formId}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Фамилия</TableCell>
-              <TableCell>Имя</TableCell>
-              <TableCell>Отчество</TableCell>
-              <TableCell>Добавить</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {persons.map((p) => (
-              <TableRow key={p.id}>
-                <TableCell>{p.lastName}</TableCell>
-                <TableCell>{p.firstName}</TableCell>
-                <TableCell>{p.patrName}</TableCell>
-                <TableCell>
-                  <Checkbox
-                    checked={values.items.includes(p.id)}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setFieldValue("items", [...values.items, p.id]);
-                      } else {
-                        setFieldValue(
-                          "items",
-                          values.items.filter((id) => id !== p.id),
-                        );
-                      }
-                    }}
-                  />
-                </TableCell>
+    <Box sx={scrollStyleChild}>
+      <FormikProvider value={formik}>
+        <Form id={formId}>
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                <TableCell>Фамилия</TableCell>
+                <TableCell>Имя</TableCell>
+                <TableCell>Отчество</TableCell>
+                <TableCell>Добавить</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Form>
-    </FormikProvider>
+            </TableHead>
+
+            <TableBody
+              sx={{
+                maxHeight: "100vh",
+                overflowY: "auto",
+              }}
+            >
+              {persons.map((p) => (
+                <TableRow key={p.id}>
+                  <TableCell>{p.lastName}</TableCell>
+                  <TableCell>{p.firstName}</TableCell>
+                  <TableCell>{p.patrName}</TableCell>
+                  <TableCell>
+                    <Checkbox
+                      checked={values.items.includes(p.id)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setFieldValue("items", [...values.items, p.id]);
+                        } else {
+                          setFieldValue(
+                            "items",
+                            values.items.filter((id) => id !== p.id),
+                          );
+                        }
+                      }}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Form>
+      </FormikProvider>
+    </Box>
   );
 }
