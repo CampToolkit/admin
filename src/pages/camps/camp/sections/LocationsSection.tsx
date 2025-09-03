@@ -1,8 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useCampLocations } from "../../hooks/use-camp-locations.hook";
 import LocationsTable from "@/pages/camps/camp/components/LocationsTable.tsx";
-import CreateLocationsButton from "@/pages/camps/camp/components/call-modal-buttons/CreateLocationsButton.tsx";
+
 import TabHeader from "@/pages/camps/camp/components/TabHeader.tsx";
+import AddLocationToCampButton from "@/pages/camps/camp/components/call-modal-buttons/AddLocationToCampButton.tsx";
 
 export default function LocationsSection() {
   const { campId } = useParams();
@@ -11,9 +12,9 @@ export default function LocationsSection() {
   return (
     <div>
       <TabHeader>
-        <CreateLocationsButton
+        <AddLocationToCampButton
           campId={Number(campId)}
-          onCreated={refreshCampLocations}
+          onDone={refreshCampLocations}
         />
       </TabHeader>
       <LocationsTable campId={Number(campId)} list={locations} />

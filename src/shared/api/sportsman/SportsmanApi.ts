@@ -3,10 +3,12 @@ import { axiosConfig } from "@/shared/api/axios-config.ts";
 import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
 import type {
   AddSportsmanToCampDto,
+  CreateSportsmanBulkDto,
   CreateSportsmanDto,
   RemoveSportsmanFromCampDto,
   UpdateSportsmanDto,
 } from "@/shared/api/sportsman/SportsmanApi.dto.ts";
+import { customDelete } from "@/shared/api/lib/utils/custom-delete.ts";
 
 export const SportsmanApi = {
   getAll: async () => {
@@ -21,6 +23,15 @@ export const SportsmanApi = {
 
   create: async (dto: CreateSportsmanDto) => {
     const { data } = await axiosConfig.post<Sportsman>("/sportsman", dto);
+    return data;
+  },
+
+  createMany: async (dto: CreateSportsmanBulkDto) => {
+    console.log("createMany", dto);
+    const { data } = await axiosConfig.post<Sportsman[]>(
+      `/sportsman/bulk/`,
+      dto,
+    );
     return data;
   },
 
@@ -40,33 +51,16 @@ export const SportsmanApi = {
   },
 
   addManyToCamp: async (campId: number, dto: AddSportsmanToCampDto) => {
+    console.log("addManyToCamp", dto);
     const { data } = await axiosConfig.post<Sportsman>(
-      `/camp/${campId}sportsman`,
+      `/camp/${campId}/sportsman`,
       dto,
     );
     return data;
   },
 
-  // note потому что axios не принимает body в delete
   removeManyFromCamp: async (id: number, dto: RemoveSportsmanFromCampDto) => {
-    const res = await fetch(`/api/camp/${id}/sportsman`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(dto),
-    });
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      throw new Error(`Failed to delete: ${res.status} ${errorText}`);
-    }
-
-    if (res.status !== 204) {
-      return res.json();
-    }
-
-    return null;
+    return await customDelete({ path: `/api/camp/${id}/sportsman`, dto });
   },
 
   delete: async (id: number) => {

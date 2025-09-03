@@ -23,11 +23,16 @@ type Sportsman = {
 interface Props {
   campId: number;
   sportsmen: Sportsman[];
+  onDone?: () => Promise<void> | void;
 }
 
-export default function SportsmanTable({ campId, sportsmen }: Props) {
+export default function SportsmanTable({ campId, sportsmen, onDone }: Props) {
   const removeFromCamp = async (sportsmanId: number) => {
-    await SportsmanApi.removeManyFromCamp(sportsmanId, { campId });
+    const response = await SportsmanApi.removeManyFromCamp(campId, {
+      items: [sportsmanId],
+    });
+    console.log(response);
+    onDone?.();
   };
 
   return (
@@ -62,7 +67,11 @@ export default function SportsmanTable({ campId, sportsmen }: Props) {
                 </IconButton>
               </TableCell>
               <TableCell>
-                <EditSportsmanButton sportsmanId={s.id} initialValues={s} />
+                <EditSportsmanButton
+                  sportsmanId={s.id}
+                  initialValues={s}
+                  onDone={onDone}
+                />
               </TableCell>
             </TableRow>
           ))}

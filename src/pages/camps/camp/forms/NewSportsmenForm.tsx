@@ -1,5 +1,5 @@
 import { FormikProvider, FieldArray, useFormik } from "formik";
-import { Stack, Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
 import TabLayout from "../components/TabLayout";
@@ -9,7 +9,7 @@ import RightLayoutItem from "@/pages/camps/camp/forms/form-items/RightLayoutItem
 import FormActions from "@/pages/camps/camp/forms/form-items/FormActions.tsx";
 
 export interface SportsmenFormValues {
-  form: {
+  items: {
     firstName: string;
     lastName: string;
     patrName: string;
@@ -21,7 +21,7 @@ export type SportsmenFormPropsType = {
   onSubmit: (values: SportsmenFormValues) => void;
 };
 
-export default function SportsmenForm(props: SportsmenFormPropsType) {
+export default function NewSportsmenForm(props: SportsmenFormPropsType) {
   const { initialValues, onSubmit } = props;
   const formik = useFormik<SportsmenFormValues>({
     enableReinitialize: true,
@@ -33,10 +33,10 @@ export default function SportsmenForm(props: SportsmenFormPropsType) {
       <FormikProvider value={formik}>
         <LeftLayoutItem>
           <Box component="form" onSubmit={formik.handleSubmit}>
-            <FieldArray name="form">
+            <FieldArray name="items">
               {({ push, remove }) => (
                 <>
-                  {formik.values?.form?.map((_, index) => (
+                  {formik.values?.items?.map((_, index) => (
                     <Grid
                       container
                       columnSpacing={1}
@@ -49,8 +49,8 @@ export default function SportsmenForm(props: SportsmenFormPropsType) {
                           size="small"
                           fullWidth
                           label="Фамилия"
-                          name={`form.${index}.lastName`}
-                          value={formik.values.form[index].lastName}
+                          name={`items.${index}.lastName`}
+                          value={formik.values.items[index].lastName}
                           onChange={formik.handleChange}
                         />
                       </Grid>
@@ -59,8 +59,8 @@ export default function SportsmenForm(props: SportsmenFormPropsType) {
                           size="small"
                           fullWidth
                           label="Имя"
-                          name={`form.${index}.firstName`}
-                          value={formik.values.form[index].firstName}
+                          name={`items.${index}.firstName`}
+                          value={formik.values.items[index].firstName}
                           onChange={formik.handleChange}
                         />
                       </Grid>
@@ -69,8 +69,8 @@ export default function SportsmenForm(props: SportsmenFormPropsType) {
                           size="small"
                           fullWidth
                           label="Отчество"
-                          name={`form.${index}.patrName`}
-                          value={formik.values.form[index].patrName}
+                          name={`items.${index}.patrName`}
+                          value={formik.values.items[index].patrName}
                           onChange={formik.handleChange}
                         />
                       </Grid>
@@ -83,7 +83,7 @@ export default function SportsmenForm(props: SportsmenFormPropsType) {
                   ))}
                   <Button
                     type="button"
-                    onClick={() => push(initialValues.form[0])}
+                    onClick={() => push(initialValues.items[0])}
                   >
                     Добавить спортсмена
                   </Button>
@@ -94,17 +94,10 @@ export default function SportsmenForm(props: SportsmenFormPropsType) {
         </LeftLayoutItem>
 
         <RightLayoutItem>
-          <>
-            <Stack gap={1} mb={3}>
-              <Button variant="outlined">Загрузить из файла</Button>
-              <Button variant="outlined">Загрузить из базы данных</Button>
-            </Stack>
-
-            <FormActions
-              saveCallback={formik.handleSubmit}
-              clearCallback={formik.handleReset}
-            />
-          </>
+          <FormActions
+            saveCallback={formik.handleSubmit}
+            clearCallback={formik.handleReset}
+          />
         </RightLayoutItem>
       </FormikProvider>
     </TabLayout>

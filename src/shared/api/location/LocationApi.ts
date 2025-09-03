@@ -1,11 +1,13 @@
 import { axiosConfig } from "@/shared/api/axios-config.ts";
 
 import type {
+  AddManyLocationToCampDto,
   CreateLocationDto,
   RemoveLocationFromCampDto,
   UpdateLocationDto,
 } from "@/shared/api/location/LocationApi.dto.ts";
 import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
+import { customDelete } from "@/shared/api/lib/utils/custom-delete.ts";
 
 export const LocationApi = {
   getAll: async () => {
@@ -31,9 +33,19 @@ export const LocationApi = {
     return data;
   },
 
-  removeFromCamp: async (id: number, dto: RemoveLocationFromCampDto) => {
-    const { data } = await axiosConfig.delete(`/auditorium/${id}`);
+  addManyToCamp: async (campId: number, dto: AddManyLocationToCampDto) => {
+    const { data } = await axiosConfig.post<CampsLocation>(
+      `/camp/${campId}/auditorium`,
+      dto,
+    );
     return data;
+  },
+
+  removeFromCamp: async (campId: number, dto: RemoveLocationFromCampDto) => {
+    return await customDelete<CampsLocation, RemoveLocationFromCampDto>({
+      path: `/camp/${campId}/auditorium`,
+      dto,
+    });
   },
 
   delete: async (id: number) => {

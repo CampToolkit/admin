@@ -14,6 +14,7 @@ export const GroupApi = {
   },
 
   getCampGroups: async (campId: number) => {
+    // todo переделать на бэке путь на camp/campId/group
     const { data } = await axiosConfig.get<Group[]>(`/group/camp/${campId}`);
     return data;
   },
