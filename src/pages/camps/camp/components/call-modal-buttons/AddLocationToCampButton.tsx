@@ -61,7 +61,7 @@ export default function AddLocationToCampButton(props: Props) {
       sx={{ fontSize: 16 }}
       onClick={onButtonClick}
     >
-      Добавить локацию
+      Добавить Локацию
     </Button>
   );
 }

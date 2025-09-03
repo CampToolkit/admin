@@ -47,12 +47,7 @@ export default function CheckPersonTableForm<T extends Person>(
               </TableRow>
             </TableHead>
 
-            <TableBody
-              sx={{
-                maxHeight: "100vh",
-                overflowY: "auto",
-              }}
-            >
+            <TableBody>
               {persons.map((p) => (
                 <TableRow key={p.id}>
                   <TableCell>{p.lastName}</TableCell>
