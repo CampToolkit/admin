@@ -1,12 +1,8 @@
-import { useParams } from "react-router-dom";
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
-import { useAllSportsmen } from "@/pages/camps/hooks/use-all-sportsmen.hook.ts";
-
-import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
 
 import { Button } from "@mui/material";
 
-import CheckPersonTableForm from "@/pages/camps/camp/components/check-tables/CheckPersonTable.tsx";
+import CheckNameTableForm from "@/pages/camps/camp/components/check-tables/CheckNameTableForm.tsx";
 import type { CheckTableFormValues } from "@/pages/camps/camp/components/check-tables/CheckTableFormValues.type.ts";
 import TabLayout from "@/pages/camps/camp/components/TabLayout.tsx";
 import LeftLayoutItem from "@/pages/camps/camp/forms/form-items/LeftLayoutItem.tsx";
@@ -15,29 +11,32 @@ import FormActions from "@/pages/camps/camp/forms/form-items/FormActions.tsx";
 
 import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
 
+import { LocationApi } from "@/shared/api/location/LocationApi.ts";
+import { useAllLocations } from "@/pages/camps/hooks/use-all-locations.hook.ts";
+
 interface Props {
   onDone?: (data?: Sportsman[]) => Promise<void> | void;
+  campId: number;
 }
 
-export default function AddPersonToCampButton(props: Props) {
+export default function AddLocationToCampButton(props: Props) {
   const { openModal, closeModal } = useModal();
-  const { campId } = useParams();
 
-  const { state: persons } = useAllSportsmen();
+  const { state } = useAllLocations();
 
   const handleSubmit = async (values: CheckTableFormValues) => {
-    await SportsmanApi.addManyToCamp(Number(campId), values);
+    await LocationApi.addManyToCamp(props.campId, values);
     closeModal();
     props.onDone?.();
   };
 
-  const formId = "addPersonToCampButton";
+  const formId = "addGroupToCampButton";
   const layout = () => (
     <TabLayout>
       <LeftLayoutItem>
-        <CheckPersonTableForm
+        <CheckNameTableForm
           onSubmit={handleSubmit}
-          persons={persons}
+          entities={state}
           formId={formId}
         />
       </LeftLayoutItem>
@@ -62,7 +61,7 @@ export default function AddPersonToCampButton(props: Props) {
       sx={{ fontSize: 16 }}
       onClick={onButtonClick}
     >
-      Добавить участника
+      Добавить локацию
     </Button>
   );
 }

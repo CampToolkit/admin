@@ -7,16 +7,13 @@ import {
   Checkbox,
 } from "@mui/material";
 import { useFormik, FormikProvider, Form } from "formik";
-import type { Person } from "@/shared/types/Person.type.ts";
-
-export interface CheckPersonTableFormValues {
-  items: number[];
-}
+import type { Person } from "@/shared/api/lib/types/Person.type.ts";
+import type { CheckTableFormValues } from "@/pages/camps/camp/components/check-tables/CheckTableFormValues.type.ts";
 
 interface Props<T> {
   persons: T[];
   formId: string;
-  onSubmit: (values: CheckPersonTableFormValues) => Promise<void> | void;
+  onSubmit: (values: CheckTableFormValues) => Promise<void> | void;
 }
 
 const INITIAL_VALUES = {
@@ -27,7 +24,7 @@ export default function CheckPersonTableForm<T extends Person>(
   props: Props<T>,
 ) {
   const { persons, formId, onSubmit } = props;
-  const formik = useFormik<CheckPersonTableFormValues>({
+  const formik = useFormik<CheckTableFormValues>({
     initialValues: INITIAL_VALUES,
     onSubmit,
   });

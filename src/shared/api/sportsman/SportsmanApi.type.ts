@@ -1,4 +1,4 @@
-import type { Person } from "@/shared/types/Person.type.ts";
+import type { Person } from "@/shared/api/lib/types/Person.type.ts";
 
 export interface Sportsman extends Person {
   id: number;
