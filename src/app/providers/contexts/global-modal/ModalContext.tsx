@@ -81,7 +81,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
             <Stack
               id="global-modal-content"
               sx={{
-                mb: 3,
+                // mb: 3,
                 flexGrow: 2,
               }}
             >
