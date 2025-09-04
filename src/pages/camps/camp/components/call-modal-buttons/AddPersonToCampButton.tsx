@@ -6,7 +6,7 @@ import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
 import { Button } from "@mui/material";
 
 import CheckPersonTableForm from "@/pages/camps/camp/components/check-tables/CheckPersonTable.tsx";
-import type { CheckTableFormValues } from "@/pages/camps/camp/components/check-tables/CheckTableFormValues.type.ts";
+import type { CheckFormValues } from "@/pages/camps/camp/components/check-tables/check-form-values.type.ts";
 
 import CheckPersonForm from "@/pages/camps/camp/forms/CheckPersonForm.tsx";
 import FormSwitcherLayout from "@/pages/camps/camp/components/add-to-camp-modal-layout/FormSwitcherLayout.tsx";
@@ -33,7 +33,7 @@ export default function AddPersonToCampButton<T extends Person>(
 
   const { state: persons } = props.useEntity();
 
-  const handleSubmit = async (values: CheckTableFormValues) => {
+  const handleSubmit = async (values: CheckFormValues) => {
     await SportsmanApi.addManyToCamp(Number(campId), values);
     closeModal();
     props.onDone?.();

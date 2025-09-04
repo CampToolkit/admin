@@ -9,13 +9,13 @@ import {
 } from "@mui/material";
 import { useFormik, FormikProvider, Form } from "formik";
 import type { Person } from "@/shared/api/lib/types/Person.type.ts";
-import type { CheckTableFormValues } from "@/pages/camps/camp/components/check-tables/CheckTableFormValues.type.ts";
+import type { CheckFormValues } from "@/pages/camps/camp/components/check-tables/check-form-values.type.ts";
 import { scrollStyleChild } from "@/styles/scroll.ts";
 
 interface Props<T> {
   persons: T[];
   formId: string;
-  onSubmit: (values: CheckTableFormValues) => Promise<void> | void;
+  onSubmit: (values: CheckFormValues) => Promise<void> | void;
 }
 
 const INITIAL_VALUES = {
@@ -26,7 +26,7 @@ export default function CheckPersonTableForm<T extends Person>(
   props: Props<T>,
 ) {
   const { persons, formId, onSubmit } = props;
-  const formik = useFormik<CheckTableFormValues>({
+  const formik = useFormik<CheckFormValues>({
     initialValues: INITIAL_VALUES,
     onSubmit,
   });

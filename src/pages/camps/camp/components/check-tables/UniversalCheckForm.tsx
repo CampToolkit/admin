@@ -1,4 +1,4 @@
-import { Form, FormikProvider, useFormik } from "formik";
+import type { ChangeEvent } from "react";
 import {
   Checkbox,
   Table,
@@ -8,15 +8,15 @@ import {
   TableRow,
 } from "@mui/material";
 
-import type { CheckTableFormValues } from "@/pages/camps/camp/components/check-tables/CheckTableFormValues.type.ts";
+import { Form, FormikProvider, useFormik } from "formik";
+import type { CheckFormValues } from "@/pages/camps/camp/components/check-tables/check-form-values.type.ts";
 import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
-import type { ChangeEvent } from "react";
 
 interface Props<T extends Entity> {
   keys: Array<keyof T>;
   entities: T[];
   formId: string;
-  onSubmit: (values: CheckTableFormValues) => Promise<void> | void;
+  onSubmit: (values: CheckFormValues) => Promise<void> | void;
 }
 
 const INITIAL_VALUES = {
@@ -26,7 +26,7 @@ const INITIAL_VALUES = {
 export default function UniversalCheckForm<T extends Entity>(props: Props<T>) {
   const { keys, entities, formId, onSubmit } = props;
 
-  const formik = useFormik<CheckTableFormValues>({
+  const formik = useFormik<CheckFormValues>({
     initialValues: INITIAL_VALUES,
     onSubmit,
   });
