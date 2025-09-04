@@ -11,7 +11,7 @@ interface Props {
   components: Component[];
 }
 
-export default function AddToCampLayout(props: Props) {
+export default function FormSwitcherLayout(props: Props) {
   const { components } = props;
   const [activeKey, setActiveKey] = useState<string>(components[0].key);
 
