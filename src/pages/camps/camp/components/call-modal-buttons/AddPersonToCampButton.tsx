@@ -8,16 +8,20 @@ import { Button } from "@mui/material";
 
 import CheckPersonTableForm from "@/pages/camps/camp/components/check-tables/CheckPersonTable.tsx";
 import type { CheckTableFormValues } from "@/pages/camps/camp/components/check-tables/CheckTableFormValues.type.ts";
-import TabLayout from "@/pages/camps/camp/components/TabLayout.tsx";
-import LeftLayoutItem from "@/pages/camps/camp/forms/form-items/LeftLayoutItem.tsx";
-import RightLayoutItem from "@/pages/camps/camp/forms/form-items/RightLayoutItem.tsx";
-import FormActions from "@/pages/camps/camp/forms/form-items/FormActions.tsx";
+
+import NewSportsmenForm from "@/pages/camps/camp/components/add-to-camp-modal-layout/NewSportsmenFormTest.tsx";
+import FormSwitcherLayout from "@/pages/camps/camp/components/add-to-camp-modal-layout/FormSwitcherLayout.tsx";
 
 import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
 
 interface Props {
   onDone?: (data?: Sportsman[]) => Promise<void> | void;
 }
+
+const ComponentKeys = {
+  DB: "database",
+  NEW_ITEM: "newItem",
+};
 
 export default function AddPersonToCampButton(props: Props) {
   const { openModal, closeModal } = useModal();
@@ -31,21 +35,34 @@ export default function AddPersonToCampButton(props: Props) {
     props.onDone?.();
   };
 
-  const formId = "addPersonToCampButton";
-  const layout = () => (
-    <TabLayout>
-      <LeftLayoutItem>
+  const components = [
+    {
+      key: ComponentKeys.DB,
+      label: "Создать",
+      element: (
+        <NewSportsmenForm
+          initialValues={{
+            items: [{ lastName: "", firstName: "", patrName: "" }],
+          }}
+          onSubmit={() => {}}
+          formId={ComponentKeys.DB}
+        />
+      ),
+    },
+    {
+      key: ComponentKeys.NEW_ITEM,
+      label: "Загрузить из базы данных",
+      element: (
         <CheckPersonTableForm
           onSubmit={handleSubmit}
           persons={persons}
-          formId={formId}
+          formId={ComponentKeys.NEW_ITEM}
         />
-      </LeftLayoutItem>
-      <RightLayoutItem>
-        <FormActions formId={formId} />
-      </RightLayoutItem>
-    </TabLayout>
-  );
+      ),
+    },
+  ];
+
+  const layout = () => <FormSwitcherLayout components={components} />;
 
   const onButtonClick = async () => {
     openModal({
