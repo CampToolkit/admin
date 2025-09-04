@@ -10,7 +10,9 @@ import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
 
 export default function SportsmenSection() {
   const { campId } = useParams();
-  const { sportsmen, refreshSportsmen } = useCampSportsmen(Number(campId));
+  const { state: sportsmen, fetch: refreshSportsmen } = useCampSportsmen(
+    Number(campId),
+  );
 
   const onAdd = async () => {
     await refreshSportsmen(Number(campId));
