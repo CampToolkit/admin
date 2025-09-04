@@ -10,13 +10,13 @@ export interface PersonFormValues {
   }[];
 }
 
-export type SportsmenFormPropsType = {
+export type NewPersonFormPropsType = {
   initialValues: PersonFormValues;
   onSubmit: (values: PersonFormValues) => void;
   formId?: string;
 };
 
-export default function CheckPersonForm(props: SportsmenFormPropsType) {
+export default function NewPersonForm(props: NewPersonFormPropsType) {
   const { initialValues, onSubmit, formId } = props;
   const formik = useFormik<PersonFormValues>({
     enableReinitialize: true,

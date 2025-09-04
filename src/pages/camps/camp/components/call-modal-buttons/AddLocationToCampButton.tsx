@@ -1,18 +1,17 @@
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
 
 import { Button } from "@mui/material";
-
-import CheckNameTableForm from "@/pages/camps/camp/components/check-tables/CheckNameTableForm.tsx";
 import type { CheckFormValues } from "@/pages/camps/camp/components/check-tables/check-form-values.type.ts";
-import TabLayout from "@/pages/camps/camp/components/TabLayout.tsx";
-import LeftLayoutItem from "@/pages/camps/camp/forms/form-items/LeftLayoutItem.tsx";
-import RightLayoutItem from "@/pages/camps/camp/forms/form-items/RightLayoutItem.tsx";
-import FormActions from "@/pages/camps/camp/forms/form-items/FormActions.tsx";
 
 import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
 
 import { LocationApi } from "@/shared/api/location/LocationApi.ts";
 import { useAllLocations } from "@/pages/camps/hooks/use-all-locations.hook.ts";
+import FormSwitcherLayout, {
+  type FormSwitcherComponent,
+} from "@/pages/camps/camp/components/add-to-camp-modal-layout/FormSwitcherLayout.tsx";
+import UniversalCheckForm from "@/pages/camps/camp/components/check-tables/UniversalCheckForm.tsx";
+import LocationsForm from "@/pages/camps/camp/forms/LocationsForm.tsx";
 
 interface Props {
   onDone?: (data?: Sportsman[]) => Promise<void> | void;
@@ -30,21 +29,32 @@ export default function AddLocationToCampButton(props: Props) {
     props.onDone?.();
   };
 
-  const formId = "addGroupToCampButton";
-  const layout = () => (
-    <TabLayout>
-      <LeftLayoutItem>
-        <CheckNameTableForm
-          onSubmit={handleSubmit}
+  const Keys = {
+    DB_LOCATIONS: "dbLocations",
+    CREATE_LOCATION: "createLocation",
+  };
+
+  const components: FormSwitcherComponent[] = [
+    {
+      key: Keys.CREATE_LOCATION,
+      label: "Создать",
+      element: <LocationsForm onSubmit={() => {}} />,
+    },
+    {
+      key: Keys.DB_LOCATIONS,
+      label: "Загрузить из базы данных",
+      element: (
+        <UniversalCheckForm
+          keys={["name"]}
           entities={state}
-          formId={formId}
+          formId={Keys.DB_LOCATIONS}
+          onSubmit={handleSubmit}
         />
-      </LeftLayoutItem>
-      <RightLayoutItem>
-        <FormActions formId={formId} />
-      </RightLayoutItem>
-    </TabLayout>
-  );
+      ),
+    },
+  ];
+
+  const layout = () => <FormSwitcherLayout components={components} />;
 
   const onButtonClick = async () => {
     openModal({

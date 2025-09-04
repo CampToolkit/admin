@@ -5,12 +5,12 @@ import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
 
 import { Button } from "@mui/material";
 
-import CheckPersonTableForm from "@/pages/camps/camp/components/check-tables/CheckPersonTable.tsx";
 import type { CheckFormValues } from "@/pages/camps/camp/components/check-tables/check-form-values.type.ts";
 
-import CheckPersonForm from "@/pages/camps/camp/forms/CheckPersonForm.tsx";
+import NewPersonForm from "@/pages/camps/camp/forms/NewPersonForm.tsx";
 import FormSwitcherLayout from "@/pages/camps/camp/components/add-to-camp-modal-layout/FormSwitcherLayout.tsx";
 import type { Person } from "@/shared/api/lib/types/Person.type.ts";
+import UniversalCheckForm from "@/pages/camps/camp/components/check-tables/UniversalCheckForm.tsx";
 
 interface Props<T> {
   onDone?: (data?: T[]) => Promise<void> | void;
@@ -44,7 +44,7 @@ export default function AddPersonToCampButton<T extends Person>(
       key: ComponentKeys.DB,
       label: "Создать",
       element: (
-        <CheckPersonForm
+        <NewPersonForm
           initialValues={{
             items: [{ lastName: "", firstName: "", patrName: "" }],
           }}
@@ -57,9 +57,10 @@ export default function AddPersonToCampButton<T extends Person>(
       key: ComponentKeys.NEW_ITEM,
       label: "Загрузить из базы данных",
       element: (
-        <CheckPersonTableForm
+        <UniversalCheckForm<T>
+          keys={["lastName", "firstName", "patrName"]}
           onSubmit={handleSubmit}
-          persons={persons}
+          entities={persons}
           formId={ComponentKeys.NEW_ITEM}
         />
       ),
