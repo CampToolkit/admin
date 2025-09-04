@@ -2,7 +2,7 @@ import { FormikProvider, FieldArray, useFormik } from "formik";
 import { Box, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
-export interface SportsmenFormValues {
+export interface PersonFormValues {
   items: {
     firstName: string;
     lastName: string;
@@ -11,14 +11,14 @@ export interface SportsmenFormValues {
 }
 
 export type SportsmenFormPropsType = {
-  initialValues: SportsmenFormValues;
-  onSubmit: (values: SportsmenFormValues) => void;
+  initialValues: PersonFormValues;
+  onSubmit: (values: PersonFormValues) => void;
   formId?: string;
 };
 
-export default function NewSportsmenForm(props: SportsmenFormPropsType) {
+export default function CheckPersonForm(props: SportsmenFormPropsType) {
   const { initialValues, onSubmit, formId } = props;
-  const formik = useFormik<SportsmenFormValues>({
+  const formik = useFormik<PersonFormValues>({
     enableReinitialize: true,
     initialValues,
     onSubmit,

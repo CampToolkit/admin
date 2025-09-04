@@ -3,16 +3,16 @@ import { useEffect, useState } from "react";
 import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
 
 export function useCampSportsmen(campId: number) {
-  const [sportsmen, setSportsmen] = useState<Sportsman[]>([]);
+  const [state, setState] = useState<Sportsman[]>([]);
 
-  async function fetchSportsmen(campId: number) {
+  async function fetch(campId: number) {
     const sportsmen = await SportsmanApi.getCampSportsmen(campId);
-    setSportsmen(sportsmen);
+    setState(sportsmen);
   }
 
   useEffect(() => {
-    fetchSportsmen(campId);
+    fetch(campId);
   }, []);
 
-  return { sportsmen, refreshSportsmen: fetchSportsmen };
+  return { state, fetch };
 }

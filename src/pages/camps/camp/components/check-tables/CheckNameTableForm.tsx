@@ -8,13 +8,13 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import type { CheckTableFormValues } from "@/pages/camps/camp/components/check-tables/CheckTableFormValues.type.ts";
+import type { CheckFormValues } from "@/pages/camps/camp/components/check-tables/check-form-values.type.ts";
 import { scrollStyleChild } from "@/styles/scroll.ts";
 
 interface Props<T> {
   entities: T[];
   formId: string;
-  onSubmit: (values: CheckTableFormValues) => Promise<void> | void;
+  onSubmit: (values: CheckFormValues) => Promise<void> | void;
 }
 
 const INITIAL_VALUES = {
@@ -25,7 +25,7 @@ export default function CheckNameTableForm<
   T extends { id: number; name: string },
 >(props: Props<T>) {
   const { entities, formId, onSubmit } = props;
-  const formik = useFormik<CheckTableFormValues>({
+  const formik = useFormik<CheckFormValues>({
     initialValues: INITIAL_VALUES,
     onSubmit,
   });

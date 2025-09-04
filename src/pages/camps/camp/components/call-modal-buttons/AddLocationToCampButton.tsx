@@ -3,7 +3,7 @@ import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.t
 import { Button } from "@mui/material";
 
 import CheckNameTableForm from "@/pages/camps/camp/components/check-tables/CheckNameTableForm.tsx";
-import type { CheckTableFormValues } from "@/pages/camps/camp/components/check-tables/CheckTableFormValues.type.ts";
+import type { CheckFormValues } from "@/pages/camps/camp/components/check-tables/check-form-values.type.ts";
 import TabLayout from "@/pages/camps/camp/components/TabLayout.tsx";
 import LeftLayoutItem from "@/pages/camps/camp/forms/form-items/LeftLayoutItem.tsx";
 import RightLayoutItem from "@/pages/camps/camp/forms/form-items/RightLayoutItem.tsx";
@@ -24,7 +24,7 @@ export default function AddLocationToCampButton(props: Props) {
 
   const { state } = useAllLocations();
 
-  const handleSubmit = async (values: CheckTableFormValues) => {
+  const handleSubmit = async (values: CheckFormValues) => {
     await LocationApi.addManyToCamp(props.campId, values);
     closeModal();
     props.onDone?.();

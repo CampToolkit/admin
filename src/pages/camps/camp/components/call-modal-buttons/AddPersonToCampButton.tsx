@@ -1,21 +1,23 @@
 import { useParams } from "react-router-dom";
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
-import { useAllSportsmen } from "@/pages/camps/hooks/use-all-sportsmen.hook.ts";
 
 import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
 
 import { Button } from "@mui/material";
 
 import CheckPersonTableForm from "@/pages/camps/camp/components/check-tables/CheckPersonTable.tsx";
-import type { CheckTableFormValues } from "@/pages/camps/camp/components/check-tables/CheckTableFormValues.type.ts";
+import type { CheckFormValues } from "@/pages/camps/camp/components/check-tables/check-form-values.type.ts";
 
-import NewSportsmenForm from "@/pages/camps/camp/components/add-to-camp-modal-layout/NewSportsmenFormTest.tsx";
+import CheckPersonForm from "@/pages/camps/camp/forms/CheckPersonForm.tsx";
 import FormSwitcherLayout from "@/pages/camps/camp/components/add-to-camp-modal-layout/FormSwitcherLayout.tsx";
+import type { Person } from "@/shared/api/lib/types/Person.type.ts";
 
-import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
-
-interface Props {
-  onDone?: (data?: Sportsman[]) => Promise<void> | void;
+interface Props<T> {
+  onDone?: (data?: T[]) => Promise<void> | void;
+  useEntity: () => {
+    state: T[];
+    fetch: () => Promise<void>;
+  };
 }
 
 const ComponentKeys = {
@@ -23,13 +25,15 @@ const ComponentKeys = {
   NEW_ITEM: "newItem",
 };
 
-export default function AddPersonToCampButton(props: Props) {
+export default function AddPersonToCampButton<T extends Person>(
+  props: Props<T>,
+) {
   const { openModal, closeModal } = useModal();
   const { campId } = useParams();
 
-  const { state: persons } = useAllSportsmen();
+  const { state: persons } = props.useEntity();
 
-  const handleSubmit = async (values: CheckTableFormValues) => {
+  const handleSubmit = async (values: CheckFormValues) => {
     await SportsmanApi.addManyToCamp(Number(campId), values);
     closeModal();
     props.onDone?.();
@@ -40,7 +44,7 @@ export default function AddPersonToCampButton(props: Props) {
       key: ComponentKeys.DB,
       label: "Создать",
       element: (
-        <NewSportsmenForm
+        <CheckPersonForm
           initialValues={{
             items: [{ lastName: "", firstName: "", patrName: "" }],
           }}
