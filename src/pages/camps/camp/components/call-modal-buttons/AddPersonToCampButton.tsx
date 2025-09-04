@@ -8,7 +8,7 @@ import { Button } from "@mui/material";
 import CheckPersonTableForm from "@/pages/camps/camp/components/check-tables/CheckPersonTable.tsx";
 import type { CheckTableFormValues } from "@/pages/camps/camp/components/check-tables/CheckTableFormValues.type.ts";
 
-import NewPersonForm from "@/pages/camps/camp/forms/NewPersonForm.tsx";
+import CheckPersonForm from "@/pages/camps/camp/forms/CheckPersonForm.tsx";
 import FormSwitcherLayout from "@/pages/camps/camp/components/add-to-camp-modal-layout/FormSwitcherLayout.tsx";
 import type { Person } from "@/shared/api/lib/types/Person.type.ts";
 
@@ -44,7 +44,7 @@ export default function AddPersonToCampButton<T extends Person>(
       key: ComponentKeys.DB,
       label: "Создать",
       element: (
-        <NewPersonForm
+        <CheckPersonForm
           initialValues={{
             items: [{ lastName: "", firstName: "", patrName: "" }],
           }}

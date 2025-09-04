@@ -16,7 +16,7 @@ export type SportsmenFormPropsType = {
   formId?: string;
 };
 
-export default function NewPersonForm(props: SportsmenFormPropsType) {
+export default function CheckPersonForm(props: SportsmenFormPropsType) {
   const { initialValues, onSubmit, formId } = props;
   const formik = useFormik<PersonFormValues>({
     enableReinitialize: true,

@@ -28,6 +28,7 @@ export default function SportsmenSection() {
           useEntity={useAllSportsmen}
         />
       </TabHeader>
+
       <SportsmanTable
         campId={Number(campId)}
         sportsmen={sportsmen}
