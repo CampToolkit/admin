@@ -49,7 +49,9 @@ export default function UniversalTextFieldForm<T extends Entity>(
   });
 
   useEffect(() => {
-    setFieldSize(Math.floor(fields.length - REMOVE_BUTTON_SIZE) / GRIDS_AMOUNT);
+    setFieldSize(
+      Math.floor((GRIDS_AMOUNT - REMOVE_BUTTON_SIZE) / fields.length),
+    );
   }, []);
 
   return (
@@ -59,7 +61,7 @@ export default function UniversalTextFieldForm<T extends Entity>(
           {({ push, remove }) => (
             <>
               {formik.values?.items.map((_, index) => (
-                <Grid container key={index}>
+                <Grid container columnSpacing={1} mb={1} key={index}>
                   {fields.map((field) => (
                     <Grid key={field.key as string} size={fieldSize}>
                       <TextField

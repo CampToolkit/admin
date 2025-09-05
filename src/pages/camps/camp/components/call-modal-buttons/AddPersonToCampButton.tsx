@@ -7,10 +7,11 @@ import { Button } from "@mui/material";
 
 import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form-values.type.ts";
 
-import NewPersonForm from "@/pages/camps/camp/forms/NewPersonForm.tsx";
 import FormSwitcherLayout from "@/pages/camps/camp/components/add-to-camp-modal-layout/FormSwitcherLayout.tsx";
-import type { Person } from "@/shared/api/lib/types/Person.type.ts";
 import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalCheckForm.tsx";
+import UniversalTextFieldForm from "@/pages/camps/camp/forms/universal/UniversalTextFieldForm.tsx";
+import type { Person } from "@/shared/api/lib/types/Person.type.ts";
+import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
 
 interface Props<T> {
   onDone?: (data?: T[]) => Promise<void> | void;
@@ -41,27 +42,38 @@ export default function AddPersonToCampButton<T extends Person>(
 
   const components = [
     {
-      key: ComponentKeys.DB,
+      key: ComponentKeys.NEW_ITEM,
       label: "Создать",
       element: (
-        <NewPersonForm
-          initialValues={{
-            items: [{ lastName: "", firstName: "", patrName: "" }],
-          }}
+        <UniversalTextFieldForm<Sportsman>
+          fields={[
+            {
+              key: "lastName",
+              label: "Фамилия",
+            },
+            {
+              key: "firstName",
+              label: "Имя",
+            },
+            {
+              key: "patrName",
+              label: "Отчество",
+            },
+          ]}
+          formId={ComponentKeys.NEW_ITEM}
           onSubmit={() => {}}
-          formId={ComponentKeys.DB}
         />
       ),
     },
     {
-      key: ComponentKeys.NEW_ITEM,
+      key: ComponentKeys.DB,
       label: "Загрузить из базы данных",
       element: (
         <UniversalCheckForm<T>
           keys={["lastName", "firstName", "patrName"]}
           onSubmit={handleSubmit}
           entities={persons}
-          formId={ComponentKeys.NEW_ITEM}
+          formId={ComponentKeys.DB}
         />
       ),
     },
