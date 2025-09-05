@@ -1,4 +1,5 @@
 import { FormikProvider, FieldArray, useFormik } from "formik";
+
 import { Box, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
@@ -10,13 +11,13 @@ export interface PersonFormValues {
   }[];
 }
 
-export type SportsmenFormPropsType = {
+export type NewPersonFormPropsType = {
   initialValues: PersonFormValues;
   onSubmit: (values: PersonFormValues) => void;
   formId?: string;
 };
 
-export default function CheckPersonForm(props: SportsmenFormPropsType) {
+export default function NewPersonForm(props: NewPersonFormPropsType) {
   const { initialValues, onSubmit, formId } = props;
   const formik = useFormik<PersonFormValues>({
     enableReinitialize: true,

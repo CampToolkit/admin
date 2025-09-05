@@ -1,14 +1,14 @@
 import { Button, Grid, Stack } from "@mui/material";
 import { type ReactNode, useState } from "react";
 
-interface Component {
+export interface FormSwitcherComponent {
   key: string;
   label: string;
   element: ReactNode;
 }
 
 interface Props {
-  components: Component[];
+  components: FormSwitcherComponent[];
 }
 
 export default function FormSwitcherLayout(props: Props) {

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 
 import { Form, FormikProvider, useFormik } from "formik";
-import type { CheckFormValues } from "@/pages/camps/camp/components/check-tables/check-form-values.type.ts";
+import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form-values.type.ts";
 import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
 
 interface Props<T extends Entity> {
@@ -23,6 +23,15 @@ const INITIAL_VALUES = {
   items: [] as number[],
 };
 
+/**
+ * Props for the UniversalCheckForm component.
+ * @typedef {Object} Props
+ * @template T - Entity type extending the base Entity interface.
+ * @property {Array<keyof T>} keys - Array of keys to display as table columns.
+ * @property {T[]} entities - Array of entities to display in the table.
+ * @property {string} formId - Unique ID for the form element.
+ * @property {(values: CheckFormValues) => void} onSubmit - Callback function to handle form submission.
+ **/
 export default function UniversalCheckForm<T extends Entity>(props: Props<T>) {
   const { keys, entities, formId, onSubmit } = props;
 
@@ -45,7 +54,7 @@ export default function UniversalCheckForm<T extends Entity>(props: Props<T>) {
   return (
     <FormikProvider value={formik}>
       <Form id={formId}>
-        <Table>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               {keys.map((key) => (
@@ -60,10 +69,12 @@ export default function UniversalCheckForm<T extends Entity>(props: Props<T>) {
                 {keys.map((key) => (
                   <TableCell>{String(entity[key])}</TableCell>
                 ))}
-                <Checkbox
-                  checked={formik.values.items.includes(entity.id)}
-                  onChange={(e) => onChange(e, entity.id)}
-                />
+                <TableCell>
+                  <Checkbox
+                    checked={formik.values.items.includes(entity.id)}
+                    onChange={(e) => onChange(e, entity.id)}
+                  />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
