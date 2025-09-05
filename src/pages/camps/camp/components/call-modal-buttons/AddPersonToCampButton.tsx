@@ -5,13 +5,13 @@ import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
 
 import { Button } from "@mui/material";
 
-import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form-values.type.ts";
-
 import FormSwitcherLayout from "@/pages/camps/camp/components/add-to-camp-modal-layout/FormSwitcherLayout.tsx";
 import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalCheckForm.tsx";
 import UniversalTextFieldForm from "@/pages/camps/camp/forms/universal/UniversalTextFieldForm.tsx";
+
 import type { Person } from "@/shared/api/lib/types/Person.type.ts";
-import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
+import type { Field } from "@/pages/camps/camp/forms/universal/universal-form.ts";
+import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
 
 interface Props<T> {
   onDone?: (data?: T[]) => Promise<void> | void;
@@ -26,6 +26,21 @@ const ComponentKeys = {
   NEW_ITEM: "newItem",
 };
 
+const FIELDS: Field<Person>[] = [
+  {
+    key: "lastName",
+    label: "Фамилия",
+  },
+  {
+    key: "firstName",
+    label: "Имя",
+  },
+  {
+    key: "patrName",
+    label: "Отчество",
+  },
+];
+
 export default function AddPersonToCampButton<T extends Person>(
   props: Props<T>,
 ) {
@@ -33,6 +48,7 @@ export default function AddPersonToCampButton<T extends Person>(
   const { campId } = useParams();
 
   const { state: persons } = props.useEntity();
+  console.log(persons);
 
   const handleSubmit = async (values: CheckFormValues) => {
     await SportsmanApi.addManyToCamp(Number(campId), values);
@@ -45,21 +61,8 @@ export default function AddPersonToCampButton<T extends Person>(
       key: ComponentKeys.NEW_ITEM,
       label: "Создать",
       element: (
-        <UniversalTextFieldForm<Sportsman>
-          fields={[
-            {
-              key: "lastName",
-              label: "Фамилия",
-            },
-            {
-              key: "firstName",
-              label: "Имя",
-            },
-            {
-              key: "patrName",
-              label: "Отчество",
-            },
-          ]}
+        <UniversalTextFieldForm<T>
+          fields={FIELDS}
           formId={ComponentKeys.NEW_ITEM}
           onSubmit={() => {}}
         />
@@ -70,7 +73,7 @@ export default function AddPersonToCampButton<T extends Person>(
       label: "Загрузить из базы данных",
       element: (
         <UniversalCheckForm<T>
-          keys={["lastName", "firstName", "patrName"]}
+          fields={FIELDS}
           onSubmit={handleSubmit}
           entities={persons}
           formId={ComponentKeys.DB}

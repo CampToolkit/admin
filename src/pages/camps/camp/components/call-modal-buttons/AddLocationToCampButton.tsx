@@ -1,7 +1,7 @@
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
 
 import { Button } from "@mui/material";
-import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form-values.type.ts";
+import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
 
 import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
 
@@ -11,7 +11,9 @@ import FormSwitcherLayout, {
   type FormSwitcherComponent,
 } from "@/pages/camps/camp/components/add-to-camp-modal-layout/FormSwitcherLayout.tsx";
 import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalCheckForm.tsx";
-import LocationsForm from "@/pages/camps/camp/forms/LocationsForm.tsx";
+
+import UniversalTextFieldForm from "@/pages/camps/camp/forms/universal/UniversalTextFieldForm.tsx";
+import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
 
 interface Props {
   onDone?: (data?: Sportsman[]) => Promise<void> | void;
@@ -38,14 +40,25 @@ export default function AddLocationToCampButton(props: Props) {
     {
       key: Keys.CREATE_LOCATION,
       label: "Создать",
-      element: <LocationsForm onSubmit={() => {}} />,
+      element: (
+        <UniversalTextFieldForm<CampsLocation>
+          fields={[
+            {
+              key: "name",
+              label: "Название",
+            },
+          ]}
+          formId={Keys.DB_LOCATIONS}
+          onSubmit={() => {}}
+        />
+      ),
     },
     {
       key: Keys.DB_LOCATIONS,
       label: "Загрузить из базы данных",
       element: (
         <UniversalCheckForm
-          keys={["name"]}
+          fields={["name"]}
           entities={state}
           formId={Keys.DB_LOCATIONS}
           onSubmit={handleSubmit}

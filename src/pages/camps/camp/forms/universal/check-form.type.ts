@@ -6,7 +6,6 @@ export interface CheckFormValues {
 }
 
 export interface CheckFormProps<T extends Entity>
-  extends UniversalFormProps<T> {
+  extends UniversalFormProps<T, CheckFormValues> {
   entities: T[];
-  onSubmit: (values: CheckFormValues) => Promise<void> | void;
 }
