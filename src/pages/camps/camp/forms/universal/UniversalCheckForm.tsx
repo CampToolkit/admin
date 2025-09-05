@@ -9,31 +9,20 @@ import {
 } from "@mui/material";
 
 import { Form, FormikProvider, useFormik } from "formik";
-import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form-values.type.ts";
+import type {
+  CheckFormProps,
+  CheckFormValues,
+} from "@/pages/camps/camp/forms/universal/check-form.type.ts";
 import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
-
-interface Props<T extends Entity> {
-  keys: Array<keyof T>;
-  entities: T[];
-  formId: string;
-  onSubmit: (values: CheckFormValues) => Promise<void> | void;
-}
 
 const INITIAL_VALUES = {
   items: [] as number[],
 };
 
-/**
- * Props for the UniversalCheckForm component.
- * @typedef {Object} Props
- * @template T - Entity type extending the base Entity interface.
- * @property {Array<keyof T>} keys - Array of keys to display as table columns.
- * @property {T[]} entities - Array of entities to display in the table.
- * @property {string} formId - Unique ID for the form element.
- * @property {(values: CheckFormValues) => void} onSubmit - Callback function to handle form submission.
- **/
-export default function UniversalCheckForm<T extends Entity>(props: Props<T>) {
-  const { keys, entities, formId, onSubmit } = props;
+export default function UniversalCheckForm<T extends Entity>(
+  props: CheckFormProps<T>,
+) {
+  const { fields, entities, formId, onSubmit } = props;
 
   const formik = useFormik<CheckFormValues>({
     initialValues: INITIAL_VALUES,
@@ -57,20 +46,21 @@ export default function UniversalCheckForm<T extends Entity>(props: Props<T>) {
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              {keys.map((key) => (
-                <TableCell key={String(key)}>{String(key)}</TableCell>
+              {fields.map((field) => (
+                <TableCell key={field.key as string}>{field.label}</TableCell>
               ))}
-              <TableCell>Добавить</TableCell>
+              <TableCell width={"1%"}>Добавить</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {entities.map((entity) => (
-              <TableRow>
-                {keys.map((key) => (
-                  <TableCell>{String(entity[key])}</TableCell>
+              <TableRow key={entity.id}>
+                {fields.map((field) => (
+                  <TableCell>{entity[field.key] as string}</TableCell>
                 ))}
-                <TableCell>
+                <TableCell align={"center"}>
                   <Checkbox
+                    key={`${entity.id}${entity.id}`}
                     checked={formik.values.items.includes(entity.id)}
                     onChange={(e) => onChange(e, entity.id)}
                   />

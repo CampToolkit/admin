@@ -1,27 +1,14 @@
-import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
-import { Box, Button, Grid, TextField } from "@mui/material";
-import { FieldArray, FormikProvider, useFormik } from "formik";
 import { useEffect, useState } from "react";
+import type {
+  UniversalFormProps,
+  UniversalFormValues,
+} from "@/pages/camps/camp/forms/universal/universal-form.ts";
 
-type Item<T extends Entity> = {
-  [K in keyof T]?: string;
-};
+import { FieldArray, FormikProvider, useFormik } from "formik";
 
-export interface UniversalTextFieldFormValues<T extends Entity> {
-  items: Item<T>[];
-}
+import { Box, Button, Grid, TextField } from "@mui/material";
 
-interface Field<T extends Entity> {
-  key: keyof T;
-  label: string;
-}
-
-export interface NewPersonFormProps<T extends Entity> {
-  fields: Field<T>[];
-  initialValues?: UniversalTextFieldFormValues<T>;
-  onSubmit: (values: UniversalTextFieldFormValues<T>) => void;
-  formId?: string;
-}
+import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
 
 const GRIDS_AMOUNT = 12;
 const REMOVE_BUTTON_SIZE = 1;
@@ -35,15 +22,15 @@ function createInitialValuesItem<T extends Entity>(keys: Array<keyof T>) {
 }
 
 export default function UniversalTextFieldForm<T extends Entity>(
-  props: NewPersonFormProps<T>,
+  props: UniversalFormProps<T, UniversalFormValues<T>>,
 ) {
   const { onSubmit, formId, fields } = props;
   const [fieldSize, setFieldSize] = useState<number>(11);
-  const initialValues = props.initialValues ?? {
+  const initialValues = {
     items: [createInitialValuesItem(fields.map((item) => item.key))],
   };
 
-  const formik = useFormik<UniversalTextFieldFormValues<T>>({
+  const formik = useFormik<UniversalFormValues<T>>({
     initialValues,
     onSubmit,
   });
@@ -61,7 +48,7 @@ export default function UniversalTextFieldForm<T extends Entity>(
           {({ push, remove }) => (
             <>
               {formik.values?.items.map((_, index) => (
-                <Grid container columnSpacing={1} mb={1} key={index}>
+                <Grid key={index} container columnSpacing={1} mb={1}>
                   {fields.map((field) => (
                     <Grid key={field.key as string} size={fieldSize}>
                       <TextField
