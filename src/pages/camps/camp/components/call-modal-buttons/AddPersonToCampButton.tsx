@@ -5,12 +5,12 @@ import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
 
 import { Button } from "@mui/material";
 
-import type { CheckFormValues } from "@/pages/camps/camp/components/check-tables/check-form-values.type.ts";
+import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form-values.type.ts";
 
 import NewPersonForm from "@/pages/camps/camp/forms/NewPersonForm.tsx";
 import FormSwitcherLayout from "@/pages/camps/camp/components/add-to-camp-modal-layout/FormSwitcherLayout.tsx";
 import type { Person } from "@/shared/api/lib/types/Person.type.ts";
-import UniversalCheckForm from "@/pages/camps/camp/components/check-tables/UniversalCheckForm.tsx";
+import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalCheckForm.tsx";
 
 interface Props<T> {
   onDone?: (data?: T[]) => Promise<void> | void;

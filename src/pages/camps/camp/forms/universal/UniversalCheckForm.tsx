@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 
 import { Form, FormikProvider, useFormik } from "formik";
-import type { CheckFormValues } from "@/pages/camps/camp/components/check-tables/check-form-values.type.ts";
+import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form-values.type.ts";
 import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
 
 interface Props<T extends Entity> {
