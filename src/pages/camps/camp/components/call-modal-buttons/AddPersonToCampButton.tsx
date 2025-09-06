@@ -1,8 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
 
-import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
-
 import { Button } from "@mui/material";
 
 import FormSwitcherLayout from "@/pages/camps/camp/components/forms-layouts/FormSwitcherLayout.tsx";
@@ -58,6 +56,7 @@ export default function AddPersonToCampButton<T extends Person>(
   const addToCamp = async (values: CheckFormValues) => {
     try {
       await props.api.addManyToCamp(Number(campId), values);
+      alert("добавили спортсменов в список участников сбора");
       closeModal();
       props.onDone?.();
     } catch (e: any) {
@@ -66,7 +65,13 @@ export default function AddPersonToCampButton<T extends Person>(
   };
 
   const createPerson = async (values: UniversalFormValues<T>) => {
-    await props.api.createMany(values);
+    try {
+      const newPersons = await props.api.createMany(values);
+      alert("добавили в базу данных");
+      await addToCamp({ items: newPersons.map((person) => person.id) });
+    } catch (e: any) {
+      console.error(e);
+    }
   };
 
   const components = [
@@ -77,7 +82,7 @@ export default function AddPersonToCampButton<T extends Person>(
         <UniversalTextFieldForm<T>
           fields={FIELDS}
           formId={ComponentKeys.NEW_ITEM}
-          onSubmit={() => {}}
+          onSubmit={createPerson}
         />
       ),
     },

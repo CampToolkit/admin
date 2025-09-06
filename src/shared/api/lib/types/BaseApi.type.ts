@@ -1,4 +1,4 @@
-type NewEntity<T> = Omit<T, "id">;
+export type NewEntity<T> = Omit<T, "id">;
 
 export interface EntityApi<T> {
   getAll: () => Promise<T[]>;

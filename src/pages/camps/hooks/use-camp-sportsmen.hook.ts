@@ -6,7 +6,7 @@ export function useCampSportsmen(campId: number) {
   const [state, setState] = useState<Sportsman[]>([]);
 
   async function fetch(campId: number) {
-    const sportsmen = await SportsmanApi.getCampSportsmen(campId);
+    const sportsmen = await SportsmanApi.getByCamp(campId);
     setState(sportsmen);
   }
 
