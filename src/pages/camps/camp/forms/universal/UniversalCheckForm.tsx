@@ -15,6 +15,10 @@ import type {
 } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
 import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
 
+const theadStyles = {
+  fontWeight: "bold",
+};
+
 const INITIAL_VALUES = {
   items: [] as number[],
 };
@@ -47,9 +51,18 @@ export default function UniversalCheckForm<T extends Entity>(
           <TableHead>
             <TableRow>
               {fields.map((field) => (
-                <TableCell key={field.key as string}>{field.label}</TableCell>
+                <TableCell
+                  key={field.key as string}
+                  sx={{
+                    ...theadStyles,
+                  }}
+                >
+                  {field.label}
+                </TableCell>
               ))}
-              <TableCell width={"1%"}>Добавить</TableCell>
+              <TableCell sx={theadStyles} width={"1%"}>
+                Добавить
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

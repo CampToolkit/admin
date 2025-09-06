@@ -9,16 +9,24 @@ import { LocationApi } from "@/shared/api/location/LocationApi.ts";
 import { useAllLocations } from "@/pages/camps/hooks/use-all-locations.hook.ts";
 import FormSwitcherLayout, {
   type FormSwitcherComponent,
-} from "@/pages/camps/camp/components/add-to-camp-modal-layout/FormSwitcherLayout.tsx";
+} from "@/pages/camps/camp/components/forms-layouts/FormSwitcherLayout.tsx";
 import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalCheckForm.tsx";
 
 import UniversalTextFieldForm from "@/pages/camps/camp/forms/universal/UniversalTextFieldForm.tsx";
 import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
+import type { Field } from "@/pages/camps/camp/forms/universal/universal-form.ts";
 
 interface Props {
   onDone?: (data?: Sportsman[]) => Promise<void> | void;
   campId: number;
 }
+
+const FIELDS: Field<CampsLocation>[] = [
+  {
+    key: "name",
+    label: "Название",
+  },
+];
 
 export default function AddLocationToCampButton(props: Props) {
   const { openModal, closeModal } = useModal();
@@ -42,12 +50,7 @@ export default function AddLocationToCampButton(props: Props) {
       label: "Создать",
       element: (
         <UniversalTextFieldForm<CampsLocation>
-          fields={[
-            {
-              key: "name",
-              label: "Название",
-            },
-          ]}
+          fields={FIELDS}
           formId={Keys.DB_LOCATIONS}
           onSubmit={() => {}}
         />
@@ -58,7 +61,7 @@ export default function AddLocationToCampButton(props: Props) {
       label: "Загрузить из базы данных",
       element: (
         <UniversalCheckForm
-          fields={["name"]}
+          fields={FIELDS}
           entities={state}
           formId={Keys.DB_LOCATIONS}
           onSubmit={handleSubmit}

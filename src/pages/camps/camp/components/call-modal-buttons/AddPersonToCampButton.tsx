@@ -5,7 +5,7 @@ import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
 
 import { Button } from "@mui/material";
 
-import FormSwitcherLayout from "@/pages/camps/camp/components/add-to-camp-modal-layout/FormSwitcherLayout.tsx";
+import FormSwitcherLayout from "@/pages/camps/camp/components/forms-layouts/FormSwitcherLayout.tsx";
 import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalCheckForm.tsx";
 import UniversalTextFieldForm from "@/pages/camps/camp/forms/universal/UniversalTextFieldForm.tsx";
 
