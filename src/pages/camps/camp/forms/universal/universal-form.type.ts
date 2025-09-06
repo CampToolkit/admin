@@ -1,8 +1,8 @@
-import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
 import type { NewEntity } from "@/shared/api/lib/types/BaseApi.type.ts";
+import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
 
 export interface Field<T extends Entity> {
-  key: keyof T;
+  key: keyof NewEntity<T>;
   label: string;
 }
 

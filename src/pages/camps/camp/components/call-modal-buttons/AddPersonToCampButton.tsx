@@ -11,18 +11,9 @@ import type { Person } from "@/shared/api/lib/types/Person.type.ts";
 import type {
   Field,
   UniversalFormValues,
-} from "@/pages/camps/camp/forms/universal/universal-form.ts";
+} from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
 import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
 import type { CampEntityApi } from "@/shared/api/lib/types/BaseApi.type.ts";
-
-interface Props<T> {
-  onDone?: (data?: T[]) => Promise<void> | void;
-  api: CampEntityApi<T>;
-  useEntity: () => {
-    state: T[];
-    fetch: () => Promise<void>;
-  };
-}
 
 const ComponentKeys = {
   DB: "database",
@@ -44,6 +35,15 @@ const FIELDS: Field<Person>[] = [
   },
 ];
 
+interface Props<T> {
+  onDone?: (data?: T[]) => Promise<void> | void;
+  api: CampEntityApi<T>;
+  useEntity: () => {
+    state: T[];
+    fetch: () => Promise<void>;
+  };
+}
+
 export default function AddPersonToCampButton<T extends Person>(
   props: Props<T>,
 ) {
@@ -60,6 +60,7 @@ export default function AddPersonToCampButton<T extends Person>(
       closeModal();
       props.onDone?.();
     } catch (e: any) {
+      // todo добавить обработку ошибок
       console.error(e);
     }
   };
@@ -70,6 +71,7 @@ export default function AddPersonToCampButton<T extends Person>(
       alert("добавили в базу данных");
       await addToCamp({ items: newPersons.map((person) => person.id) });
     } catch (e: any) {
+      // todo добавить обработку ошибок
       console.error(e);
     }
   };

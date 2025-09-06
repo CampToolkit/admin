@@ -2,25 +2,29 @@ import { useEffect, useState } from "react";
 import type {
   UniversalFormProps,
   UniversalFormValues,
-} from "@/pages/camps/camp/forms/universal/universal-form.ts";
+} from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
 
 import { FieldArray, FormikProvider, useFormik } from "formik";
 
 import { Box, Button, Grid, TextField } from "@mui/material";
 
 import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
+import type { NewEntity } from "@/shared/api/lib/types/BaseApi.type.ts";
 
 const GRIDS_AMOUNT = 12;
 const REMOVE_BUTTON_SIZE = 1;
 
-function createInitialValuesItem<T extends Entity>(keys: Array<keyof T>) {
-  const result: Partial<Record<keyof T, string>> = {};
+function createInitialValuesItem<T extends Entity>(
+  keys: Array<keyof NewEntity<T>>,
+) {
+  const result = {} as NewEntity<T>;
   for (const key of keys) {
-    result[key] = "";
+    result[key] = "" as unknown as any;
   }
   return result;
 }
 
+// todo добавить валидацию полей
 export default function UniversalTextFieldForm<T extends Entity>(
   props: UniversalFormProps<T, UniversalFormValues<T>>,
 ) {
