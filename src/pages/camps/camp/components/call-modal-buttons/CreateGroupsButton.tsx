@@ -1,7 +1,10 @@
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
 
 import { Button } from "@mui/material";
-import type { CreateGroupDto } from "@/shared/api/group/GroupApi.dto.ts";
+import type {
+  CreateGroupBulkDto,
+  CreateGroupDto,
+} from "@/shared/api/group/GroupApi.dto.ts";
 import GroupsForm, {
   type GroupsFormValues,
 } from "@/pages/camps/camp/forms/GroupsForm.tsx";
@@ -19,14 +22,16 @@ export default function CreateGroupsButton(props: Props) {
 
   const onSubmit = async (campId: number, values: GroupsFormValues) => {
     console.log("campId", campId);
-    const dto: CreateGroupDto = {
-      campId,
-      name: values.groups[0].name,
-      parentId: values.groups[0].parentId ?? null,
+    const dto: CreateGroupBulkDto = {
+      items: values.groups.map((item) => ({
+        campId,
+        name: item.name,
+        parentId: item.parentId ?? null,
+      })),
     };
     console.log("dto", dto);
     try {
-      await GroupApi.create(dto);
+      await GroupApi.createMany(dto);
       alert("Группы сохранили");
       closeModal();
       onCreated();

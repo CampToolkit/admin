@@ -33,12 +33,18 @@ export const GroupApi: NativeCampEntityApi<Group> = {
   },
 
   createMany: async (dto: CreateGroupBulkDto) => {
-    const { data } = await axiosConfig.post<Group[]>("/group/bulk", dto);
+    const { data } = await axiosConfig.post<Group[]>(
+      "/practice-group/bulk",
+      dto,
+    );
     return data;
   },
 
   update: async (id: number, dto: UpdateGroupDto) => {
-    const { data } = await axiosConfig.patch<Group>(`/group/${id}`, dto);
+    const { data } = await axiosConfig.patch<Group>(
+      `/practice-group/${id}`,
+      dto,
+    );
     return data;
   },
 
