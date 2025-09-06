@@ -10,11 +10,16 @@ import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalChec
 import UniversalTextFieldForm from "@/pages/camps/camp/forms/universal/UniversalTextFieldForm.tsx";
 
 import type { Person } from "@/shared/api/lib/types/Person.type.ts";
-import type { Field } from "@/pages/camps/camp/forms/universal/universal-form.ts";
+import type {
+  Field,
+  UniversalFormValues,
+} from "@/pages/camps/camp/forms/universal/universal-form.ts";
 import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
+import type { CampEntityApi } from "@/shared/api/lib/types/BaseApi.type.ts";
 
 interface Props<T> {
   onDone?: (data?: T[]) => Promise<void> | void;
+  api: CampEntityApi<T>;
   useEntity: () => {
     state: T[];
     fetch: () => Promise<void>;
@@ -50,10 +55,18 @@ export default function AddPersonToCampButton<T extends Person>(
   const { state: persons } = props.useEntity();
   console.log(persons);
 
-  const handleSubmit = async (values: CheckFormValues) => {
-    await SportsmanApi.addManyToCamp(Number(campId), values);
-    closeModal();
-    props.onDone?.();
+  const addToCamp = async (values: CheckFormValues) => {
+    try {
+      await props.api.addManyToCamp(Number(campId), values);
+      closeModal();
+      props.onDone?.();
+    } catch (e: any) {
+      console.error(e);
+    }
+  };
+
+  const createPerson = async (values: UniversalFormValues<T>) => {
+    await props.api.createMany(values);
   };
 
   const components = [
@@ -74,7 +87,7 @@ export default function AddPersonToCampButton<T extends Person>(
       element: (
         <UniversalCheckForm<T>
           fields={FIELDS}
-          onSubmit={handleSubmit}
+          onSubmit={addToCamp}
           entities={persons}
           formId={ComponentKeys.DB}
         />
