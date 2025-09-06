@@ -9,10 +9,10 @@ import {
 
 import { FieldArray, FormikProvider, useFormik } from "formik";
 
-import TabLayout from "../components/TabLayout";
-import LeftLayoutItem from "@/pages/camps/camp/forms/form-items/LeftLayoutItem.tsx";
-import RightLayoutItem from "@/pages/camps/camp/forms/form-items/RightLayoutItem.tsx";
-import FormActions from "@/pages/camps/camp/forms/form-items/FormActions.tsx";
+import TabLayout from "../components/forms-layouts/TabLayout.tsx";
+import LeftLayoutItem from "@/pages/camps/camp/components/forms-layouts/LeftLayoutItem.tsx";
+import RightLayoutItem from "@/pages/camps/camp/components/forms-layouts/RightLayoutItem.tsx";
+import FormActions from "@/pages/camps/camp/components/forms-layouts/FormActions.tsx";
 
 export interface GroupsFormValues {
   groups: {
