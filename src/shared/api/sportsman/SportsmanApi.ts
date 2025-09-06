@@ -2,16 +2,16 @@ import { axiosConfig } from "@/shared/api/axios-config.ts";
 
 import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
 import type {
-  AddSportsmanToCampDto,
+  AddSportsmenToCampDto,
   CreateSportsmanBulkDto,
   CreateSportsmanDto,
   RemoveSportsmanFromCampDto,
   UpdateSportsmanDto,
 } from "@/shared/api/sportsman/SportsmanApi.dto.ts";
 import { customDelete } from "@/shared/api/lib/utils/custom-delete.ts";
-import type { CampEntityApi } from "@/shared/api/lib/types/BaseApi.type.ts";
+import type { RelatedCampEntityApi } from "@/shared/api/lib/types/BaseApi.type.ts";
 
-export const SportsmanApi: CampEntityApi<Sportsman> = {
+export const SportsmanApi: RelatedCampEntityApi<Sportsman> = {
   getAll: async () => {
     const { data } = await axiosConfig.get<Sportsman[]>("sportsman");
     return data;
@@ -51,7 +51,7 @@ export const SportsmanApi: CampEntityApi<Sportsman> = {
     return data;
   },
 
-  addManyToCamp: async (campId: number, dto: AddSportsmanToCampDto) => {
+  addManyToCamp: async (campId: number, dto: AddSportsmenToCampDto) => {
     await axiosConfig.post<Sportsman>(`/camp/${campId}/sportsman`, dto);
   },
 

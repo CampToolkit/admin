@@ -6,26 +6,29 @@ import type {
   CreateGroupDto,
   UpdateGroupDto,
 } from "@/shared/api/group/GroupApi.dto.ts";
+import type { NativeCampEntityApi } from "@/shared/api/lib/types/BaseApi.type.ts";
 
-export const GroupApi = {
+export const GroupApi: NativeCampEntityApi<Group> = {
   getAll: async () => {
-    const { data } = await axiosConfig.get<Group[]>("/group");
+    const { data } = await axiosConfig.get<Group[]>("/practice-group");
     return data;
   },
 
-  getCampGroups: async (campId: number) => {
-    // todo переделать на бэке путь на camp/campId/group
-    const { data } = await axiosConfig.get<Group[]>(`/group/camp/${campId}`);
+  getByCamp: async (campId: number) => {
+    // todo переделать на бэке путь на camp/campId/practice-group
+    const { data } = await axiosConfig.get<Group[]>(
+      `/practice-group/camp/${campId}`,
+    );
     return data;
   },
 
   getOne: async (id: number) => {
-    const { data } = await axiosConfig.get<Group>(`/group/${id}`);
+    const { data } = await axiosConfig.get<Group>(`/practice-group/${id}`);
     return data;
   },
 
   create: async (dto: CreateGroupDto) => {
-    const { data } = await axiosConfig.post<Group>("/group", dto);
+    const { data } = await axiosConfig.post<Group>("/practice-group", dto);
     return data;
   },
 
@@ -37,5 +40,9 @@ export const GroupApi = {
   update: async (id: number, dto: UpdateGroupDto) => {
     const { data } = await axiosConfig.patch<Group>(`/group/${id}`, dto);
     return data;
+  },
+
+  delete: async (id: number) => {
+    await axiosConfig.delete(`/practice-group/${id}`);
   },
 };

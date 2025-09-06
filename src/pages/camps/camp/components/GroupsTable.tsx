@@ -10,10 +10,11 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditGroupButton from "@/pages/camps/camp/components/call-modal-buttons/EditGroupButton.tsx";
+import type { Group } from "@/shared/api/group/GroupApi.type.ts";
 
 interface Props {
   campId: number;
-  list: { id: number; name: string; parentId: number | null }[];
+  list: Group[];
 }
 
 export default function GroupsTable(props: Props) {

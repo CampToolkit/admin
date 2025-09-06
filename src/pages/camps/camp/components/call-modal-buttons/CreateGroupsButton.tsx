@@ -17,18 +17,27 @@ export default function CreateGroupsButton(props: Props) {
 
   const { openModal, closeModal } = useModal();
 
-  const onSubmit = async (values: GroupsFormValues) => {
+  const onSubmit = async (campId: number, values: GroupsFormValues) => {
+    console.log("campId", campId);
     const dto: CreateGroupDto = {
       campId,
       name: values.groups[0].name,
-      parentId: values.groups[0].parentId ?? undefined,
+      parentId: values.groups[0].parentId ?? null,
     };
-    await GroupApi.create(dto);
-    closeModal();
-    onCreated();
+    console.log("dto", dto);
+    try {
+      await GroupApi.create(dto);
+      alert("Группы сохранили");
+      closeModal();
+      onCreated();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const sportsmen = () => <GroupsForm onSubmit={onSubmit} />;
+  const sportsmen = () => (
+    <GroupsForm onSubmit={(values) => onSubmit(campId, values)} />
+  );
 
   const onClickCreate = async () => {
     openModal({

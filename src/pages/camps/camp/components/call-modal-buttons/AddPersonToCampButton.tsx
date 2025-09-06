@@ -13,7 +13,7 @@ import type {
   UniversalFormValues,
 } from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
 import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
-import type { CampEntityApi } from "@/shared/api/lib/types/BaseApi.type.ts";
+import type { RelatedCampEntityApi } from "@/shared/api/lib/types/BaseApi.type.ts";
 
 const ComponentKeys = {
   DB: "database",
@@ -37,7 +37,7 @@ const FIELDS: Field<Person>[] = [
 
 interface Props<T> {
   onDone?: (data?: T[]) => Promise<void> | void;
-  api: CampEntityApi<T>;
+  api: RelatedCampEntityApi<T>;
   useEntity: () => {
     state: T[];
     fetch: () => Promise<void>;
