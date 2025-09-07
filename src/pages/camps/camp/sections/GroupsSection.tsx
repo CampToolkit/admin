@@ -22,8 +22,6 @@ export default function GroupsSection() {
     }));
   };
 
-  console.log("GroupsSection", groups);
-
   useEffect(() => {
     setParentGroupSelectOptions(createParentGroupSelectOptions(groups));
   }, [groups]);
@@ -37,7 +35,11 @@ export default function GroupsSection() {
           onCreated={() => refresh(Number(campId))}
         />
       </TabHeader>
-      <GroupsTable list={groups} selectOptions={parentGroupSelectOptions} />
+      <GroupsTable
+        list={groups}
+        selectOptions={parentGroupSelectOptions}
+        onDone={() => refresh(Number(campId))}
+      />
     </div>
   );
 }

@@ -15,10 +15,11 @@ import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options
 interface Props {
   list: Group[];
   selectOptions: SelectOption[];
+  onDone: () => Promise<void> | void;
 }
 
 export default function GroupsTable(props: Props) {
-  const { list, selectOptions } = props;
+  const { list, selectOptions, onDone } = props;
 
   return (
     <TableContainer component={Paper}>
@@ -37,6 +38,7 @@ export default function GroupsTable(props: Props) {
               item={item}
               level={1}
               selectOptions={selectOptions}
+              onDone={onDone}
             />
           ))}
         </TableBody>

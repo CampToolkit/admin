@@ -1,4 +1,5 @@
 import { IconButton } from "@mui/material";
+
 import EditIcon from "@mui/icons-material/Edit";
 
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
@@ -9,16 +10,15 @@ import GroupForm, {
 import type { UpdateGroupDto } from "@/shared/api/group/GroupApi.dto.ts";
 import { GroupApi } from "@/shared/api/group/GroupApi.ts";
 import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
-import type { Group } from "@/shared/api/group/GroupApi.type.ts";
 
 type PropsType = {
   initialValues: GroupFormValues;
   selectOptions: SelectOption[];
-  item?: Group;
+  onDone: () => Promise<void> | void;
 };
 
 export default function EditGroupButton(props: PropsType) {
-  const { initialValues, selectOptions } = props;
+  const { initialValues, selectOptions, onDone } = props;
   const { openModal, closeModal } = useModal();
 
   const onSubmit = async (data: GroupFormValues) => {
@@ -28,6 +28,7 @@ export default function EditGroupButton(props: PropsType) {
     };
     await GroupApi.update(initialValues.id, dto);
     closeModal();
+    onDone();
   };
 
   const form = () => (
