@@ -1,5 +1,5 @@
 import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
-import type { UniversalFormProps } from "./universal-form";
+import type { UniversalFormProps } from "./universal-form.type.ts";
 
 export interface CheckFormValues {
   items: number[];

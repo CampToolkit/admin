@@ -14,7 +14,7 @@ import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalChec
 
 import UniversalTextFieldForm from "@/pages/camps/camp/forms/universal/UniversalTextFieldForm.tsx";
 import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
-import type { Field } from "@/pages/camps/camp/forms/universal/universal-form.ts";
+import type { Field } from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
 
 interface Props {
   onDone?: (data?: Sportsman[]) => Promise<void> | void;

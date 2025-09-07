@@ -1,8 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
 
-import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
-
 import { Button } from "@mui/material";
 
 import FormSwitcherLayout from "@/pages/camps/camp/components/forms-layouts/FormSwitcherLayout.tsx";
@@ -10,16 +8,12 @@ import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalChec
 import UniversalTextFieldForm from "@/pages/camps/camp/forms/universal/UniversalTextFieldForm.tsx";
 
 import type { Person } from "@/shared/api/lib/types/Person.type.ts";
-import type { Field } from "@/pages/camps/camp/forms/universal/universal-form.ts";
+import type {
+  Field,
+  UniversalFormValues,
+} from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
 import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
-
-interface Props<T> {
-  onDone?: (data?: T[]) => Promise<void> | void;
-  useEntity: () => {
-    state: T[];
-    fetch: () => Promise<void>;
-  };
-}
+import type { RelatedCampEntityApi } from "@/shared/api/lib/types/BaseApi.type.ts";
 
 const ComponentKeys = {
   DB: "database",
@@ -41,6 +35,15 @@ const FIELDS: Field<Person>[] = [
   },
 ];
 
+interface Props<T> {
+  onDone?: (data?: T[]) => Promise<void> | void;
+  api: RelatedCampEntityApi<T>;
+  useEntity: () => {
+    state: T[];
+    fetch: () => Promise<void>;
+  };
+}
+
 export default function AddPersonToCampButton<T extends Person>(
   props: Props<T>,
 ) {
@@ -50,10 +53,27 @@ export default function AddPersonToCampButton<T extends Person>(
   const { state: persons } = props.useEntity();
   console.log(persons);
 
-  const handleSubmit = async (values: CheckFormValues) => {
-    await SportsmanApi.addManyToCamp(Number(campId), values);
-    closeModal();
-    props.onDone?.();
+  const addToCamp = async (values: CheckFormValues) => {
+    try {
+      await props.api.addManyToCamp(Number(campId), values);
+      alert("добавили спортсменов в список участников сбора");
+      closeModal();
+      props.onDone?.();
+    } catch (e: any) {
+      // todo добавить обработку ошибок
+      console.error(e);
+    }
+  };
+
+  const createPerson = async (values: UniversalFormValues<T>) => {
+    try {
+      const newPersons = await props.api.createMany(values);
+      alert("добавили в базу данных");
+      await addToCamp({ items: newPersons.map((person) => person.id) });
+    } catch (e: any) {
+      // todo добавить обработку ошибок
+      console.error(e);
+    }
   };
 
   const components = [
@@ -64,7 +84,7 @@ export default function AddPersonToCampButton<T extends Person>(
         <UniversalTextFieldForm<T>
           fields={FIELDS}
           formId={ComponentKeys.NEW_ITEM}
-          onSubmit={() => {}}
+          onSubmit={createPerson}
         />
       ),
     },
@@ -74,7 +94,7 @@ export default function AddPersonToCampButton<T extends Person>(
       element: (
         <UniversalCheckForm<T>
           fields={FIELDS}
-          onSubmit={handleSubmit}
+          onSubmit={addToCamp}
           entities={persons}
           formId={ComponentKeys.DB}
         />

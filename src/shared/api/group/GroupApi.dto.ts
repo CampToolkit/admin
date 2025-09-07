@@ -1,12 +1,12 @@
 export interface CreateGroupDto {
   campId: number;
   name: string;
-  parentId?: number;
+  parentId: number | null;
 }
 
 export interface UpdateGroupDto {
   name?: string;
-  parentId?: number;
+  parentId?: number | null;
 }
 
 export interface CreateGroupBulkDto {

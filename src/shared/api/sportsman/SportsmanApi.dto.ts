@@ -13,9 +13,9 @@ export interface CreateSportsmanBulkDto {
 export interface UpdateSportsmanDto extends Partial<CreateSportsmanDto> {}
 
 // note sportsmanId
-export interface AddSportsmanToCampDto {
+export interface AddSportsmenToCampDto {
   items: number[];
 }
 
 // eslint-disable-next-line
-export interface RemoveSportsmanFromCampDto extends AddSportsmanToCampDto {}
+export interface RemoveSportsmanFromCampDto extends AddSportsmenToCampDto {}

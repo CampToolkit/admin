@@ -5,6 +5,7 @@ import RightLayoutItem from "@/pages/camps/camp/components/forms-layouts/RightLa
 import FormActions from "@/pages/camps/camp/components/forms-layouts/FormActions.tsx";
 import TabLayout from "@/pages/camps/camp/components/forms-layouts/TabLayout.tsx";
 import { useFormik } from "formik";
+import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
 
 export interface GroupFormValues {
   id: number;
@@ -14,41 +15,26 @@ export interface GroupFormValues {
 
 interface Props {
   initialValues: GroupFormValues;
+  selectOptions: SelectOption[];
   onSubmit: (values: GroupFormValues) => void;
 }
 
-const PARENT_GROUP_OPTIONS = [
-  {
-    index: 1,
-    parentId: 1,
-    name: "основная",
-  },
-  {
-    index: 2,
-    parentId: 2,
-    name: "parent1",
-  },
-  {
-    index: 3,
-    parentId: 3,
-    name: "parent2",
-  },
-];
-
 export default function GroupForm(props: Props) {
-  const { initialValues, onSubmit } = props;
-
+  const { initialValues, selectOptions, onSubmit } = props;
   const formik = useFormik<GroupFormValues>({
     enableReinitialize: true,
     initialValues,
     onSubmit,
   });
 
+  console.log("initialValues.parentId", initialValues.parentId);
+  console.log("selectOptions", selectOptions);
   return (
     <TabLayout>
       <LeftLayoutItem>
         <Grid container rowSpacing={2} columnSpacing={2}>
           <Grid size={6}>
+            <div>Название группы</div>
             <TextField
               size="small"
               fullWidth
@@ -59,7 +45,9 @@ export default function GroupForm(props: Props) {
             />
           </Grid>
           <Grid size={6}>
+            <div>Родительская группа</div>
             <Select
+              displayEmpty
               size="small"
               labelId="parentId"
               name="parentId"
@@ -67,8 +55,11 @@ export default function GroupForm(props: Props) {
               onChange={formik.handleChange}
               sx={{ width: "100%" }}
             >
-              {PARENT_GROUP_OPTIONS.map((option) => (
-                <MenuItem key={option.index} value={option.parentId}>
+              <MenuItem value={0}>
+                <em>Не выбрано</em>
+              </MenuItem>
+              {selectOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
                   {option.name}
                 </MenuItem>
               ))}
