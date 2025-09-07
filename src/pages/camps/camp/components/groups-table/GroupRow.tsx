@@ -9,13 +9,20 @@ interface Props {
   item: Group;
   level: number;
   selectOptions: SelectOption[];
+  onDone: () => Promise<void> | void;
 }
 
-export default function GroupRow({ item, level, selectOptions }: Props) {
+export default function GroupRow({
+  item,
+  level,
+  selectOptions,
+  onDone,
+}: Props) {
   const removeFromCamp = async (id: number) => {
     try {
       await GroupApi.delete(id);
       alert("group removed");
+      onDone();
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +59,7 @@ export default function GroupRow({ item, level, selectOptions }: Props) {
               parentId: item?.parentId ?? 0,
             }}
             selectOptions={selectOptions}
-            item={item}
+            onDone={onDone}
           />
         </TableCell>
       </TableRow>
@@ -63,6 +70,7 @@ export default function GroupRow({ item, level, selectOptions }: Props) {
             item={child}
             level={level + 1}
             selectOptions={selectOptions}
+            onDone={onDone}
           />
         ))}
     </>
