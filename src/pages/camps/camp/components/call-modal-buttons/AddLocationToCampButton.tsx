@@ -14,7 +14,10 @@ import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalChec
 
 import UniversalTextFieldForm from "@/pages/camps/camp/forms/universal/UniversalTextFieldForm.tsx";
 import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
-import type { Field } from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
+import type {
+  Field,
+  UniversalFormValues,
+} from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
 
 interface Props {
   onDone?: (data?: Sportsman[]) => Promise<void> | void;
@@ -33,10 +36,27 @@ export default function AddLocationToCampButton(props: Props) {
 
   const { state } = useAllLocations();
 
-  const handleSubmit = async (values: CheckFormValues) => {
+  const addToCamp = async (values: CheckFormValues) => {
     await LocationApi.addManyToCamp(props.campId, values);
     closeModal();
     props.onDone?.();
+  };
+
+  const createNewLocation = async (
+    values: UniversalFormValues<CampsLocation>,
+  ) => {
+    try {
+      const result = await LocationApi.createMany({
+        items: values.items.map((item) => ({ name: item.name })),
+      });
+      await addToCamp({
+        items: result.map((item) => item.id),
+      });
+      alert("локации созданы и добавлены в доступные локации сбора");
+      closeModal();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const Keys = {
@@ -51,8 +71,8 @@ export default function AddLocationToCampButton(props: Props) {
       element: (
         <UniversalTextFieldForm<CampsLocation>
           fields={FIELDS}
-          formId={Keys.DB_LOCATIONS}
-          onSubmit={() => {}}
+          formId={Keys.CREATE_LOCATION}
+          onSubmit={createNewLocation}
         />
       ),
     },
@@ -64,7 +84,7 @@ export default function AddLocationToCampButton(props: Props) {
           fields={FIELDS}
           entities={state}
           formId={Keys.DB_LOCATIONS}
-          onSubmit={handleSubmit}
+          onSubmit={addToCamp}
         />
       ),
     },

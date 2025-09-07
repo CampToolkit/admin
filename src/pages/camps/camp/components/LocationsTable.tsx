@@ -16,13 +16,14 @@ import EditLocationButton from "@/pages/camps/camp/components/call-modal-buttons
 interface Props {
   campId: number;
   list: { id: number; name: string }[];
+  onDone: () => Promise<void> | void;
 }
 
 export default function LocationsTable(props: Props) {
-  const { campId, list } = props;
+  const { campId, list, onDone } = props;
 
   const removeFromCamp = async (id: number, campId: number) => {
-    await LocationApi.removeFromCamp(id, { campId });
+    await LocationApi.removeFromCamp(campId, { items: [id] });
   };
 
   return (
@@ -53,7 +54,11 @@ export default function LocationsTable(props: Props) {
                 </IconButton>
               </TableCell>
               <TableCell>
-                <EditLocationButton itemId={item.id} initialValues={item} />
+                <EditLocationButton
+                  itemId={item.id}
+                  initialValues={item}
+                  onDone={onDone}
+                />
               </TableCell>
             </TableRow>
           ))}

@@ -17,7 +17,11 @@ export default function LocationsSection() {
           onDone={refreshCampLocations}
         />
       </TabHeader>
-      <LocationsTable campId={Number(campId)} list={locations} />
+      <LocationsTable
+        campId={Number(campId)}
+        list={locations}
+        onDone={refreshCampLocations}
+      />
     </div>
   );
 }
