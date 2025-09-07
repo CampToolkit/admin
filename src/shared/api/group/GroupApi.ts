@@ -28,6 +28,7 @@ export const GroupApi: NativeCampEntityApi<Group, CreateGroupDto> = {
   },
 
   create: async (dto: CreateGroupDto) => {
+    console.log("DTO", dto);
     const { data } = await axiosConfig.post<Group>("/practice-group", dto);
     return data;
   },

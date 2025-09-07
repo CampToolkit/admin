@@ -27,6 +27,8 @@ export default function GroupForm(props: Props) {
     onSubmit,
   });
 
+  console.log("initialValues.parentId", initialValues.parentId);
+  console.log("selectOptions", selectOptions);
   return (
     <TabLayout>
       <LeftLayoutItem>

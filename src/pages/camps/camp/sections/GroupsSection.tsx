@@ -4,25 +4,28 @@ import CreateGroupsButton from "@/pages/camps/camp/components/call-modal-buttons
 import TabHeader from "@/pages/camps/camp/components/TabHeader.tsx";
 import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
 import type { Group } from "@/shared/api/group/GroupApi.type.ts";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
 
 export default function GroupsSection() {
+  const [parentGroupSelectOptions, setParentGroupSelectOptions] = useState<
+    SelectOption[]
+  >([]);
+
   const { campId } = useParams();
   const { state: groups, fetch: refresh } = useGroupsInCamp(Number(campId));
-  const rootGroupsRef = useRef<SelectOption[]>([]);
 
-  console.log("groups", groups);
-
-  const filterRootGroups = (groups: Group[]) => {
+  const createParentGroupSelectOptions = (groups: Group[]) => {
     return groups.map((group: Group) => ({
       value: group.id,
       name: group.name,
     }));
   };
 
+  console.log("GroupsSection", groups);
+
   useEffect(() => {
-    rootGroupsRef.current = filterRootGroups(groups);
+    setParentGroupSelectOptions(createParentGroupSelectOptions(groups));
   }, [groups]);
 
   return (
@@ -30,11 +33,11 @@ export default function GroupsSection() {
       <TabHeader>
         <CreateGroupsButton
           campId={Number(campId)}
-          selectOptions={rootGroupsRef.current}
+          selectOptions={parentGroupSelectOptions}
           onCreated={() => refresh(Number(campId))}
         />
       </TabHeader>
-      <GroupsTable list={groups} selectOptions={rootGroupsRef.current} />
+      <GroupsTable list={groups} selectOptions={parentGroupSelectOptions} />
     </div>
   );
 }

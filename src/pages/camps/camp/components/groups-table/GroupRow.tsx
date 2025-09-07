@@ -3,6 +3,7 @@ import { IconButton, TableCell, TableRow } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditGroupButton from "@/pages/camps/camp/components/call-modal-buttons/EditGroupButton.tsx";
 import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
+import { GroupApi } from "@/shared/api/group/GroupApi";
 
 interface Props {
   item: Group;
@@ -11,8 +12,13 @@ interface Props {
 }
 
 export default function GroupRow({ item, level, selectOptions }: Props) {
-  const removeFromCamp = (campId: number, id: number) => {
-    console.log(campId, id);
+  const removeFromCamp = async (id: number) => {
+    try {
+      await GroupApi.delete(id);
+      alert("group removed");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -27,7 +33,7 @@ export default function GroupRow({ item, level, selectOptions }: Props) {
         </TableCell>
         <TableCell>
           <IconButton
-            onClick={() => removeFromCamp(item.campId, item.id)}
+            onClick={() => removeFromCamp(item.id)}
             sx={{
               color: "error.main",
               "&:hover": {
