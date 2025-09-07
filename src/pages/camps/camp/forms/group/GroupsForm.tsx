@@ -9,57 +9,42 @@ import {
 
 import { FieldArray, FormikProvider, useFormik } from "formik";
 
-import TabLayout from "../components/forms-layouts/TabLayout.tsx";
+import TabLayout from "../../components/forms-layouts/TabLayout.tsx";
 import LeftLayoutItem from "@/pages/camps/camp/components/forms-layouts/LeftLayoutItem.tsx";
 import RightLayoutItem from "@/pages/camps/camp/components/forms-layouts/RightLayoutItem.tsx";
 import FormActions from "@/pages/camps/camp/components/forms-layouts/FormActions.tsx";
+import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
 
 export interface GroupsFormValues {
   groups: {
     name: string;
-    parentId: number | null;
+    parentId: number;
   }[];
 }
 
 const defaultItem = {
   name: "",
-  parentId: 1,
+  parentId: 0,
 };
 
 const initialValues: GroupsFormValues = {
   groups: [defaultItem],
 };
 
-const PARENT_GROUP_OPTIONS = [
-  {
-    index: 1,
-    value: 1,
-    name: "основная",
-  },
-  {
-    index: 2,
-    value: 2,
-    name: "parent1",
-  },
-  {
-    index: 3,
-    value: 3,
-    name: "parent2",
-  },
-];
-
 interface Props {
+  selectOptions: SelectOption[];
   onSubmit: (values: GroupsFormValues) => void;
 }
 
 export default function GroupsForm(props: Props) {
-  const { onSubmit } = props;
+  const { selectOptions, onSubmit } = props;
 
   const formik = useFormik<GroupsFormValues>({
     enableReinitialize: true,
     initialValues,
     onSubmit,
   });
+
   return (
     <TabLayout>
       <FormikProvider value={formik}>
@@ -75,7 +60,9 @@ export default function GroupsForm(props: Props) {
                     columnSpacing={2}
                     sx={{ mb: 2 }}
                   >
+                    {/* todo сделать название поля в рамке поля*/}
                     <Grid size={5}>
+                      <div>Название группы</div>
                       <TextField
                         size="small"
                         fullWidth
@@ -85,17 +72,23 @@ export default function GroupsForm(props: Props) {
                         onChange={(event) => formik.handleChange(event)}
                       />
                     </Grid>
+                    {/* todo сделать название поля в рамке поля*/}
                     <Grid size={5}>
+                      <div>Родительская группа</div>
                       <Select
+                        displayEmpty
                         size="small"
                         labelId="status-select-label"
                         name={`groups[${index}].parentId`}
                         value={formik.values.groups[index].parentId}
-                        onChange={(event) => formik.handleChange(event)}
+                        onChange={formik.handleChange}
                         sx={{ width: "100%" }}
                       >
-                        {PARENT_GROUP_OPTIONS.map((option) => (
-                          <MenuItem key={option.index} value={option.index}>
+                        <MenuItem value={0}>
+                          <em>Не выбрано</em>
+                        </MenuItem>
+                        {selectOptions.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
                             {option.name}
                           </MenuItem>
                         ))}

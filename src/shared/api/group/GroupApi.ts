@@ -8,7 +8,7 @@ import type {
 } from "@/shared/api/group/GroupApi.dto.ts";
 import type { NativeCampEntityApi } from "@/shared/api/lib/types/BaseApi.type.ts";
 
-export const GroupApi: NativeCampEntityApi<Group> = {
+export const GroupApi: NativeCampEntityApi<Group, CreateGroupDto> = {
   getAll: async () => {
     const { data } = await axiosConfig.get<Group[]>("/practice-group");
     return data;
@@ -17,7 +17,7 @@ export const GroupApi: NativeCampEntityApi<Group> = {
   getByCamp: async (campId: number) => {
     // todo переделать на бэке путь на camp/campId/practice-group
     const { data } = await axiosConfig.get<Group[]>(
-      `/practice-group/camp/${campId}`,
+      `/camp/${campId}/practice-group/`,
     );
     return data;
   },

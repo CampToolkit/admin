@@ -1,35 +1,32 @@
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
 
 import { Button } from "@mui/material";
-import type {
-  CreateGroupBulkDto,
-  CreateGroupDto,
-} from "@/shared/api/group/GroupApi.dto.ts";
+
 import GroupsForm, {
   type GroupsFormValues,
-} from "@/pages/camps/camp/forms/GroupsForm.tsx";
+} from "@/pages/camps/camp/forms/group/GroupsForm.tsx";
 import { GroupApi } from "@/shared/api/group/GroupApi.ts";
+import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
 
 interface Props {
   campId: number;
+  selectOptions: SelectOption[];
   onCreated?: () => void;
 }
 
 export default function CreateGroupsButton(props: Props) {
-  const { onCreated = () => {}, campId } = props;
+  const { campId, selectOptions, onCreated = () => {} } = props;
 
   const { openModal, closeModal } = useModal();
 
   const onSubmit = async (campId: number, values: GroupsFormValues) => {
-    console.log("campId", campId);
-    const dto: CreateGroupBulkDto = {
+    const dto = {
       items: values.groups.map((item) => ({
         campId,
         name: item.name,
-        parentId: item.parentId ?? null,
+        parentId: item.parentId === 0 ? null : item.parentId,
       })),
     };
-    console.log("dto", dto);
     try {
       await GroupApi.createMany(dto);
       alert("Группы сохранили");
@@ -41,7 +38,10 @@ export default function CreateGroupsButton(props: Props) {
   };
 
   const sportsmen = () => (
-    <GroupsForm onSubmit={(values) => onSubmit(campId, values)} />
+    <GroupsForm
+      selectOptions={selectOptions}
+      onSubmit={(values) => onSubmit(campId, values)}
+    />
   );
 
   const onClickCreate = async () => {

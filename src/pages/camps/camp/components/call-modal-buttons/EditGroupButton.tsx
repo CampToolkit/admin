@@ -5,17 +5,20 @@ import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.t
 
 import GroupForm, {
   type GroupFormValues,
-} from "@/pages/camps/camp/forms/GroupForm.tsx";
+} from "@/pages/camps/camp/forms/group/GroupForm.tsx";
 import type { UpdateGroupDto } from "@/shared/api/group/GroupApi.dto.ts";
 import { GroupApi } from "@/shared/api/group/GroupApi.ts";
+import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
+import type { Group } from "@/shared/api/group/GroupApi.type.ts";
 
 type PropsType = {
-  groupId: number;
   initialValues: GroupFormValues;
+  selectOptions: SelectOption[];
+  item?: Group;
 };
 
 export default function EditGroupButton(props: PropsType) {
-  const { initialValues, groupId } = props;
+  const { initialValues, selectOptions } = props;
   const { openModal, closeModal } = useModal();
 
   const onSubmit = async (data: GroupFormValues) => {
@@ -23,12 +26,16 @@ export default function EditGroupButton(props: PropsType) {
       name: data.name,
       parentId: data.parentId ?? undefined,
     };
-    await GroupApi.update(groupId, dto);
+    await GroupApi.update(initialValues.id, dto);
     closeModal();
   };
 
   const form = () => (
-    <GroupForm onSubmit={onSubmit} initialValues={initialValues} />
+    <GroupForm
+      selectOptions={selectOptions}
+      onSubmit={onSubmit}
+      initialValues={initialValues}
+    />
   );
 
   const onClick = () => {
