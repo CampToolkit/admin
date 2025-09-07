@@ -3,6 +3,7 @@ import { axiosConfig } from "@/shared/api/axios-config.ts";
 import type {
   AddManyLocationToCampDto,
   CreateLocationDto,
+  CreateManyLocationDto,
   RemoveLocationFromCampDto,
   UpdateLocationDto,
 } from "@/shared/api/location/LocationApi.dto.ts";
@@ -22,6 +23,14 @@ export const LocationApi = {
 
   create: async (dto: CreateLocationDto) => {
     const { data } = await axiosConfig.post<CampsLocation>("/auditorium", dto);
+    return data;
+  },
+
+  createMany: async (dto: CreateManyLocationDto) => {
+    const { data } = await axiosConfig.post<CampsLocation[]>(
+      `/auditorium/bulk/`,
+      dto,
+    );
     return data;
   },
 

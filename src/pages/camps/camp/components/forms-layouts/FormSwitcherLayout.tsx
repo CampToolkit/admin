@@ -17,7 +17,7 @@ export default function FormSwitcherLayout(props: Props) {
   const [activeKey, setActiveKey] = useState<string>(components[0].key);
 
   const currentComponent = components.find((c) => c.key === activeKey);
-
+  console.log("formSwitcherLayout", activeKey);
   return (
     <Grid
       container

@@ -12,10 +12,11 @@ import type { UpdateLocationDto } from "@/shared/api/location/LocationApi.dto.ts
 interface Props {
   itemId: number;
   initialValues: LocationFormValues;
+  onDone: () => Promise<void> | void;
 }
 
 export default function EditLocationButton(props: Props) {
-  const { initialValues, itemId } = props;
+  const { initialValues, itemId, onDone } = props;
   const { openModal, closeModal } = useModal();
 
   const onSubmit = async (data: LocationFormValues) => {
@@ -24,6 +25,7 @@ export default function EditLocationButton(props: Props) {
     };
     await LocationApi.update(itemId, dto);
     closeModal();
+    onDone();
   };
 
   const form = () => (
