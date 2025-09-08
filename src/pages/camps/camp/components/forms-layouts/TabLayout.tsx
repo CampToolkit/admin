@@ -7,6 +7,7 @@ export default function TabLayout({ children }: { children: ReactNode }) {
       direction="row"
       spacing={3}
       sx={{
+        height: "100%",
         minHeight: "100%",
       }}
     >

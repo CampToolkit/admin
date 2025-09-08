@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Box,
   Container,
   IconButton,
   Toolbar,
@@ -11,7 +12,13 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function MainLayout() {
   return (
-    <>
+    <Box
+      sx={{
+        height: "100vh",
+        minHeight: "100vh",
+        pt: 10,
+      }}
+    >
       <AppBar position="fixed">
         <Toolbar>
           <IconButton>
@@ -26,9 +33,15 @@ export default function MainLayout() {
         </Toolbar>
       </AppBar>
 
-      <Container maxWidth={"xl"} sx={{ mt: 10, px: 2 }}>
+      <Container
+        maxWidth={"xl"}
+        sx={{
+          px: 2,
+          height: "100%",
+        }}
+      >
         <Outlet />
       </Container>
-    </>
+    </Box>
   );
 }

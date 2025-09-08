@@ -1,4 +1,4 @@
-import { Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import { useCampTabs } from "@/pages/camps/hooks/use-camp-tabs.hook.ts";
 
 import PageTitle from "@/shared/components/PageTitle.tsx";
@@ -46,14 +46,14 @@ export default function CampPage() {
   const { currentTabIndex, handleSwitchTabs } = useCampTabs();
 
   return (
-    <div>
+    <Box sx={{ height: "100%" }}>
       <PageTitle title="Camp Page" showBackButton={true} />
       <Tabs value={currentTabIndex} onChange={handleSwitchTabs} sx={{ mb: 2 }}>
         {TABS.map((tab, index) => (
           <Tab key={tab.name} label={tab.name} value={index} />
         ))}
       </Tabs>
-      <div>{TABS[currentTabIndex].component}</div>
-    </div>
+      <Box sx={{ height: "100%" }}>{TABS[currentTabIndex].component}</Box>
+    </Box>
   );
 }
