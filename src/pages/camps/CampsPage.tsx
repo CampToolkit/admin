@@ -86,8 +86,7 @@ export default function CampsPage() {
             >
               <Typography variant="h6">{camp.name}</Typography>
               <Typography variant="body2" color="textSecondary">
-                даты: {formatDate(camp.startDate)} -{" "}
-                {formatDate(camp.startDate)}
+                даты: {formatDate(camp.startDate)} - {formatDate(camp.endDate)}
               </Typography>
               <Typography variant="body2">город: {camp.city}</Typography>
             </CardActionArea>
