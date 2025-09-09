@@ -7,7 +7,7 @@ import {
   Agenda,
   Inject,
 } from "@syncfusion/ej2-react-schedule";
-export default function Schedule() {
+export default function ExampleSchedule() {
   const data = [
     {
       Id: 1,

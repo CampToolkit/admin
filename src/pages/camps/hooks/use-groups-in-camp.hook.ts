@@ -7,7 +7,6 @@ export function useGroupsInCamp(campId: number) {
 
   const fetch = useCallback(async (campId: number) => {
     const data = await GroupApi.getByCamp?.(campId);
-    console.log(data);
     if (data) {
       setState(data);
     }

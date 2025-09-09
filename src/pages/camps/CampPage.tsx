@@ -8,7 +8,7 @@ import SportsmenSection from "@/pages/camps/camp/sections/SportsmenSection.tsx";
 import GroupsSection from "@/pages/camps/camp/sections/GroupsSection.tsx";
 import LocationsSection from "@/pages/camps/camp/sections/LocationsSection.tsx";
 import ScheduleSection from "@/pages/camps/camp/sections/ScheduleSection.tsx";
-import TestSection from "./camp/sections/TestSection";
+import ExampleSection from "./camp/sections/ExampleSection.tsx";
 
 const TABS = [
   {
@@ -43,9 +43,9 @@ const TABS = [
   },
   {
     index: 5,
-    name: "Test",
-    path: "test",
-    component: <TestSection />,
+    name: "Example",
+    path: "example",
+    component: <ExampleSection />,
   },
 ];
 
