@@ -7,42 +7,41 @@ import { useEffect, useState } from "react";
 import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
 import { useParams } from "react-router-dom";
 
+import { useCampLocationsByCamp } from "@/pages/camps/hooks/use-camp-locations-by-camp.hook.ts";
+
 const VIEW_OPTIONS: {
   value: ViewModeType;
   label: string;
 }[] = [
   {
     value: "byGroup",
-    label: "По группам",
+    label: "Расписание группы",
   },
   {
     value: "byLocation",
-    label: "По локациям",
+    label: "Расписание локации",
   },
 ];
 
-function generateSelectProps<T extends { id: number; name: string }>(
-  items: T[],
-) {
-  return {
-    options: items.map((item) => ({
-      value: item.id,
-      label: item.name,
-    })),
-  };
-}
-
 export default function ScheduleSection() {
   const [viewMode, setViewMode] = useState<ViewModeType>(VIEW_OPTIONS[0].value);
-  const [currentGroup, setCurrentGroup] = useState<number | null>(null);
   const { campId } = useParams();
+  const [currentGroup, setCurrentGroup] = useState<number | null>(null);
+  const [currentLocation, setCurrentLocation] = useState<number | null>(null);
   const { state: groups } = useGroupsInCamp(Number(campId));
+  const { state: campLocations } = useCampLocationsByCamp(Number(campId));
 
   useEffect(() => {
     if (groups.length > 0) {
       setCurrentGroup(groups[0].id);
     }
   }, [groups]);
+
+  useEffect(() => {
+    if (campLocations.length > 0) {
+      setCurrentLocation(campLocations[0].id);
+    }
+  }, [campLocations]);
 
   return (
     <div>
@@ -58,15 +57,30 @@ export default function ScheduleSection() {
         {viewMode === VIEW_OPTIONS[0].value && currentGroup && (
           <>
             <CustomSelect<number>
-              options={groups.map((group) => ({
-                value: group.id,
-                label: group.name,
+              options={groups.map((item) => ({
+                value: item.id,
+                label: item.name,
               }))}
               onChange={(e) => {
                 setCurrentGroup(e.target.value);
               }}
               value={currentGroup}
               label={"Группа"}
+            />
+          </>
+        )}
+        {viewMode === VIEW_OPTIONS[1].value && currentLocation && (
+          <>
+            <CustomSelect<number>
+              options={campLocations.map((item) => ({
+                value: item.id,
+                label: item.name,
+              }))}
+              onChange={(e) => {
+                setCurrentLocation(e.target.value);
+              }}
+              value={currentLocation}
+              label={"Локация"}
             />
           </>
         )}
