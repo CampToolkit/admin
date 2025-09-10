@@ -12,6 +12,11 @@ interface Args {
   initialViewMode: ViewModeType;
 }
 
+type MappingViewModeType = Record<
+  ViewModeType,
+  { list: (Group | CampsLocation)[]; columns: (Group | CampsLocation)[] }
+>;
+
 export function useScheduleSelection({ campId, initialViewMode }: Args) {
   const [viewMode, setViewMode] = useState<ViewModeType>(initialViewMode);
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -19,21 +24,18 @@ export function useScheduleSelection({ campId, initialViewMode }: Args) {
   const { state: groups } = useGroupsInCamp(campId);
   const { state: campLocations } = useCampLocationsByCamp(campId);
 
-  const mapping: Record<
-    ViewModeType,
-    { list: (Group | CampsLocation)[]; tabs: (Group | CampsLocation)[] }
-  > = {
+  const mapping: MappingViewModeType = {
     byGroup: {
       list: groups,
-      tabs: campLocations,
+      columns: campLocations,
     },
     byLocation: {
       list: campLocations,
-      tabs: groups,
+      columns: groups,
     },
   };
 
-  const { list, tabs } = useMemo(() => {
+  const { list, columns } = useMemo(() => {
     return mapping[viewMode];
   }, [viewMode, groups, campLocations]);
 
@@ -54,7 +56,7 @@ export function useScheduleSelection({ campId, initialViewMode }: Args) {
       current: selectedId,
       set: setSelectedId,
       list,
-      tabs,
+      columns: columns,
     },
   };
 }

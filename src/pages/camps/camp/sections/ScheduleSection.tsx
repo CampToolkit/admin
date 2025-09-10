@@ -6,6 +6,8 @@ import CustomSelect from "@/modules/schedule/components/CustomSelect.tsx";
 import { useParams } from "react-router-dom";
 
 import { useScheduleSelection } from "@/modules/schedule/hooks/use-schedule-selection.ts";
+import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
+import type { Group } from "@/shared/api/group/GroupApi.type";
 
 const VIEW_OPTIONS: {
   value: ViewModeType;
@@ -66,10 +68,11 @@ export default function ScheduleSection() {
         )}
       </Box>
       {selection.current && (
-        <Schedule
+        <Schedule<CampsLocation | Group>
           events={[]}
           viewMode={view.current}
           selectedId={selection.current}
+          columns={selection.columns}
         />
       )}
     </div>

@@ -1,6 +1,7 @@
 import { Grid, Paper, Typography, Box } from "@mui/material";
 import dayjs from "dayjs";
 import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.ts";
+import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
 
 interface Event {
   id: string;
@@ -13,19 +14,21 @@ interface Event {
 
 export type ViewModeType = "byLocation" | "byGroup";
 
-interface ScheduleProps {
+interface ScheduleProps<T extends Entity> {
   events: Event[];
   viewMode: ViewModeType;
   selectedId: number;
+  columns: T[];
 }
 
 const CURRENT_DATE = dayjs();
 const SLOT_HEIGHT = 20;
-export default function Schedule({
+export default function Schedule<T extends Entity & { name: string }>({
   events,
   viewMode,
   selectedId,
-}: ScheduleProps) {
+  columns,
+}: ScheduleProps<T>) {
   const hourSlots = generateTimeSlots({
     date: CURRENT_DATE,
     startHour: 7,
@@ -46,11 +49,6 @@ export default function Schedule({
       unit: "minute",
     },
   });
-  // Моковые данные для колонок (группы или локации), позже заменим на реальные
-  const columns =
-    viewMode === "byLocation"
-      ? ["Group A", "Group B", "Group C"] // Заменить на реальные группы для selectedId (локации)
-      : ["Location 1", "Location 2", "Location 3"]; // Заменить на реальные локации для selectedId (группы)
 
   return (
     <Box sx={{ paddingInline: 2, paddingBlockEnd: 2 }}>
@@ -79,7 +77,7 @@ export default function Schedule({
             <Paper
               sx={{ p: 1, textAlign: "center", backgroundColor: "#f5f5f5" }}
             >
-              <Typography variant="subtitle1">{column}</Typography>
+              <Typography variant="subtitle1">{column.name}</Typography>
             </Paper>
             {minuteSlots.map((time, index) => (
               <Paper
