@@ -31,7 +31,7 @@ export default function ScheduleSection() {
 
   return (
     <div>
-      <Box display="flex" gap={2}>
+      <Box display="flex" gap={2} sx={{ paddingInline: 2, paddingBlockEnd: 2 }}>
         <CustomSelect<ViewModeType>
           options={VIEW_OPTIONS}
           onChange={(e) => {

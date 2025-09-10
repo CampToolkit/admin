@@ -53,7 +53,7 @@ export default function Schedule({
       : ["Location 1", "Location 2", "Location 3"]; // Заменить на реальные локации для selectedId (группы)
 
   return (
-    <Box sx={{ p: 2 }}>
+    <Box sx={{ paddingInline: 2, paddingBlockEnd: 2 }}>
       <Grid container spacing={1}>
         <Grid size={1}>
           <Paper sx={{ p: 1, textAlign: "center", backgroundColor: "#f5f5f5" }}>
