@@ -3,11 +3,9 @@ import Schedule, {
 } from "@/modules/schedule/components/Schedule.tsx";
 import { Box } from "@mui/material";
 import CustomSelect from "@/modules/schedule/components/CustomSelect.tsx";
-import { useEffect, useState } from "react";
-import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
 import { useParams } from "react-router-dom";
 
-import { useCampLocationsByCamp } from "@/pages/camps/hooks/use-camp-locations-by-camp.hook.ts";
+import { useScheduleSelection } from "@/modules/schedule/hooks/use-schedule-selection.ts";
 
 const VIEW_OPTIONS: {
   value: ViewModeType;
@@ -24,24 +22,12 @@ const VIEW_OPTIONS: {
 ];
 
 export default function ScheduleSection() {
-  const [viewMode, setViewMode] = useState<ViewModeType>(VIEW_OPTIONS[0].value);
   const { campId } = useParams();
-  const [currentGroup, setCurrentGroup] = useState<number | null>(null);
-  const [currentLocation, setCurrentLocation] = useState<number | null>(null);
-  const { state: groups } = useGroupsInCamp(Number(campId));
-  const { state: campLocations } = useCampLocationsByCamp(Number(campId));
 
-  useEffect(() => {
-    if (groups.length > 0) {
-      setCurrentGroup(groups[0].id);
-    }
-  }, [groups]);
-
-  useEffect(() => {
-    if (campLocations.length > 0) {
-      setCurrentLocation(campLocations[0].id);
-    }
-  }, [campLocations]);
+  const { view, groups, locations } = useScheduleSelection({
+    campId: Number(campId),
+    initialViewMode: "byGroup",
+  });
 
   return (
     <div>
@@ -49,43 +35,43 @@ export default function ScheduleSection() {
         <CustomSelect<ViewModeType>
           options={VIEW_OPTIONS}
           onChange={(e) => {
-            setViewMode(e.target.value);
+            view.set(e.target.value);
           }}
-          value={viewMode}
+          value={view.mode}
           label={"Вид"}
         />
-        {viewMode === VIEW_OPTIONS[0].value && currentGroup && (
+        {view.mode === VIEW_OPTIONS[0].value && groups.current && (
           <>
             <CustomSelect<number>
-              options={groups.map((item) => ({
+              options={groups.list.map((item) => ({
                 value: item.id,
                 label: item.name,
               }))}
               onChange={(e) => {
-                setCurrentGroup(e.target.value);
+                groups.set(e.target.value);
               }}
-              value={currentGroup}
+              value={groups.current}
               label={"Группа"}
             />
           </>
         )}
-        {viewMode === VIEW_OPTIONS[1].value && currentLocation && (
+        {view.mode === VIEW_OPTIONS[1].value && locations.current && (
           <>
             <CustomSelect<number>
-              options={campLocations.map((item) => ({
+              options={locations.list.map((item) => ({
                 value: item.id,
                 label: item.name,
               }))}
               onChange={(e) => {
-                setCurrentLocation(e.target.value);
+                locations.set(e.target.value);
               }}
-              value={currentLocation}
+              value={locations.current}
               label={"Локация"}
             />
           </>
         )}
       </Box>
-      <Schedule events={[]} viewMode={viewMode} selectedId={5} />
+      <Schedule events={[]} viewMode={view.mode} selectedId={5} />
     </div>
   );
 }
