@@ -24,7 +24,7 @@ const VIEW_OPTIONS: {
 export default function ScheduleSection() {
   const { campId } = useParams();
 
-  const { view, groups, locations } = useScheduleSelection({
+  const { view, groups, locations, selected } = useScheduleSelection({
     campId: Number(campId),
     initialViewMode: "byGroup",
   });
@@ -71,7 +71,13 @@ export default function ScheduleSection() {
           </>
         )}
       </Box>
-      <Schedule events={[]} viewMode={view.mode} selectedId={5} />
+      {selected.entity && (
+        <Schedule
+          events={[]}
+          viewMode={view.mode}
+          selectedId={selected.entity}
+        />
+      )}
     </div>
   );
 }
