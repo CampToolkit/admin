@@ -4,6 +4,9 @@ import type { ViewModeType } from "@/modules/schedule/components/Schedule.tsx";
 import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
 import { useCampLocationsByCamp } from "@/pages/camps/hooks/use-camp-locations-by-camp.hook.ts";
 
+import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
+import type { Group } from "@/shared/api/group/GroupApi.type.ts";
+
 interface Args {
   campId: number;
   initialViewMode: ViewModeType;
@@ -11,50 +14,47 @@ interface Args {
 
 export function useScheduleSelection({ campId, initialViewMode }: Args) {
   const [viewMode, setViewMode] = useState<ViewModeType>(initialViewMode);
-
-  const [currentGroup, setCurrentGroup] = useState<number | null>(null);
-  const [currentLocation, setCurrentLocation] = useState<number | null>(null);
-
-  const selectedEntity = useMemo(() => {
-    return viewMode === "byGroup" ? currentGroup : currentLocation;
-  }, [currentGroup, currentLocation, viewMode]);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const { state: groups } = useGroupsInCamp(campId);
   const { state: campLocations } = useCampLocationsByCamp(campId);
 
-  useEffect(() => {
-    if (groups.length > 0) {
-      setCurrentGroup(groups[0].id);
-    } else {
-      setCurrentLocation(null);
-    }
-  }, [groups]);
+  const mapping: Record<
+    ViewModeType,
+    { list: (Group | CampsLocation)[]; tabs: (Group | CampsLocation)[] }
+  > = {
+    byGroup: {
+      list: groups,
+      tabs: campLocations,
+    },
+    byLocation: {
+      list: campLocations,
+      tabs: groups,
+    },
+  };
+
+  const { list, tabs } = useMemo(() => {
+    return mapping[viewMode];
+  }, [viewMode, groups, campLocations]);
 
   useEffect(() => {
-    if (campLocations.length > 0) {
-      setCurrentLocation(campLocations[0].id);
+    if (list.length > 0) {
+      setSelectedId(list[0].id);
     } else {
-      setCurrentLocation(null);
+      setSelectedId(null);
     }
-  }, [campLocations]);
+  }, [list]);
 
   return {
     view: {
-      mode: viewMode,
+      current: viewMode,
       set: setViewMode,
     },
-    groups: {
-      current: currentGroup,
-      list: groups,
-      set: setCurrentGroup,
-    },
-    locations: {
-      current: currentLocation,
-      list: campLocations,
-      set: setCurrentLocation,
-    },
-    selected: {
-      entity: selectedEntity,
+    selection: {
+      current: selectedId,
+      set: setSelectedId,
+      list,
+      tabs,
     },
   };
 }
