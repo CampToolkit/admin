@@ -1,21 +1,14 @@
 import { Grid, Paper, Typography, Box } from "@mui/material";
-import dayjs from "dayjs";
+import dayjs, { type Dayjs } from "dayjs";
 import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.ts";
 import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
-
-interface Event {
-  id: string;
-  title: string;
-  start: Date;
-  end: Date;
-  groupId: string;
-  locationId: string;
-}
+import type { Lesson } from "@/shared/api/lesson/LessonApi.type";
+import { groupSessionByColumns } from "@/modules/schedule/utils/group-session-by-columns.ts";
 
 export type ViewModeType = "byLocation" | "byGroup";
 
 interface ScheduleProps<T extends Entity> {
-  events: Event[];
+  lessons: Lesson[];
   viewMode: ViewModeType;
   selectedId: number;
   columns: T[];
@@ -24,7 +17,7 @@ interface ScheduleProps<T extends Entity> {
 const CURRENT_DATE = dayjs();
 const SLOT_HEIGHT = 20;
 export default function Schedule<T extends Entity & { name: string }>({
-  events,
+  lessons,
   viewMode,
   selectedId,
   columns,
@@ -50,6 +43,9 @@ export default function Schedule<T extends Entity & { name: string }>({
     },
   });
 
+  const groupedSessions = groupSessionByColumns(lessons, "auditorium");
+  console.log(groupedSessions);
+
   return (
     <Box sx={{ paddingInline: 2, paddingBlockEnd: 2 }}>
       <Grid container spacing={1}>
@@ -73,7 +69,13 @@ export default function Schedule<T extends Entity & { name: string }>({
         </Grid>
 
         {columns.map((column, index) => (
-          <Grid size={10 / columns.length} key={index}>
+          <Grid
+            size={10 / columns.length}
+            key={index}
+            sx={{
+              position: "relative",
+            }}
+          >
             <Paper
               sx={{ p: 1, textAlign: "center", backgroundColor: "#f5f5f5" }}
             >
@@ -91,6 +93,18 @@ export default function Schedule<T extends Entity & { name: string }>({
                   borderRadius: 0,
                 }}
               ></Paper>
+            ))}
+            {groupedSessions[column.id]?.map((session) => (
+              <Box
+                key={session.id}
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                }}
+              >
+                {session.startDate}
+              </Box>
             ))}
           </Grid>
         ))}

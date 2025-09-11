@@ -9,6 +9,8 @@ import { useScheduleSelection } from "@/modules/schedule/hooks/use-schedule-sele
 import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
 import type { Group } from "@/shared/api/group/GroupApi.type";
 
+import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
+
 const VIEW_OPTIONS: {
   value: ViewModeType;
   label: string;
@@ -69,7 +71,34 @@ export default function ScheduleSection() {
       </Box>
       {selection.current && (
         <Schedule<CampsLocation | Group>
-          events={[]}
+          lessons={[
+            {
+              id: 1,
+              campId: 1,
+              startDate: "2025-09-10 11:00",
+              endDate: "2025-09-10 12:00",
+              groups: [
+                {
+                  id: 2,
+                  name: "младшая",
+                } as Group,
+              ],
+              auditorium: { id: 2, name: "лед" },
+            } as Lesson,
+            {
+              id: 2,
+              campId: 1,
+              startDate: "2025-09-10 12:00",
+              endDate: "2025-09-10 13:00",
+              groups: [
+                {
+                  id: 1,
+                  name: "старшая",
+                } as Group,
+              ],
+              auditorium: { id: 1, name: "офп" },
+            } as Lesson,
+          ]}
           viewMode={view.current}
           selectedId={selection.current}
           columns={selection.columns}
