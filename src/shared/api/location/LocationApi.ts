@@ -42,6 +42,13 @@ export const LocationApi = {
     return data;
   },
 
+  async getByCamp(campId: number) {
+    const { data } = await axiosConfig.get<CampsLocation[]>(
+      `/camp/${campId}/auditorium`,
+    );
+    return data;
+  },
+
   addManyToCamp: async (campId: number, dto: AddManyLocationToCampDto) => {
     const { data } = await axiosConfig.post<CampsLocation>(
       `/camp/${campId}/auditorium`,

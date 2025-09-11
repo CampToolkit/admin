@@ -20,7 +20,6 @@ const router = createBrowserRouter([
       {
         path: "camps/:campId",
         element: <CampPage />,
-        // children: campChildren,
       },
     ],
   },

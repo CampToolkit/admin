@@ -21,6 +21,7 @@
     "@mui/system": "^7.3.1",
     "@mui/x-date-pickers": "^8.10.2",
     "@mui/x-date-pickers-pro": "^8.10.2",
+    "@syncfusion/ej2-react-schedule": "^31.1.17",
     "axios": "^1.11.0",
     "dayjs": "^1.11.13",
     "formik": "^2.4.6",
