@@ -98,6 +98,19 @@ export default function ScheduleSection() {
               ],
               auditorium: { id: 1, name: "офп" },
             } as Lesson,
+            {
+              id: 7,
+              campId: 1,
+              startDate: "2025-09-10 12:00",
+              endDate: "2025-09-10 13:00",
+              groups: [
+                {
+                  id: 3,
+                  name: "средняя",
+                } as Group,
+              ],
+              auditorium: { id: 1, name: "офп" },
+            } as Lesson,
           ]}
           viewMode={view.current}
           selectedId={selection.current}

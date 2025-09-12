@@ -5,13 +5,14 @@ import {
   Grid,
   lighten,
   Box,
-  Button,
   IconButton,
 } from "@mui/material";
-import { type Dayjs } from "dayjs";
-import { baseTheme } from "@/app/providers/theme/base-theme.ts";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+
+import { baseTheme } from "@/app/providers/theme/base-theme.ts";
+
+import { type Dayjs } from "dayjs";
 
 interface Props {
   startDate: Dayjs;
