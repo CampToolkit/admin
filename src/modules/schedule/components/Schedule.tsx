@@ -5,6 +5,15 @@ import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
 import type { Lesson } from "@/shared/api/lesson/LessonApi.type";
 import { groupSessionByColumns } from "@/modules/schedule/utils/group-session-by-columns.ts";
 
+import {
+  SLOT_HEIGHT,
+  SLOTS_AMOUNT_IN_HOUR,
+  START_HOUR,
+} from "../constants/time-table.const";
+import { calcLessonPosition } from "@/modules/schedule/utils/calc-lesson-position.ts";
+import ScheduleEntryCard from "@/modules/schedule/components/ScheduleEntryCard.tsx";
+import LessonCard from "@/modules/schedule/components/LessonCard.tsx";
+
 export type ViewModeType = "byLocation" | "byGroup";
 
 interface ScheduleProps<T extends Entity> {
@@ -15,9 +24,7 @@ interface ScheduleProps<T extends Entity> {
 }
 
 const CURRENT_DATE = dayjs();
-const SLOT_HEIGHT = 20;
-const SLOTS_AMOUNT_IN_HOUR = 4;
-const START_HOUR = 7;
+
 export default function Schedule<T extends Entity & { name: string }>({
   lessons,
   viewMode,
@@ -47,26 +54,6 @@ export default function Schedule<T extends Entity & { name: string }>({
 
   const groupedSessions = groupSessionByColumns(lessons, "auditorium");
 
-  function calcLessonPosition(lesson: Lesson) {
-    const startDateD = dayjs(lesson.startDate);
-    const endDateD = dayjs(lesson.endDate);
-
-    const top = calcTopPosition(startDateD);
-
-    const height =
-      (endDateD.hour() - startDateD.hour()) *
-      SLOTS_AMOUNT_IN_HOUR *
-      SLOT_HEIGHT;
-    return {
-      top: top,
-      height: height,
-    };
-  }
-
-  function calcTopPosition(time: Dayjs) {
-    return (time.hour() - START_HOUR) * SLOT_HEIGHT * SLOTS_AMOUNT_IN_HOUR;
-  }
-
   return (
     <Box sx={{ paddingInline: 2, paddingBlockEnd: 2 }}>
       <Grid container spacing={1}>
@@ -84,7 +71,6 @@ export default function Schedule<T extends Entity & { name: string }>({
                 border: "1px solid #e0e0e0",
               }}
             >
-              <Typography variant="body2">{calcTopPosition(time)}</Typography>
               <Typography variant="body2">{time.format("HH:mm")}</Typography>
             </Paper>
           ))}
@@ -116,19 +102,17 @@ export default function Schedule<T extends Entity & { name: string }>({
                 ></Paper>
               ))}
               {groupedSessions[column.id]?.map((session) => (
-                <Box
-                  key={session.id}
-                  sx={{
-                    position: "absolute",
-                    ...calcLessonPosition(session),
-                    backgroundColor: "primary.light",
-                  }}
-                >
-                  <div>{calcLessonPosition(session).top}</div>
-                  {dayjs(session.startDate).format("HH:mm")} -
-                  {dayjs(session.endDate).format("HH:mm")}
-                </Box>
+                <LessonCard
+                  startDate={dayjs(session.startDate)}
+                  groupName={session.groups.join(", ")}
+                  coachName={"coach"}
+                  campLocationName={"лед"}
+                  position={calcLessonPosition(session)}
+                />
               ))}
+              <ScheduleEntryCard>
+                <div>TEst</div>
+              </ScheduleEntryCard>
             </Box>
           </Grid>
         ))}
