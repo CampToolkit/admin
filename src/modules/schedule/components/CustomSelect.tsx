@@ -32,7 +32,7 @@ export default function CustomSelect<T extends string | number>({
         value={value}
         size="small"
         sx={{
-          width: "200px",
+          minWidth: "200px",
         }}
       >
         {options.map((option) => (

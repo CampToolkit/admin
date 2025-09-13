@@ -55,7 +55,7 @@ export default function ScheduleSection() {
           value={view.current}
           label={"Вид"}
         />
-        {selection.current && (
+        {selection.currentId && (
           <CustomSelect<number>
             options={selection.list.map((item) => ({
               value: item.id,
@@ -64,12 +64,12 @@ export default function ScheduleSection() {
             onChange={(e) => {
               selection.set(e.target.value);
             }}
-            value={selection.current}
+            value={selection.currentId}
             label={""}
           />
         )}
       </Box>
-      {selection.current && (
+      {selection.currentId && (
         <Schedule<CampsLocation | Group>
           lessons={[
             {
@@ -113,7 +113,7 @@ export default function ScheduleSection() {
             } as Lesson,
           ]}
           viewMode={view.current}
-          selectedId={selection.current}
+          selectedId={selection.currentId}
           columns={selection.columns}
         />
       )}
