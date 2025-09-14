@@ -1,13 +1,14 @@
+import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
+import LessonForm from "../components/LessonForm.tsx";
+
 import type {
   LessonFormValues,
   LessonFormProps,
 } from "../components/LessonForm.tsx";
-import LessonForm from "../components/LessonForm.tsx";
 import type { LessonType } from "@/shared/api/LessonTypeApi.type.ts";
 import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type.ts";
 import type { Group } from "@/shared/api/group/GroupApi.type.ts";
 import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
-import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
 
 type UseSessionModalProps = {
   campId: number;
@@ -27,7 +28,7 @@ type OpenModalParams = {
   };
 };
 
-export function useSessionModal({ campId, onClose }: UseSessionModalProps) {
+export function useLessonModal({ campId, onClose }: UseSessionModalProps) {
   const { openModal, closeModal } = useModal();
 
   const handleSubmit: LessonFormProps["onSubmit"] = (values) => {

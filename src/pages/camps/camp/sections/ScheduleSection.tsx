@@ -1,23 +1,24 @@
-import Schedule, {
-  type ViewModeType,
-} from "@/modules/schedule/components/Schedule.tsx";
-import { Box } from "@mui/material";
-import CustomSelect from "@/modules/schedule/components/CustomSelect.tsx";
 import { useParams } from "react-router-dom";
 
 import { useScheduleSelection } from "@/modules/schedule/hooks/use-schedule-selection.ts";
+import { useLessonModal } from "@/modules/schedule/hooks/use-lesson-modal.tsx";
 
-import type { Group } from "@/shared/api/group/GroupApi.type";
-import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
+import { Box } from "@mui/material";
+import Schedule, {
+  type ViewModeType,
+} from "@/modules/schedule/components/Schedule.tsx";
+import CustomSelect from "@/modules/schedule/components/CustomSelect.tsx";
 
-import { useSessionModal } from "@/modules/schedule/hooks/use-session-modal.tsx";
-import type { LessonType } from "@/shared/api/LessonTypeApi.type.ts";
-import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type";
-import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
 import {
   prepareLessonFormValues,
   type RareLessonFormValues,
 } from "@/modules/schedule/utils/prepareLessonFormValues.ts";
+
+import type { Group } from "@/shared/api/group/GroupApi.type";
+import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
+import type { LessonType } from "@/shared/api/LessonTypeApi.type.ts";
+import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type";
+import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
 
 const options = {
   lessonTypeOptions: [{ id: 1, name: "lessonTypeOptions" } as LessonType],
@@ -58,7 +59,7 @@ export default function ScheduleSection() {
     initialViewMode: "byGroup",
   });
 
-  const { open } = useSessionModal({
+  const { open } = useLessonModal({
     campId: Number(campId),
   });
 
