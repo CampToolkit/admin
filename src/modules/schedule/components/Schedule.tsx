@@ -11,7 +11,7 @@ import {
   START_HOUR,
 } from "../constants/time-table.const";
 import { calcLessonPosition } from "@/modules/schedule/utils/calc-lesson-position.ts";
-import ScheduleEntryCard from "@/modules/schedule/components/ScheduleEntryCard.tsx";
+
 import LessonCard from "@/modules/schedule/components/LessonCard.tsx";
 
 import type { MouseEvent } from "react";
@@ -142,9 +142,6 @@ export default function Schedule({
                   position={calcLessonPosition(session)}
                 />
               ))}
-              <ScheduleEntryCard>
-                <div>{selectedId}</div>
-              </ScheduleEntryCard>
             </Box>
           </Grid>
         ))}

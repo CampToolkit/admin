@@ -9,11 +9,29 @@ import { useScheduleSelection } from "@/modules/schedule/hooks/use-schedule-sele
 
 import type { Group } from "@/shared/api/group/GroupApi.type";
 import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
-import { useSessionData } from "@/modules/schedule/hooks/use-session-data.ts";
-import SessionModal from "@/modules/schedule/components/SessionModal.tsx";
+
+import { useSessionModal } from "@/modules/schedule/hooks/use-session-modal.tsx";
 import type { LessonType } from "@/shared/api/LessonTypeApi.type.ts";
 import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type";
 import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
+import {
+  prepareLessonFormValues,
+  type RareLessonFormValues,
+} from "@/modules/schedule/utils/prepareLessonFormValues.ts";
+
+const options = {
+  lessonTypeOptions: [{ id: 1, name: "lessonTypeOptions" } as LessonType],
+  activityTypeOptions: [{ id: 1, name: "activityTypeOptions" } as ActivityType],
+  groupOptions: [{ id: 1, name: "groupOptions" } as Group],
+  coachOptions: [
+    {
+      id: 1,
+      lastName: "last",
+      firstName: "firstName",
+      patrName: "part",
+    } as Coach,
+  ],
+};
 
 const VIEW_OPTIONS: {
   value: ViewModeType;
@@ -40,7 +58,20 @@ export default function ScheduleSection() {
     initialViewMode: "byGroup",
   });
 
-  const { sessionData, openSession, closeSession } = useSessionData();
+  const { open } = useSessionModal({
+    campId: Number(campId),
+  });
+
+  const callLessonModal = (data: RareLessonFormValues) => {
+    const formInitialValues = prepareLessonFormValues(data);
+    open({
+      options,
+      formData: {
+        formId: "createAndEditLessonFormId",
+        initialValues: formInitialValues,
+      },
+    });
+  };
 
   return (
     <div>
@@ -122,30 +153,7 @@ export default function ScheduleSection() {
           viewMode={view.current}
           selectedId={selection.currentId}
           columns={selection.columns}
-          openSessionModal={openSession}
-        />
-      )}
-
-      {sessionData && (
-        <SessionModal
-          formData={{
-            formId: "session-create-edit",
-            initialValues: sessionData,
-            lessonTypeOptions: [{ name: "somelessonTypeOption" } as LessonType],
-            activityTypeOptions: [
-              { name: "someactivityTypeOption" } as ActivityType,
-            ],
-            groupOptions: [{ name: "somegroupOption" } as Group],
-            coachOptions: [
-              {
-                lastName: "lastName",
-                firstName: "firstName",
-                patrName: "patrName",
-              } as Coach,
-            ],
-          }}
-          campId={Number(campId)}
-          onClose={closeSession}
+          openSessionModal={callLessonModal}
         />
       )}
     </div>
