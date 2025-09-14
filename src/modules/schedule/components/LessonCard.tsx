@@ -26,12 +26,7 @@ interface Props {
 }
 
 const PointTitle = ({ children }: { children: string }) => (
-  <Typography
-    variant="body2"
-    sx={{ color: "text.secondary", display: "inline" }}
-  >
-    {children}
-  </Typography>
+  <span style={{ color: "#666", display: "inline" }}>{children}</span>
 );
 
 export default function LessonCard(props: Props) {

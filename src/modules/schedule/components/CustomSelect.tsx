@@ -11,9 +11,11 @@ interface Props<T> {
     value: T;
     label: string;
   }[];
+  name?: string;
   value: T;
   onChange: (e: SelectChangeEvent<T>) => void;
   label: string;
+  displayEmpty?: boolean;
 }
 
 export default function CustomSelect<T extends string | number>({
@@ -21,6 +23,8 @@ export default function CustomSelect<T extends string | number>({
   value,
   onChange,
   label,
+  name = "",
+  displayEmpty = false,
 }: Props<T>) {
   return (
     <Box>
@@ -34,7 +38,13 @@ export default function CustomSelect<T extends string | number>({
         sx={{
           minWidth: "200px",
         }}
+        name={name}
       >
+        {displayEmpty && (
+          <MenuItem value={0}>
+            <em>Не выбрано</em>
+          </MenuItem>
+        )}
         {options.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}

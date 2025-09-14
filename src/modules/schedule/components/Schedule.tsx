@@ -16,23 +16,32 @@ import LessonCard from "@/modules/schedule/components/LessonCard.tsx";
 
 import type { MouseEvent } from "react";
 import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
-import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
-import type { Group } from "@/shared/api/group/GroupApi.type.ts";
+import type { LessonFormValues } from "@/modules/schedule/components/LessonForm.tsx";
 
 export type ViewModeType = "byLocation" | "byGroup";
 
-interface ScheduleProps<T extends CampsLocation | Group> {
+interface ScheduleProps {
   lessons: Lesson[];
   viewMode: ViewModeType;
   selectedId: number;
-  columns: ScheduleColumns<T>;
+  columns: ScheduleColumns;
+  openSessionModal: (
+    value: {
+      startDate: Dayjs;
+      endDate: Dayjs;
+    } & Partial<Omit<LessonFormValues, "startDate" | "endDate">>,
+  ) => void;
 }
 
 const CURRENT_DATE = dayjs();
 
-export default function Schedule<
-  T extends CampsLocation | (Group & { name: string }),
->({ lessons, viewMode, selectedId, columns }: ScheduleProps<T>) {
+export default function Schedule({
+  lessons,
+  viewMode,
+  selectedId,
+  columns,
+  openSessionModal,
+}: ScheduleProps) {
   const hourSlots = generateTimeSlots({
     date: CURRENT_DATE,
     startHour: START_HOUR,
@@ -60,7 +69,15 @@ export default function Schedule<
     const target = (e.target as HTMLDivElement).closest(
       "[data-slot-time]",
     ) as HTMLDivElement;
-    console.log(target.dataset.slotTime);
+
+    if (!target) return;
+
+    console.log(target.dataset.slotTime, target.dataset.entityType);
+    const startDate = dayjs(target.dataset.slotTime);
+    openSessionModal({
+      startDate: startDate,
+      endDate: startDate.add(1, "hour"),
+    });
   };
 
   return (
@@ -111,10 +128,13 @@ export default function Schedule<
                     cursor: "pointer",
                   }}
                   data-slot-time={time.toISOString()}
+                  data-entity-type={columns.type}
+                  data-entity-id={column.id}
                 ></Paper>
               ))}
               {groupedSessions[column.id]?.map((session) => (
                 <LessonCard
+                  key={session.id}
                   startDate={dayjs(session.startDate)}
                   groupName={session.groups.join(", ")}
                   coachName={"coach"}

@@ -6,10 +6,14 @@ import CustomSelect from "@/modules/schedule/components/CustomSelect.tsx";
 import { useParams } from "react-router-dom";
 
 import { useScheduleSelection } from "@/modules/schedule/hooks/use-schedule-selection.ts";
-import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
-import type { Group } from "@/shared/api/group/GroupApi.type";
 
+import type { Group } from "@/shared/api/group/GroupApi.type";
 import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
+import { useSessionData } from "@/modules/schedule/hooks/use-session-data.ts";
+import SessionModal from "@/modules/schedule/components/SessionModal.tsx";
+import type { LessonType } from "@/shared/api/LessonTypeApi.type.ts";
+import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type";
+import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
 
 const VIEW_OPTIONS: {
   value: ViewModeType;
@@ -36,6 +40,8 @@ export default function ScheduleSection() {
     initialViewMode: "byGroup",
   });
 
+  const { sessionData, openSession, closeSession } = useSessionData();
+
   return (
     <div>
       <Box
@@ -54,6 +60,7 @@ export default function ScheduleSection() {
           }}
           value={view.current}
           label={"Вид"}
+          displayEmpty={false}
         />
         {selection.currentId && (
           <CustomSelect<number>
@@ -70,7 +77,7 @@ export default function ScheduleSection() {
         )}
       </Box>
       {selection.currentId && (
-        <Schedule<CampsLocation | Group>
+        <Schedule
           lessons={[
             {
               id: 1,
@@ -115,6 +122,30 @@ export default function ScheduleSection() {
           viewMode={view.current}
           selectedId={selection.currentId}
           columns={selection.columns}
+          openSessionModal={openSession}
+        />
+      )}
+
+      {sessionData && (
+        <SessionModal
+          formData={{
+            formId: "session-create-edit",
+            initialValues: sessionData,
+            lessonTypeOptions: [{ name: "somelessonTypeOption" } as LessonType],
+            activityTypeOptions: [
+              { name: "someactivityTypeOption" } as ActivityType,
+            ],
+            groupOptions: [{ name: "somegroupOption" } as Group],
+            coachOptions: [
+              {
+                lastName: "lastName",
+                firstName: "firstName",
+                patrName: "patrName",
+              } as Coach,
+            ],
+          }}
+          campId={Number(campId)}
+          onClose={closeSession}
         />
       )}
     </div>
