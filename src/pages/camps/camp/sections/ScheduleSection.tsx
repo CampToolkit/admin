@@ -19,6 +19,7 @@ import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
 import type { LessonType } from "@/shared/api/LessonTypeApi.type.ts";
 import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type";
 import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
+import { useActivityType } from "@/pages/camps/hooks/use-activity-type.ts";
 
 const options = {
   lessonTypeOptions: [{ id: 1, name: "lessonTypeOptions" } as LessonType],
@@ -63,10 +64,19 @@ export default function ScheduleSection() {
     campId: Number(campId),
   });
 
+  const { state: activityTypes } = useActivityType();
+
   const callLessonModal = (data: RareLessonFormValues) => {
+    if (activityTypes.length > 0) {
+      data.activityTypeId ??= activityTypes[0].id;
+    }
+
     const formInitialValues = prepareLessonFormValues(data);
     open({
-      options,
+      options: {
+        ...options,
+        activityTypeOptions: activityTypes,
+      },
       formData: {
         formId: "createAndEditLessonFormId",
         initialValues: formInitialValues,

@@ -34,6 +34,7 @@ export function useScheduleSelection({ campId, initialViewMode }: Args) {
   const { state: groups } = useGroupsInCamp(campId);
   const { state: campLocations } = useCampLocationsByCamp(campId);
 
+  // todo добавить coach
   const mapping: MappingViewModeType = {
     groups: {
       list: groups,
