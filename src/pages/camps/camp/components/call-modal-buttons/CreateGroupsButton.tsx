@@ -7,9 +7,6 @@ import GroupsForm, {
 } from "@/pages/camps/camp/forms/group/GroupsForm.tsx";
 import { GroupApi } from "@/shared/api/group/GroupApi.ts";
 import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
-import LessonForm, {
-  type LessonFormProps,
-} from "@/modules/schedule/components/LessonForm.tsx";
 
 interface Props {
   campId: number;

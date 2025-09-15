@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useScheduleSelection } from "@/modules/schedule/hooks/use-schedule-selection.ts";
 import { useLessonModal } from "@/modules/schedule/hooks/use-lesson-modal.tsx";
 
-import { Box } from "@mui/material";
+import { Box, Dialog, DialogContent } from "@mui/material";
 import Schedule, {
   type ViewModeType,
 } from "@/modules/schedule/components/Schedule.tsx";

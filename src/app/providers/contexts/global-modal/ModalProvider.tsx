@@ -33,7 +33,6 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
 
   const handleConfirm = () => {
     modalOptions?.onConfirm?.();
-    closeModal();
   };
 
   const handleCancel = () => {
@@ -95,8 +94,13 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
                 </Button>
               )}
               {modalOptions.showConfirmButton !== false && (
-                <Button variant="contained" onClick={handleConfirm}>
-                  Подтвердить
+                <Button
+                  form={modalOptions?.formId}
+                  type={modalOptions?.formId ? "submit" : "button"}
+                  variant="contained"
+                  onClick={handleConfirm}
+                >
+                  {modalOptions?.formId ? "Сохранить" : "Подтвердить"}
                 </Button>
               )}
             </Stack>

@@ -72,7 +72,6 @@ export default function Schedule({
 
     if (!target) return;
 
-    console.log(target.dataset.slotTime, target.dataset.entityType);
     const startDate = dayjs(target.dataset.slotTime);
     openSessionModal({
       startDate: startDate,

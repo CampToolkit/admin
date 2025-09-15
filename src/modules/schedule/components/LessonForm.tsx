@@ -1,5 +1,5 @@
 import { Box, Grid } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 import { useFormik } from "formik";
 import { Dayjs } from "dayjs";
 import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type.ts";
@@ -43,8 +43,9 @@ export default function LessonForm(props: LessonFormProps) {
     initialValues,
     onSubmit,
   });
+
   return (
-    <Box component="form" id={formId}>
+    <Box component="form" id={formId} onSubmit={formik.handleSubmit}>
       <Grid container spacing={2}>
         <Grid size={6}>
           <CustomSelect
@@ -78,7 +79,7 @@ export default function LessonForm(props: LessonFormProps) {
           />
         </Grid>
         <Grid size={6}>
-          <DatePicker
+          <DateTimePicker
             label="окончание"
             name="endDate"
             value={formik.values.endDate}

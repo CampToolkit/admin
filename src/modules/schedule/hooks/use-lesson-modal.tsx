@@ -44,8 +44,9 @@ export function useLessonModal({ campId, onClose }: UseSessionModalProps) {
 
     openModal({
       content,
-      showConfirmButton: false,
-      showCancelButton: false,
+      showConfirmButton: true,
+      showCancelButton: true,
+      formId: formData.formId,
     });
   };
 
