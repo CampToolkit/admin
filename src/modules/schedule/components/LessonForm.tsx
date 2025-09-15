@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box, FormControl, Grid, InputLabel } from "@mui/material";
 
 import { useFormik } from "formik";
 import { Dayjs } from "dayjs";
@@ -48,32 +48,14 @@ export default function LessonForm(props: LessonFormProps) {
     <Box component="form" id={formId} onSubmit={formik.handleSubmit}>
       <Grid container spacing={2}>
         <Grid size={6}>
-          <CustomSelect
-            label="тип тренировки"
-            options={lessonTypeOptions?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
-            name="lessonTypeId"
-            value={formik.values.lessonTypeId}
-            onChange={formik.handleChange}
-          />
-        </Grid>
-        <Grid size={6}>
-          <CustomSelect
-            label="тип активности"
-            options={activityTypeOptions?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
-            name="activityTypeId"
-            value={formik.values.activityTypeId}
-            onChange={formik.handleChange}
-          />
-        </Grid>
-        <Grid size={6}>
           <DateTimePicker
             label="начало"
+            sx={{ width: "100%" }}
+            slotProps={{
+              textField: {
+                size: "small",
+              },
+            }}
             name="startDate"
             value={formik.values.startDate}
           />
@@ -81,35 +63,126 @@ export default function LessonForm(props: LessonFormProps) {
         <Grid size={6}>
           <DateTimePicker
             label="окончание"
+            sx={{ width: "100%" }}
+            slotProps={{
+              textField: {
+                size: "small",
+              },
+            }}
             name="endDate"
             value={formik.values.endDate}
           />
         </Grid>
+
         <Grid size={6}>
-          <CustomSelect
-            displayEmpty={true}
-            label="группа"
-            options={groupOptions?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
-            name="groupId"
-            value={formik.values.groupId}
-            onChange={formik.handleChange}
-          />
+          <FormControl fullWidth>
+            <InputLabel
+              id="session-type-label"
+              sx={{
+                backgroundColor: "background.paper",
+                px: 1,
+                transform: "translate(14px, -9px) scale(0.75)",
+                "&.Mui-focused": {
+                  color: "primary.main",
+                },
+              }}
+            >
+              тип тренировки
+            </InputLabel>
+            <CustomSelect
+              sx={{ width: "100%" }}
+              options={lessonTypeOptions?.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+              name="lessonTypeId"
+              value={formik.values.lessonTypeId}
+              onChange={formik.handleChange}
+            />
+          </FormControl>
         </Grid>
         <Grid size={6}>
-          <CustomSelect
-            displayEmpty={true}
-            label="тренер"
-            options={coachOptions?.map((item) => ({
-              label: `${item.lastName} ${item.firstName.at(0)}.${item.patrName.at(0)}.`,
-              value: item.id,
-            }))}
-            name="coachId"
-            value={formik.values.activityTypeId}
-            onChange={formik.handleChange}
-          />
+          <FormControl fullWidth>
+            <InputLabel
+              id="session-type-label"
+              sx={{
+                backgroundColor: "background.paper",
+                px: 1,
+                transform: "translate(14px, -9px) scale(0.75)",
+                "&.Mui-focused": {
+                  color: "primary.main",
+                },
+              }}
+            >
+              тип активности
+            </InputLabel>
+            <CustomSelect
+              sx={{ width: "100%" }}
+              options={activityTypeOptions?.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+              name="activityTypeId"
+              value={formik.values.activityTypeId}
+              onChange={formik.handleChange}
+            />
+          </FormControl>
+        </Grid>
+        <Grid size={6}>
+          <FormControl fullWidth>
+            <InputLabel
+              id="session-type-label"
+              sx={{
+                backgroundColor: "background.paper",
+                px: 1,
+                transform: "translate(14px, -9px) scale(0.75)",
+                "&.Mui-focused": {
+                  color: "primary.main",
+                },
+              }}
+            >
+              группа
+            </InputLabel>
+            <CustomSelect
+              sx={{ width: "100%" }}
+              displayEmpty={true}
+              options={groupOptions?.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+              name="groupId"
+              value={formik.values.groupId}
+              onChange={formik.handleChange}
+            />
+          </FormControl>
+        </Grid>
+        <Grid size={6}>
+          <FormControl fullWidth>
+            <InputLabel
+              id="session-type-label"
+              sx={{
+                backgroundColor: "background.paper",
+                px: 1,
+                transform: "translate(14px, -9px) scale(0.75)",
+                "&.Mui-focused": {
+                  color: "primary.main",
+                },
+              }}
+            >
+              тренер
+            </InputLabel>
+            <CustomSelect
+              sx={{ width: "100%" }}
+              displayEmpty={true}
+              options={coachOptions?.map((item) => ({
+                label: `${item.lastName} ${item.firstName.at(0)}.${item.patrName.at(0)}.`,
+                value: item.id,
+              }))}
+              name="coachId"
+              value={formik.values.activityTypeId}
+              onChange={formik.handleChange}
+            />
+          </FormControl>
         </Grid>
       </Grid>
     </Box>

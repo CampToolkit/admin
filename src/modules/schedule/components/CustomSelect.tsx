@@ -5,6 +5,7 @@ import {
   Typography,
   type SelectChangeEvent,
 } from "@mui/material";
+import type { SxProps, Theme } from "@mui/system";
 
 interface Props<T> {
   options: {
@@ -14,8 +15,9 @@ interface Props<T> {
   name?: string;
   value: T;
   onChange: (e: SelectChangeEvent<T>) => void;
-  label: string;
+  label?: string;
   displayEmpty?: boolean;
+  sx?: SxProps<Theme>;
 }
 
 export default function CustomSelect<T extends string | number>({
@@ -25,6 +27,7 @@ export default function CustomSelect<T extends string | number>({
   label,
   name = "",
   displayEmpty = false,
+  sx = {},
 }: Props<T>) {
   return (
     <Box>
@@ -37,6 +40,7 @@ export default function CustomSelect<T extends string | number>({
         size="small"
         sx={{
           minWidth: "200px",
+          ...sx,
         }}
         name={name}
       >
