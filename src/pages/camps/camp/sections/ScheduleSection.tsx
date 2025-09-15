@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useScheduleSelection } from "@/modules/schedule/hooks/use-schedule-selection.ts";
 import { useLessonModal } from "@/modules/schedule/hooks/use-lesson-modal.tsx";
 
-import { Box, Dialog, DialogContent } from "@mui/material";
+import { Box } from "@mui/material";
 import Schedule, {
   type ViewModeType,
 } from "@/modules/schedule/components/Schedule.tsx";
@@ -40,12 +40,12 @@ const VIEW_OPTIONS: {
   currentSelectLabel: string;
 }[] = [
   {
-    value: "byGroup",
+    value: "groups",
     label: "Расписание группы",
     currentSelectLabel: "Группа",
   },
   {
-    value: "byLocation",
+    value: "auditorium",
     label: "Расписание локации",
     currentSelectLabel: "Локация",
   },
@@ -56,7 +56,7 @@ export default function ScheduleSection() {
 
   const { view, selection } = useScheduleSelection({
     campId: Number(campId),
-    initialViewMode: "byGroup",
+    initialViewMode: "groups",
   });
 
   const { open } = useLessonModal({
@@ -122,7 +122,7 @@ export default function ScheduleSection() {
                   name: "младшая",
                 } as Group,
               ],
-              auditorium: { id: 2, name: "лед" },
+              auditorium: { id: 5, name: "лед" },
             } as Lesson,
             {
               id: 2,
@@ -135,20 +135,20 @@ export default function ScheduleSection() {
                   name: "старшая",
                 } as Group,
               ],
-              auditorium: { id: 1, name: "офп" },
+              auditorium: { id: 5, name: "офп" },
             } as Lesson,
             {
               id: 7,
               campId: 1,
-              startDate: "2025-09-10 12:00",
-              endDate: "2025-09-10 13:00",
+              startDate: "2025-09-10 12:30",
+              endDate: "2025-09-10 13:30",
               groups: [
                 {
                   id: 3,
                   name: "средняя",
                 } as Group,
               ],
-              auditorium: { id: 1, name: "офп" },
+              auditorium: { id: 5, name: "лед" },
             } as Lesson,
           ]}
           viewMode={view.current}

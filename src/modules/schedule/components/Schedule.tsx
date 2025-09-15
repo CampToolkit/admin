@@ -1,8 +1,8 @@
-import { Grid, Paper, Typography, Box } from "@mui/material";
+import type { MouseEvent } from "react";
 import dayjs, { type Dayjs } from "dayjs";
-import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.ts";
+import { Grid, Paper, Typography, Box } from "@mui/material";
 
-import type { Lesson } from "@/shared/api/lesson/LessonApi.type";
+import LessonCard from "@/modules/schedule/components/LessonCard.tsx";
 import { groupSessionByColumns } from "@/modules/schedule/utils/group-session-by-columns.ts";
 
 import {
@@ -12,13 +12,16 @@ import {
 } from "../constants/time-table.const";
 import { calcLessonPosition } from "@/modules/schedule/utils/calc-lesson-position.ts";
 
-import LessonCard from "@/modules/schedule/components/LessonCard.tsx";
+import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.ts";
 
-import type { MouseEvent } from "react";
 import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
+import type { Lesson } from "@/shared/api/lesson/LessonApi.type";
 import type { LessonFormValues } from "@/modules/schedule/components/LessonForm.tsx";
 
-export type ViewModeType = "byLocation" | "byGroup";
+export type ViewModeType = keyof Pick<
+  Lesson,
+  "auditorium" | "groups" | "coach"
+>;
 
 interface ScheduleProps {
   lessons: Lesson[];
@@ -63,7 +66,7 @@ export default function Schedule({
     },
   });
 
-  const groupedSessions = groupSessionByColumns(lessons, "auditorium");
+  const groupedSessions = groupSessionByColumns(lessons, viewMode);
 
   const createSession = (e: MouseEvent<HTMLDivElement>) => {
     const target = (e.target as HTMLDivElement).closest(

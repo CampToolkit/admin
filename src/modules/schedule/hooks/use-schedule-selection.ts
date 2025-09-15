@@ -35,14 +35,14 @@ export function useScheduleSelection({ campId, initialViewMode }: Args) {
   const { state: campLocations } = useCampLocationsByCamp(campId);
 
   const mapping: MappingViewModeType = {
-    byGroup: {
+    groups: {
       list: groups,
       columns: {
         type: "campLocation",
         list: campLocations,
       },
     },
-    byLocation: {
+    auditorium: {
       list: campLocations,
       columns: {
         type: "group",
