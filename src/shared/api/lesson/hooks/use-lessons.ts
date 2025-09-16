@@ -6,7 +6,7 @@ export function useLessons(campId: number) {
   const [state, setState] = useState<Lesson[]>([]);
 
   const fetch = useCallback(async () => {
-    const data = await LessonApi.getByCamp(campId);
+    const data = await LessonApi.getAll({ campId });
     setState(data);
   }, []);
 

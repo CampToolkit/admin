@@ -14,9 +14,6 @@ import {
   type RareLessonFormValues,
 } from "@/modules/schedule/utils/prepareLessonFormValues.ts";
 
-import type { Group } from "@/shared/api/group/GroupApi.type.ts";
-import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
-
 import { useActivityType } from "@/pages/camps/hooks/use-activity-type.ts";
 import { useLessonType } from "@/modules/schedule/hooks/use-lesson-type.ts";
 

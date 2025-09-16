@@ -17,10 +17,11 @@ import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.
 import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
 import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
 import type { LessonFormValues } from "./lesson-form/lesson-form.type.ts";
+import { useGroupSession } from "@/modules/schedule/hooks/use-group-session.hook.ts";
 
 export type ViewModeType = keyof Pick<
   Lesson,
-  "auditorium" | "groups" | "coach"
+  "auditorium" | "groups" | "coaches"
 >;
 
 interface ScheduleProps {
@@ -45,8 +46,8 @@ export default function Schedule({
   columns,
   openSessionModal,
 }: ScheduleProps) {
-  const groupedSessions = groupSessionByColumns(lessons, viewMode);
-  console.log(lessons);
+  const groupedSessions = useGroupSession(lessons, viewMode);
+  console.log(groupedSessions);
 
   const hourSlots = generateTimeSlots({
     date: CURRENT_DATE,

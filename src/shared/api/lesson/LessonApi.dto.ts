@@ -10,7 +10,7 @@ export interface CreateLessonDto {
 // eslint-disable-next-line
 export interface UpdateLessonDto extends Partial<CreateLessonDto> {}
 
-export interface GetLessonDto {
+export interface GetLessonDto extends Record<string, unknown> {
   campId: number;
   startDate?: string;
   endDate?: string;

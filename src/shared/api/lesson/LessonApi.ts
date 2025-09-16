@@ -1,12 +1,3 @@
-import { CampEntityApi } from "@/shared/api/api-classes/CampEntityApi.ts";
-import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
-import type {
-  CreateLessonDto,
-  UpdateLessonDto,
-} from "@/shared/api/lesson/LessonApi.dto.ts";
+import { CampLessonApi } from "@/shared/api/api-classes/LessonApi.ts";
 
-export const LessonApi = new CampEntityApi<
-  Lesson,
-  CreateLessonDto,
-  UpdateLessonDto
->("/lesson");
+export const LessonApi = new CampLessonApi("/lesson");
