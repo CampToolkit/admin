@@ -12,9 +12,19 @@ interface Args {
   initialViewMode: ViewModeType;
 }
 
+export type ScheduleColumns =
+  | {
+      type: "campLocation";
+      list: CampsLocation[];
+    }
+  | {
+      type: "group";
+      list: Group[];
+    };
+
 type MappingViewModeType = Record<
   ViewModeType,
-  { list: (Group | CampsLocation)[]; columns: (Group | CampsLocation)[] }
+  { list: (Group | CampsLocation)[]; columns: ScheduleColumns }
 >;
 
 export function useScheduleSelection({ campId, initialViewMode }: Args) {
@@ -24,14 +34,21 @@ export function useScheduleSelection({ campId, initialViewMode }: Args) {
   const { state: groups } = useGroupsInCamp(campId);
   const { state: campLocations } = useCampLocationsByCamp(campId);
 
+  // todo добавить coach
   const mapping: MappingViewModeType = {
-    byGroup: {
+    groups: {
       list: groups,
-      columns: campLocations,
+      columns: {
+        type: "campLocation",
+        list: campLocations,
+      },
     },
-    byLocation: {
+    auditorium: {
       list: campLocations,
-      columns: groups,
+      columns: {
+        type: "group",
+        list: groups,
+      },
     },
   };
 
@@ -53,7 +70,7 @@ export function useScheduleSelection({ campId, initialViewMode }: Args) {
       set: setViewMode,
     },
     selection: {
-      current: selectedId,
+      currentId: selectedId,
       set: setSelectedId,
       list,
       columns: columns,

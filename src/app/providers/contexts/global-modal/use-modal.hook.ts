@@ -7,6 +7,7 @@ export type ModalOptions = {
   onCancel?: () => void;
   showConfirmButton?: boolean;
   showCancelButton?: boolean;
+  formId?: string;
 };
 
 type ModalContextType = {
@@ -15,8 +16,7 @@ type ModalContextType = {
 };
 
 export const ModalContext = createContext<ModalContextType | undefined>(
-  // eslint-disable-next-line
-  undefined
+  undefined,
 );
 
 export const useModal = () => {

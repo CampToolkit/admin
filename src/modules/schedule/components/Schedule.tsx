@@ -1,37 +1,53 @@
+import type { MouseEvent } from "react";
+import dayjs, { type Dayjs } from "dayjs";
 import { Grid, Paper, Typography, Box } from "@mui/material";
-import dayjs from "dayjs";
+
+import LessonCard from "@/modules/schedule/components/LessonCard.tsx";
+import { groupSessionByColumns } from "@/modules/schedule/utils/group-session-by-columns.ts";
+
+import {
+  SLOT_HEIGHT,
+  SLOTS_AMOUNT_IN_HOUR,
+  START_HOUR,
+} from "../constants/time-table.const";
+import { calcLessonPosition } from "@/modules/schedule/utils/calc-lesson-position.ts";
+
 import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.ts";
-import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
 
-interface Event {
-  id: string;
-  title: string;
-  start: Date;
-  end: Date;
-  groupId: string;
-  locationId: string;
-}
+import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
+import type { Lesson } from "@/shared/api/lesson/LessonApi.type";
+import type { LessonFormValues } from "@/modules/schedule/components/LessonForm.tsx";
 
-export type ViewModeType = "byLocation" | "byGroup";
+export type ViewModeType = keyof Pick<
+  Lesson,
+  "auditorium" | "groups" | "coach"
+>;
 
-interface ScheduleProps<T extends Entity> {
-  events: Event[];
+interface ScheduleProps {
+  lessons: Lesson[];
   viewMode: ViewModeType;
   selectedId: number;
-  columns: T[];
+  columns: ScheduleColumns;
+  openSessionModal: (
+    value: {
+      startDate: Dayjs;
+      endDate: Dayjs;
+    } & Partial<Omit<LessonFormValues, "startDate" | "endDate">>,
+  ) => void;
 }
 
 const CURRENT_DATE = dayjs();
-const SLOT_HEIGHT = 20;
-export default function Schedule<T extends Entity & { name: string }>({
-  events,
+
+export default function Schedule({
+  lessons,
   viewMode,
   selectedId,
   columns,
-}: ScheduleProps<T>) {
+  openSessionModal,
+}: ScheduleProps) {
   const hourSlots = generateTimeSlots({
     date: CURRENT_DATE,
-    startHour: 7,
+    startHour: START_HOUR,
     endHour: 21,
     step: {
       value: 1,
@@ -41,7 +57,7 @@ export default function Schedule<T extends Entity & { name: string }>({
 
   const minuteSlots = generateTimeSlots({
     date: CURRENT_DATE,
-    startHour: 7,
+    startHour: START_HOUR,
     endHour: 21,
     endMinute: 45,
     step: {
@@ -49,6 +65,22 @@ export default function Schedule<T extends Entity & { name: string }>({
       unit: "minute",
     },
   });
+
+  const groupedSessions = groupSessionByColumns(lessons, viewMode);
+
+  const createSession = (e: MouseEvent<HTMLDivElement>) => {
+    const target = (e.target as HTMLDivElement).closest(
+      "[data-slot-time]",
+    ) as HTMLDivElement;
+
+    if (!target) return;
+
+    const startDate = dayjs(target.dataset.slotTime);
+    openSessionModal({
+      startDate: startDate,
+      endDate: startDate.add(1, "hour"),
+    });
+  };
 
   return (
     <Box sx={{ paddingInline: 2, paddingBlockEnd: 2 }}>
@@ -62,7 +94,7 @@ export default function Schedule<T extends Entity & { name: string }>({
               key={time.format("HH:mm")}
               sx={{
                 p: 1,
-                height: SLOT_HEIGHT * 4,
+                height: SLOT_HEIGHT * SLOTS_AMOUNT_IN_HOUR,
                 textAlign: "center",
                 border: "1px solid #e0e0e0",
               }}
@@ -72,26 +104,47 @@ export default function Schedule<T extends Entity & { name: string }>({
           ))}
         </Grid>
 
-        {columns.map((column, index) => (
-          <Grid size={10 / columns.length} key={index}>
+        {columns.list.map((column, index) => (
+          <Grid size={10 / columns.list.length} key={index}>
             <Paper
               sx={{ p: 1, textAlign: "center", backgroundColor: "#f5f5f5" }}
             >
               <Typography variant="subtitle1">{column.name}</Typography>
             </Paper>
-            {minuteSlots.map((time, index) => (
-              <Paper
-                key={`${column}-${time.format("HH:mm")}`}
-                sx={{
-                  p: 1,
-                  height: SLOT_HEIGHT,
-                  borderTop: "1px solid",
-                  borderTopColor:
-                    time.minute() === 0 && index > 0 ? "#666" : "#e0e0e0",
-                  borderRadius: 0,
-                }}
-              ></Paper>
-            ))}
+            <Box
+              sx={{
+                position: "relative",
+              }}
+              onClick={createSession}
+            >
+              {minuteSlots.map((time, index) => (
+                <Paper
+                  key={`${column}-${time.format("HH:mm")}`}
+                  sx={{
+                    p: 1,
+                    height: SLOT_HEIGHT,
+                    borderTop: "1px solid",
+                    borderTopColor:
+                      time.minute() === 0 && index > 0 ? "#666" : "#e0e0e0",
+                    borderRadius: 0,
+                    cursor: "pointer",
+                  }}
+                  data-slot-time={time.toISOString()}
+                  data-entity-type={columns.type}
+                  data-entity-id={column.id}
+                ></Paper>
+              ))}
+              {groupedSessions[column.id]?.map((session) => (
+                <LessonCard
+                  key={session.id}
+                  startDate={dayjs(session.startDate)}
+                  groupName={session.groups.join(", ")}
+                  coachName={"coach"}
+                  campLocationName={"лед"}
+                  position={calcLessonPosition(session)}
+                />
+              ))}
+            </Box>
           </Grid>
         ))}
       </Grid>
