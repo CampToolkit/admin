@@ -7,21 +7,14 @@ import AddLocationToCampButton from "@/pages/camps/camp/components/call-modal-bu
 
 export default function LocationsSection() {
   const { campId } = useParams();
-  const { locations, refreshCampLocations } = useCampLocations();
+  const { state, fetch } = useCampLocations();
 
   return (
     <div>
       <TabHeader>
-        <AddLocationToCampButton
-          campId={Number(campId)}
-          onDone={refreshCampLocations}
-        />
+        <AddLocationToCampButton campId={Number(campId)} onDone={fetch} />
       </TabHeader>
-      <LocationsTable
-        campId={Number(campId)}
-        list={locations}
-        onDone={refreshCampLocations}
-      />
+      <LocationsTable campId={Number(campId)} list={state} onDone={fetch} />
     </div>
   );
 }

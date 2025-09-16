@@ -5,8 +5,8 @@ import { Dayjs } from "dayjs";
 import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type.ts";
 import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
 import type { Group } from "@/shared/api/group/GroupApi.type.ts";
-import type { LessonType } from "@/shared/api/LessonTypeApi.type.ts";
-import CustomSelect from "@/modules/schedule/components/CustomSelect.tsx";
+import type { LessonType } from "@/shared/api/lesson-type/LessonTypeApi.type.ts";
+import CustomSelect from "@/modules/schedule/ui/CustomSelect.tsx";
 import { DateTimePicker } from "@mui/x-date-pickers";
 
 export interface LessonFormValues {
@@ -39,10 +39,20 @@ export default function LessonForm(props: LessonFormProps) {
     coachOptions,
     groupOptions,
   } = props;
+
   const formik = useFormik<LessonFormValues>({
     initialValues,
     onSubmit,
   });
+
+  const inputLabelStyles = {
+    backgroundColor: "background.paper",
+    px: 1,
+    transform: "translate(14px, -9px) scale(0.75)",
+    "&.Mui-focused": {
+      color: "primary.main",
+    },
+  };
 
   return (
     <Box component="form" id={formId} onSubmit={formik.handleSubmit}>
@@ -76,17 +86,7 @@ export default function LessonForm(props: LessonFormProps) {
 
         <Grid size={6}>
           <FormControl fullWidth>
-            <InputLabel
-              id="session-type-label"
-              sx={{
-                backgroundColor: "background.paper",
-                px: 1,
-                transform: "translate(14px, -9px) scale(0.75)",
-                "&.Mui-focused": {
-                  color: "primary.main",
-                },
-              }}
-            >
+            <InputLabel id="session-type-label" sx={inputLabelStyles}>
               тип тренировки
             </InputLabel>
             <CustomSelect
@@ -103,17 +103,7 @@ export default function LessonForm(props: LessonFormProps) {
         </Grid>
         <Grid size={6}>
           <FormControl fullWidth>
-            <InputLabel
-              id="session-type-label"
-              sx={{
-                backgroundColor: "background.paper",
-                px: 1,
-                transform: "translate(14px, -9px) scale(0.75)",
-                "&.Mui-focused": {
-                  color: "primary.main",
-                },
-              }}
-            >
+            <InputLabel id="session-type-label" sx={inputLabelStyles}>
               тип активности
             </InputLabel>
             <CustomSelect
@@ -130,17 +120,7 @@ export default function LessonForm(props: LessonFormProps) {
         </Grid>
         <Grid size={6}>
           <FormControl fullWidth>
-            <InputLabel
-              id="session-type-label"
-              sx={{
-                backgroundColor: "background.paper",
-                px: 1,
-                transform: "translate(14px, -9px) scale(0.75)",
-                "&.Mui-focused": {
-                  color: "primary.main",
-                },
-              }}
-            >
+            <InputLabel id="session-type-label" sx={inputLabelStyles}>
               группа
             </InputLabel>
             <CustomSelect
@@ -158,17 +138,7 @@ export default function LessonForm(props: LessonFormProps) {
         </Grid>
         <Grid size={6}>
           <FormControl fullWidth>
-            <InputLabel
-              id="session-type-label"
-              sx={{
-                backgroundColor: "background.paper",
-                px: 1,
-                transform: "translate(14px, -9px) scale(0.75)",
-                "&.Mui-focused": {
-                  color: "primary.main",
-                },
-              }}
-            >
+            <InputLabel id="session-type-label" sx={inputLabelStyles}>
               тренер
             </InputLabel>
             <CustomSelect
@@ -179,7 +149,7 @@ export default function LessonForm(props: LessonFormProps) {
                 value: item.id,
               }))}
               name="coachId"
-              value={formik.values.activityTypeId}
+              value={formik.values.coachId}
               onChange={formik.handleChange}
             />
           </FormControl>

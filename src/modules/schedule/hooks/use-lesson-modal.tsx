@@ -1,11 +1,11 @@
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
-import LessonForm from "../components/LessonForm.tsx";
+import LessonForm from "@/modules/schedule/ui/LessonForm.tsx";
 
 import type {
   LessonFormValues,
   LessonFormProps,
-} from "../components/LessonForm.tsx";
-import type { LessonType } from "@/shared/api/LessonTypeApi.type.ts";
+} from "@/modules/schedule/ui/LessonForm.tsx";
+import type { LessonType } from "@/shared/api/lesson-type/LessonTypeApi.type.ts";
 import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type.ts";
 import type { Group } from "@/shared/api/group/GroupApi.type.ts";
 import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";

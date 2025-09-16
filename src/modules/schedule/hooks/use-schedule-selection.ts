@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import type { ViewModeType } from "@/modules/schedule/components/Schedule.tsx";
+import type { ViewModeType } from "@/modules/schedule/ui/Schedule.tsx";
 
 import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
 import { useCampLocationsByCamp } from "@/pages/camps/hooks/use-camp-locations-by-camp.hook.ts";

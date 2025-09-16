@@ -2,21 +2,21 @@ import type { MouseEvent } from "react";
 import dayjs, { type Dayjs } from "dayjs";
 import { Grid, Paper, Typography, Box } from "@mui/material";
 
-import LessonCard from "@/modules/schedule/components/LessonCard.tsx";
+import LessonCard from "@/modules/schedule/ui/LessonCard.tsx";
 import { groupSessionByColumns } from "@/modules/schedule/utils/group-session-by-columns.ts";
 
 import {
   SLOT_HEIGHT,
   SLOTS_AMOUNT_IN_HOUR,
   START_HOUR,
-} from "../constants/time-table.const";
+} from "../constants/time-table.const.ts";
 import { calcLessonPosition } from "@/modules/schedule/utils/calc-lesson-position.ts";
 
 import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.ts";
 
 import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
-import type { Lesson } from "@/shared/api/lesson/LessonApi.type";
-import type { LessonFormValues } from "@/modules/schedule/components/LessonForm.tsx";
+import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
+import type { LessonFormValues } from "@/modules/schedule/ui/LessonForm.tsx";
 
 export type ViewModeType = keyof Pick<
   Lesson,

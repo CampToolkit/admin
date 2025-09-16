@@ -6,25 +6,26 @@ import { useLessonModal } from "@/modules/schedule/hooks/use-lesson-modal.tsx";
 import { Box } from "@mui/material";
 import Schedule, {
   type ViewModeType,
-} from "@/modules/schedule/components/Schedule.tsx";
-import CustomSelect from "@/modules/schedule/components/CustomSelect.tsx";
+} from "@/modules/schedule/ui/Schedule.tsx";
+import CustomSelect from "@/modules/schedule/ui/CustomSelect.tsx";
 
 import {
   prepareLessonFormValues,
   type RareLessonFormValues,
 } from "@/modules/schedule/utils/prepareLessonFormValues.ts";
 
-import type { Group } from "@/shared/api/group/GroupApi.type";
+import type { Group } from "@/shared/api/group/GroupApi.type.ts";
 import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
-import type { LessonType } from "@/shared/api/LessonTypeApi.type.ts";
-import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type";
+
 import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
 import { useActivityType } from "@/pages/camps/hooks/use-activity-type.ts";
+import { useLessonType } from "@/modules/schedule/hooks/use-lesson-type.ts";
+
+import { useCampLocationsByCamp } from "@/pages/camps/hooks/use-camp-locations-by-camp.hook.ts";
+import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
+import { useCoach } from "@/pages/camps/hooks/use-coach.ts";
 
 const options = {
-  lessonTypeOptions: [{ id: 1, name: "lessonTypeOptions" } as LessonType],
-  activityTypeOptions: [{ id: 1, name: "activityTypeOptions" } as ActivityType],
-  groupOptions: [{ id: 1, name: "groupOptions" } as Group],
   coachOptions: [
     {
       id: 1,
@@ -65,10 +66,22 @@ export default function ScheduleSection() {
   });
 
   const { state: activityTypes } = useActivityType();
+  const { state: lessonTypes } = useLessonType();
+  const { state: campLocations } = useCampLocationsByCamp(Number(campId));
+  const { state: groups } = useGroupsInCamp(Number(campId));
+  const { state: coaches } = useCoach(Number(campId));
 
   const callLessonModal = (data: RareLessonFormValues) => {
     if (activityTypes.length > 0) {
       data.activityTypeId ??= activityTypes[0].id;
+    }
+
+    if (lessonTypes.length > 0) {
+      data.lessonTypeId ??= lessonTypes[0].id;
+    }
+
+    if (campLocations.length > 0) {
+      data.auditoriumId ??= campLocations[0].id;
     }
 
     const formInitialValues = prepareLessonFormValues(data);
@@ -76,6 +89,8 @@ export default function ScheduleSection() {
       options: {
         ...options,
         activityTypeOptions: activityTypes,
+        lessonTypeOptions: lessonTypes,
+        groupOptions: groups,
       },
       formData: {
         formId: "createAndEditLessonFormId",
