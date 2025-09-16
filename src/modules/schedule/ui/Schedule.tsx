@@ -16,7 +16,7 @@ import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.
 
 import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
 import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
-import type { LessonFormValues } from "@/modules/schedule/ui/lesson-form/LessonForm.tsx";
+import type { LessonFormValues } from "./lesson-form/lesson-form.type.ts";
 
 export type ViewModeType = keyof Pick<
   Lesson,
@@ -138,7 +138,7 @@ export default function Schedule({
                 <LessonCard
                   key={session.id}
                   startDate={dayjs(session.startDate)}
-                  groupName={session.groups.join(", ")}
+                  groupName={session.groups.map((item) => item.name).join(", ")}
                   coachName={"coach"}
                   campLocationName={"лед"}
                   position={calcLessonPosition(session)}

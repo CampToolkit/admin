@@ -84,6 +84,25 @@ export default function LessonForm(props: LessonFormProps) {
             />
           </FormControl>
         </Grid>
+
+        <Grid size={6}>
+          <FormControl fullWidth>
+            <InputLabel id="session-type-label" sx={inputLabelStyles}>
+              локация
+            </InputLabel>
+            <CustomSelect
+              sx={{ width: "100%" }}
+              displayEmpty={true}
+              options={options.locationOptions}
+              name="auditoriumId"
+              value={formik.values.auditoriumId}
+              onChange={formik.handleChange}
+            />
+          </FormControl>
+        </Grid>
+
+        <Grid size={6}></Grid>
+
         <Grid size={6}>
           <FormControl fullWidth>
             <InputLabel id="session-type-label" sx={inputLabelStyles}>

@@ -12,6 +12,7 @@ export interface LessonFormValues {
 }
 
 export interface LessonFormOptions {
+  locationOptions: SelectOption<number>[];
   lessonTypeOptions: SelectOption<number>[];
   activityTypeOptions: SelectOption<number>[];
   groupOptions: SelectOption<number>[];
