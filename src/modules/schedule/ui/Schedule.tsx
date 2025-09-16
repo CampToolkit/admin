@@ -45,6 +45,9 @@ export default function Schedule({
   columns,
   openSessionModal,
 }: ScheduleProps) {
+  const groupedSessions = groupSessionByColumns(lessons, viewMode);
+  console.log(lessons);
+
   const hourSlots = generateTimeSlots({
     date: CURRENT_DATE,
     startHour: START_HOUR,
@@ -65,8 +68,6 @@ export default function Schedule({
       unit: "minute",
     },
   });
-
-  const groupedSessions = groupSessionByColumns(lessons, viewMode);
 
   const createSession = (e: MouseEvent<HTMLDivElement>) => {
     const target = (e.target as HTMLDivElement).closest(

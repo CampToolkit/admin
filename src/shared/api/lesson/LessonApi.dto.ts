@@ -9,3 +9,12 @@ export interface CreateLessonDto {
 
 // eslint-disable-next-line
 export interface UpdateLessonDto extends Partial<CreateLessonDto> {}
+
+export interface GetLessonDto {
+  campId: number;
+  startDate?: string;
+  endDate?: string;
+  activityTypeId?: number;
+  auditoriumId?: number;
+  lessonTypeId?: number;
+}

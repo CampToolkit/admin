@@ -24,6 +24,7 @@ import { useCampLocationsByCamp } from "@/pages/camps/hooks/use-camp-locations-b
 import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
 import { useCoach } from "@/pages/camps/hooks/use-coach.ts";
 import { useSelectOptions } from "@/modules/schedule/hooks/use-select-options.ts";
+import { useLessons } from "@/shared/api/lesson/hooks/use-lessons.ts";
 
 const VIEW_OPTIONS: {
   value: ViewModeType;
@@ -44,6 +45,8 @@ const VIEW_OPTIONS: {
 
 export default function ScheduleSection() {
   const { campId } = useParams();
+
+  const { state: lessons } = useLessons(Number(campId));
 
   const { view, selection } = useScheduleSelection({
     campId: Number(campId),
@@ -127,47 +130,7 @@ export default function ScheduleSection() {
       </Box>
       {selection.currentId && (
         <Schedule
-          lessons={[
-            {
-              id: 1,
-              campId: 1,
-              startDate: "2025-09-10 11:00",
-              endDate: "2025-09-10 12:00",
-              groups: [
-                {
-                  id: 2,
-                  name: "младшая",
-                } as Group,
-              ],
-              auditorium: { id: 5, name: "лед" },
-            } as Lesson,
-            {
-              id: 2,
-              campId: 1,
-              startDate: "2025-09-10 12:00",
-              endDate: "2025-09-10 13:00",
-              groups: [
-                {
-                  id: 1,
-                  name: "старшая",
-                } as Group,
-              ],
-              auditorium: { id: 5, name: "офп" },
-            } as Lesson,
-            {
-              id: 7,
-              campId: 1,
-              startDate: "2025-09-10 12:30",
-              endDate: "2025-09-10 13:30",
-              groups: [
-                {
-                  id: 3,
-                  name: "средняя",
-                } as Group,
-              ],
-              auditorium: { id: 5, name: "лед" },
-            } as Lesson,
-          ]}
+          lessons={lessons}
           viewMode={view.current}
           selectedId={selection.currentId}
           columns={selection.columns}

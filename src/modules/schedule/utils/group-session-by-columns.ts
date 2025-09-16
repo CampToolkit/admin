@@ -8,7 +8,7 @@ type EntityKeys<T> = {
 export function groupSessionByColumns<K extends EntityKeys<Lesson>>(
   list: Lesson[],
   key: K,
-) {
+): Record<string, Lesson[]> {
   const grouped: Record<string, Lesson[]> = {};
 
   for (const item of list) {
