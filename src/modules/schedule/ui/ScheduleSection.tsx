@@ -7,7 +7,7 @@ import { Box } from "@mui/material";
 import Schedule, {
   type ViewModeType,
 } from "@/modules/schedule/ui/Schedule.tsx";
-import CustomSelect from "@/modules/schedule/ui/CustomSelect.tsx";
+import CustomSelect from "@/modules/schedule/ui/custom-select/CustomSelect.tsx";
 
 import {
   prepareLessonFormValues,
@@ -17,24 +17,13 @@ import {
 import type { Group } from "@/shared/api/group/GroupApi.type.ts";
 import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
 
-import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
 import { useActivityType } from "@/pages/camps/hooks/use-activity-type.ts";
 import { useLessonType } from "@/modules/schedule/hooks/use-lesson-type.ts";
 
 import { useCampLocationsByCamp } from "@/pages/camps/hooks/use-camp-locations-by-camp.hook.ts";
 import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
 import { useCoach } from "@/pages/camps/hooks/use-coach.ts";
-
-const options = {
-  coachOptions: [
-    {
-      id: 1,
-      lastName: "last",
-      firstName: "firstName",
-      patrName: "part",
-    } as Coach,
-  ],
-};
+import { useSelectOptions } from "@/modules/schedule/hooks/use-select-options.ts";
 
 const VIEW_OPTIONS: {
   value: ViewModeType;
@@ -71,6 +60,14 @@ export default function ScheduleSection() {
   const { state: groups } = useGroupsInCamp(Number(campId));
   const { state: coaches } = useCoach(Number(campId));
 
+  const options = useSelectOptions({
+    activityTypes,
+    lessonTypes,
+    campLocations,
+    groups,
+    coaches,
+  });
+
   const callLessonModal = (data: RareLessonFormValues) => {
     if (activityTypes.length > 0) {
       data.activityTypeId ??= activityTypes[0].id;
@@ -86,12 +83,7 @@ export default function ScheduleSection() {
 
     const formInitialValues = prepareLessonFormValues(data);
     open({
-      options: {
-        ...options,
-        activityTypeOptions: activityTypes,
-        lessonTypeOptions: lessonTypes,
-        groupOptions: groups,
-      },
+      options,
       formData: {
         formId: "createAndEditLessonFormId",
         initialValues: formInitialValues,

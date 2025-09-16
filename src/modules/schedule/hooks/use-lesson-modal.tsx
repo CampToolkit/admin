@@ -1,14 +1,12 @@
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
-import LessonForm from "@/modules/schedule/ui/LessonForm.tsx";
+import LessonForm, {
+  type LessonFormOptions,
+} from "@/modules/schedule/ui/lesson-form/LessonForm.tsx";
 
 import type {
   LessonFormValues,
   LessonFormProps,
-} from "@/modules/schedule/ui/LessonForm.tsx";
-import type { LessonType } from "@/shared/api/lesson-type/LessonTypeApi.type.ts";
-import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type.ts";
-import type { Group } from "@/shared/api/group/GroupApi.type.ts";
-import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
+} from "@/modules/schedule/ui/lesson-form/LessonForm.tsx";
 
 type UseSessionModalProps = {
   campId: number;
@@ -20,12 +18,7 @@ type OpenModalParams = {
     formId: string;
     initialValues: LessonFormValues;
   };
-  options: {
-    lessonTypeOptions: LessonType[];
-    activityTypeOptions: ActivityType[];
-    groupOptions: Group[];
-    coachOptions: Coach[];
-  };
+  options: LessonFormOptions;
 };
 
 export function useLessonModal({ campId, onClose }: UseSessionModalProps) {
@@ -39,7 +32,7 @@ export function useLessonModal({ campId, onClose }: UseSessionModalProps) {
 
   const open = ({ formData, options }: OpenModalParams) => {
     const content = () => (
-      <LessonForm {...formData} {...options} onSubmit={handleSubmit} />
+      <LessonForm {...formData} options={options} onSubmit={handleSubmit} />
     );
 
     openModal({

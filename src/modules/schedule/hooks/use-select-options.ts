@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 
-import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
-import type { LessonType } from "@/shared/api/lesson-type/LessonTypeApi.type.ts";
-import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type.ts";
-import type { Group } from "@/shared/api/group/GroupApi.type.ts";
-import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
+import type { CampsLocation } from "@/shared/api/location/LocationApi.type";
+import type { LessonType } from "@/shared/api/lesson-type/LessonTypeApi.type";
+import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type";
+import type { Group } from "@/shared/api/group/GroupApi.type";
+import type { Coach } from "@/shared/api/coach/CoachApi.type";
 
 interface Args {
   activityTypes: ActivityType[];
@@ -13,6 +13,7 @@ interface Args {
   groups: Group[];
   coaches: Coach[];
 }
+
 export function useSelectOptions(args: Args) {
   const { activityTypes, lessonTypes, campLocations, groups, coaches } = args;
   const activityTypeOptions = useMemo(

@@ -16,7 +16,7 @@ import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.
 
 import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
 import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
-import type { LessonFormValues } from "@/modules/schedule/ui/LessonForm.tsx";
+import type { LessonFormValues } from "@/modules/schedule/ui/lesson-form/LessonForm.tsx";
 
 export type ViewModeType = keyof Pick<
   Lesson,

@@ -1,5 +1,5 @@
 import { type Dayjs } from "dayjs";
-import type { LessonFormValues } from "@/modules/schedule/ui/LessonForm";
+import type { LessonFormValues } from "@/modules/schedule/ui/lesson-form/LessonForm.tsx";
 
 const DEFAULT_VALUES = {
   lessonTypeId: 0,

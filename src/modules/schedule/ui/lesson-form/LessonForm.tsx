@@ -1,44 +1,16 @@
-import { Box, FormControl, Grid, InputLabel } from "@mui/material";
-
 import { useFormik } from "formik";
-import { Dayjs } from "dayjs";
-import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type.ts";
-import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
-import type { Group } from "@/shared/api/group/GroupApi.type.ts";
-import type { LessonType } from "@/shared/api/lesson-type/LessonTypeApi.type.ts";
-import CustomSelect from "@/modules/schedule/ui/CustomSelect.tsx";
+
+import { Box, FormControl, Grid, InputLabel } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers";
+import CustomSelect from "@/modules/schedule/ui/custom-select/CustomSelect.tsx";
 
-export interface LessonFormValues {
-  startDate: Dayjs;
-  endDate: Dayjs;
-  lessonTypeId: number;
-  activityTypeId: number;
-  auditoriumId: number;
-  coachId: number;
-  groupId: number;
-}
-
-export type LessonFormProps = {
-  formId: string;
-  initialValues: LessonFormValues;
-  onSubmit: (values: LessonFormValues) => void;
-  lessonTypeOptions: LessonType[];
-  activityTypeOptions: ActivityType[];
-  groupOptions: Group[];
-  coachOptions: Coach[];
-};
+import type {
+  LessonFormProps,
+  LessonFormValues,
+} from "@/modules/schedule/ui/lesson-form/lesson-form.type.ts";
 
 export default function LessonForm(props: LessonFormProps) {
-  const {
-    formId,
-    initialValues,
-    onSubmit,
-    lessonTypeOptions,
-    activityTypeOptions,
-    coachOptions,
-    groupOptions,
-  } = props;
+  const { formId, initialValues, onSubmit, options } = props;
 
   const formik = useFormik<LessonFormValues>({
     initialValues,
@@ -91,10 +63,7 @@ export default function LessonForm(props: LessonFormProps) {
             </InputLabel>
             <CustomSelect
               sx={{ width: "100%" }}
-              options={lessonTypeOptions?.map((item) => ({
-                label: item.name,
-                value: item.id,
-              }))}
+              options={options.lessonTypeOptions}
               name="lessonTypeId"
               value={formik.values.lessonTypeId}
               onChange={formik.handleChange}
@@ -108,10 +77,7 @@ export default function LessonForm(props: LessonFormProps) {
             </InputLabel>
             <CustomSelect
               sx={{ width: "100%" }}
-              options={activityTypeOptions?.map((item) => ({
-                label: item.name,
-                value: item.id,
-              }))}
+              options={options.activityTypeOptions}
               name="activityTypeId"
               value={formik.values.activityTypeId}
               onChange={formik.handleChange}
@@ -126,10 +92,7 @@ export default function LessonForm(props: LessonFormProps) {
             <CustomSelect
               sx={{ width: "100%" }}
               displayEmpty={true}
-              options={groupOptions?.map((item) => ({
-                label: item.name,
-                value: item.id,
-              }))}
+              options={options.groupOptions}
               name="groupId"
               value={formik.values.groupId}
               onChange={formik.handleChange}
@@ -144,10 +107,7 @@ export default function LessonForm(props: LessonFormProps) {
             <CustomSelect
               sx={{ width: "100%" }}
               displayEmpty={true}
-              options={coachOptions?.map((item) => ({
-                label: `${item.lastName} ${item.firstName.at(0)}.${item.patrName.at(0)}.`,
-                value: item.id,
-              }))}
+              options={options.coachOptions}
               name="coachId"
               value={formik.values.coachId}
               onChange={formik.handleChange}
