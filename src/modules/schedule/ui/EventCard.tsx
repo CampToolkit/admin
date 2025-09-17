@@ -19,31 +19,21 @@ interface Props {
   groupName: string;
   coachName: string;
   campLocationName: string;
-  position: {
-    top: number;
-    height: number;
-  };
 }
 
 const PointTitle = ({ children }: { children: string }) => (
   <span style={{ color: "#666", display: "inline" }}>{children}</span>
 );
 
-export default function LessonCard(props: Props) {
-  const { startDate, coachName, campLocationName, groupName, position } = props;
+export default function EventCard(props: Props) {
+  const { startDate, coachName, campLocationName, groupName } = props;
 
   return (
-    <Card
-      variant="elevation"
-      sx={{
-        position: "absolute",
-        top: position.top,
-        height: position.height,
-      }}
-    >
+    <Card variant="elevation" sx={{ height: "100%" }}>
       <CardContent
         sx={{
           position: "relative",
+          width: "100%",
           height: "100%",
           p: "0.9em",
           fontSize: "0.9em",

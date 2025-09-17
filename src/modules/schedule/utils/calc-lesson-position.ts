@@ -7,17 +7,32 @@ import {
   START_HOUR,
 } from "../constants/time-table.const";
 
-export function calcLessonPosition(lesson: Lesson) {
-  const startDateD = dayjs(lesson.startDate);
-  const endDateD = dayjs(lesson.endDate);
+interface Props {
+  event: Lesson;
+  eventIndex: number;
+  overlapEventsAmount: number;
+}
 
-  const top = calcTopPosition(startDateD);
+export function calcLessonPosition(props: Props) {
+  const { event, eventIndex, overlapEventsAmount } = props;
+
+  const startDateD = dayjs(event.startDate);
+  const endDateD = dayjs(event.endDate);
 
   const height =
     (endDateD.hour() - startDateD.hour()) * SLOTS_AMOUNT_IN_HOUR * SLOT_HEIGHT;
+
+  const width = 95 / overlapEventsAmount;
+
+  const top = calcTopPosition(startDateD);
+
+  const left = width * eventIndex;
+
   return {
-    top: top,
-    height: height,
+    top,
+    left,
+    width,
+    height,
   };
 }
 

@@ -1,5 +1,5 @@
 import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
-import type { EntityKeys } from "@/modules/schedule/hooks/filter-union-sessions/EntityKeys.type.ts";
+import type { EntityKeys } from "@/modules/schedule/hooks/distribute-events/EntityKeys.type.ts";
 
 export function filterSessions<K extends EntityKeys<Lesson>>(
   list: Lesson[],

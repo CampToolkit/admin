@@ -104,7 +104,7 @@ export default function ScheduleForm() {
                     <Grid size={2}>
                       <FormControl fullWidth>
                         <InputLabel
-                          id="session-type-label"
+                          id="events-type-label"
                           sx={{
                             backgroundColor: "background.paper",
                             px: 1,
@@ -117,8 +117,8 @@ export default function ScheduleForm() {
                           Тип тренировки
                         </InputLabel>
                         <Select
-                          labelId="session-type-label"
-                          label="session-type"
+                          labelId="events-type-label"
+                          label="events-type"
                           name={`lessons[${index}].sessionTypeId`}
                           value={formik.values.lessons[index].sessionTypeId}
                           onChange={formik.handleChange}
