@@ -6,12 +6,10 @@ import {
   type SelectChangeEvent,
 } from "@mui/material";
 import type { SxProps, Theme } from "@mui/system";
+import type { SelectOption } from "@/modules/schedule/ui/custom-select/custom-select.type.ts";
 
 interface Props<T> {
-  options: {
-    value: T;
-    label: string;
-  }[];
+  options: SelectOption<T>[];
   name?: string;
   value: T;
   onChange: (e: SelectChangeEvent<T>) => void;

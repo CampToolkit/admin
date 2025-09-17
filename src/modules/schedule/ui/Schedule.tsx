@@ -2,30 +2,31 @@ import type { MouseEvent } from "react";
 import dayjs, { type Dayjs } from "dayjs";
 import { Grid, Paper, Typography, Box } from "@mui/material";
 
-import LessonCard from "@/modules/schedule/components/LessonCard.tsx";
-import { groupSessionByColumns } from "@/modules/schedule/utils/group-session-by-columns.ts";
+import LessonCard from "@/modules/schedule/ui/LessonCard.tsx";
 
 import {
   SLOT_HEIGHT,
   SLOTS_AMOUNT_IN_HOUR,
   START_HOUR,
-} from "../constants/time-table.const";
+} from "../constants/time-table.const.ts";
 import { calcLessonPosition } from "@/modules/schedule/utils/calc-lesson-position.ts";
 
 import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.ts";
 
 import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
-import type { Lesson } from "@/shared/api/lesson/LessonApi.type";
-import type { LessonFormValues } from "@/modules/schedule/components/LessonForm.tsx";
+import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
+import type { LessonFormValues } from "./lesson-form/lesson-form.type.ts";
+import { useUnionSessions } from "@/modules/schedule/hooks/use-union-sessions.hook.ts";
 
-export type ViewModeType = keyof Pick<
+export type EntitiesKeyType = keyof Pick<
   Lesson,
-  "auditorium" | "groups" | "coach"
+  "auditorium" | "groups" | "coaches"
 >;
 
 interface ScheduleProps {
   lessons: Lesson[];
-  viewMode: ViewModeType;
+  unionKey: EntitiesKeyType;
+  filterKey: EntitiesKeyType;
   selectedId: number;
   columns: ScheduleColumns;
   openSessionModal: (
@@ -40,11 +41,13 @@ const CURRENT_DATE = dayjs();
 
 export default function Schedule({
   lessons,
-  viewMode,
+  unionKey,
   selectedId,
   columns,
   openSessionModal,
 }: ScheduleProps) {
+  const groupedSessions = useUnionSessions(lessons, unionKey);
+
   const hourSlots = generateTimeSlots({
     date: CURRENT_DATE,
     startHour: START_HOUR,
@@ -65,8 +68,6 @@ export default function Schedule({
       unit: "minute",
     },
   });
-
-  const groupedSessions = groupSessionByColumns(lessons, viewMode);
 
   const createSession = (e: MouseEvent<HTMLDivElement>) => {
     const target = (e.target as HTMLDivElement).closest(
@@ -138,9 +139,11 @@ export default function Schedule({
                 <LessonCard
                   key={session.id}
                   startDate={dayjs(session.startDate)}
-                  groupName={session.groups.join(", ")}
-                  coachName={"coach"}
-                  campLocationName={"лед"}
+                  groupName={session.groups.map((item) => item.name).join(", ")}
+                  coachName={session.coaches
+                    .map((item) => item.lastName)
+                    .join(", ")}
+                  campLocationName={session.auditorium.name}
                   position={calcLessonPosition(session)}
                 />
               ))}

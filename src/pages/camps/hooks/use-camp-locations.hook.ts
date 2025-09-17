@@ -14,5 +14,5 @@ export const useCampLocations = () => {
     fetch();
   }, []);
 
-  return { locations: state, refreshCampLocations: fetch };
+  return { state, fetch };
 };

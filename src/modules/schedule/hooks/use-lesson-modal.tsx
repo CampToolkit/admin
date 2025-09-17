@@ -1,14 +1,11 @@
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
-import LessonForm from "../components/LessonForm.tsx";
-
+import LessonForm from "@/modules/schedule/ui/lesson-form/LessonForm.tsx";
 import type {
-  LessonFormValues,
+  LessonFormOptions,
   LessonFormProps,
-} from "../components/LessonForm.tsx";
-import type { LessonType } from "@/shared/api/LessonTypeApi.type.ts";
-import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type.ts";
-import type { Group } from "@/shared/api/group/GroupApi.type.ts";
-import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
+  LessonFormValues,
+} from "@/modules/schedule/ui/lesson-form/lesson-form.type.ts";
+import { LessonApi } from "@/shared/api/lesson/LessonApi.ts";
 
 type UseSessionModalProps = {
   campId: number;
@@ -20,26 +17,29 @@ type OpenModalParams = {
     formId: string;
     initialValues: LessonFormValues;
   };
-  options: {
-    lessonTypeOptions: LessonType[];
-    activityTypeOptions: ActivityType[];
-    groupOptions: Group[];
-    coachOptions: Coach[];
-  };
+  options: LessonFormOptions;
 };
 
 export function useLessonModal({ campId, onClose }: UseSessionModalProps) {
   const { openModal, closeModal } = useModal();
 
-  const handleSubmit: LessonFormProps["onSubmit"] = (values) => {
-    console.log("Submit:", values, "campId:", campId);
+  const handleSubmit: LessonFormProps["onSubmit"] = async (values) => {
+    const response = await LessonApi.create({
+      campId,
+      startDate: values.startDate.toISOString(),
+      endDate: values.endDate.toISOString(),
+      lessonTypeId: values.lessonTypeId,
+      activityTypeId: values.activityTypeId,
+      auditoriumId: values.auditoriumId,
+    });
+    console.log(response);
     onClose?.();
     closeModal();
   };
 
   const open = ({ formData, options }: OpenModalParams) => {
     const content = () => (
-      <LessonForm {...formData} {...options} onSubmit={handleSubmit} />
+      <LessonForm {...formData} options={options} onSubmit={handleSubmit} />
     );
 
     openModal({
