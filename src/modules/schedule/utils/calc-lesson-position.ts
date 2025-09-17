@@ -1,6 +1,7 @@
 import dayjs, { type Dayjs } from "dayjs";
 import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
 import {
+  MINUTES_IN_SLOT,
   SLOT_HEIGHT,
   SLOTS_AMOUNT_IN_HOUR,
   START_HOUR,
@@ -21,5 +22,8 @@ export function calcLessonPosition(lesson: Lesson) {
 }
 
 function calcTopPosition(time: Dayjs) {
-  return (time.hour() - START_HOUR) * SLOT_HEIGHT * SLOTS_AMOUNT_IN_HOUR;
+  return (
+    (time.hour() - START_HOUR) * SLOT_HEIGHT * SLOTS_AMOUNT_IN_HOUR +
+    (time.minute() * SLOT_HEIGHT) / MINUTES_IN_SLOT
+  );
 }
