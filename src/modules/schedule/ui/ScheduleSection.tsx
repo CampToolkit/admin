@@ -5,7 +5,7 @@ import { useLessonModal } from "@/modules/schedule/hooks/use-lesson-modal.tsx";
 
 import { Box } from "@mui/material";
 import Schedule, {
-  type ViewModeType,
+  type EntitiesKeyType,
 } from "@/modules/schedule/ui/Schedule.tsx";
 import CustomSelect from "@/modules/schedule/ui/custom-select/CustomSelect.tsx";
 
@@ -23,18 +23,18 @@ import { useCoach } from "@/pages/camps/hooks/use-coach.ts";
 import { useSelectOptions } from "@/modules/schedule/hooks/use-select-options.ts";
 import { useLessons } from "@/shared/api/lesson/hooks/use-lessons.ts";
 
-const VIEW_OPTIONS: {
-  value: ViewModeType;
+const UNION_OPTIONS: {
+  value: EntitiesKeyType;
   label: string;
   currentSelectLabel: string;
 }[] = [
   {
-    value: "groups",
+    value: "auditorium",
     label: "Расписание группы",
     currentSelectLabel: "Группа",
   },
   {
-    value: "auditorium",
+    value: "groups",
     label: "Расписание локации",
     currentSelectLabel: "Локация",
   },
@@ -47,7 +47,7 @@ export default function ScheduleSection() {
 
   const { view, selection } = useScheduleSelection({
     campId: Number(campId),
-    initialViewMode: "groups",
+    initialUnionKey: "groups",
   });
 
   const { open } = useLessonModal({
@@ -102,8 +102,8 @@ export default function ScheduleSection() {
           paddingBlockEnd: 2,
         }}
       >
-        <CustomSelect<ViewModeType>
-          options={VIEW_OPTIONS}
+        <CustomSelect<EntitiesKeyType>
+          options={UNION_OPTIONS}
           onChange={(e) => {
             view.set(e.target.value);
           }}
@@ -128,7 +128,8 @@ export default function ScheduleSection() {
       {selection.currentId && (
         <Schedule
           lessons={lessons}
-          viewMode={view.current}
+          unionKey={view.current}
+          filterKey={selection.filterKey}
           selectedId={selection.currentId}
           columns={selection.columns}
           openSessionModal={callLessonModal}

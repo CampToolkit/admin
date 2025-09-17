@@ -3,7 +3,6 @@ import dayjs, { type Dayjs } from "dayjs";
 import { Grid, Paper, Typography, Box } from "@mui/material";
 
 import LessonCard from "@/modules/schedule/ui/LessonCard.tsx";
-import { groupSessionByColumns } from "@/modules/schedule/utils/group-session-by-columns.ts";
 
 import {
   SLOT_HEIGHT,
@@ -17,16 +16,17 @@ import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.
 import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
 import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
 import type { LessonFormValues } from "./lesson-form/lesson-form.type.ts";
-import { useGroupSession } from "@/modules/schedule/hooks/use-group-session.hook.ts";
+import { useUnionSessions } from "@/modules/schedule/hooks/use-union-sessions.hook.ts";
 
-export type ViewModeType = keyof Pick<
+export type EntitiesKeyType = keyof Pick<
   Lesson,
   "auditorium" | "groups" | "coaches"
 >;
 
 interface ScheduleProps {
   lessons: Lesson[];
-  viewMode: ViewModeType;
+  unionKey: EntitiesKeyType;
+  filterKey: EntitiesKeyType;
   selectedId: number;
   columns: ScheduleColumns;
   openSessionModal: (
@@ -41,13 +41,12 @@ const CURRENT_DATE = dayjs();
 
 export default function Schedule({
   lessons,
-  viewMode,
+  unionKey,
   selectedId,
   columns,
   openSessionModal,
 }: ScheduleProps) {
-  const groupedSessions = useGroupSession(lessons, viewMode);
-  console.log(groupedSessions);
+  const groupedSessions = useUnionSessions(lessons, unionKey);
 
   const hourSlots = generateTimeSlots({
     date: CURRENT_DATE,
@@ -141,8 +140,10 @@ export default function Schedule({
                   key={session.id}
                   startDate={dayjs(session.startDate)}
                   groupName={session.groups.map((item) => item.name).join(", ")}
-                  coachName={"coach"}
-                  campLocationName={"лед"}
+                  coachName={session.coaches
+                    .map((item) => item.lastName)
+                    .join(", ")}
+                  campLocationName={session.auditorium.name}
                   position={calcLessonPosition(session)}
                 />
               ))}

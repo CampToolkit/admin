@@ -75,12 +75,12 @@ export default function LessonCard(props: Props) {
               <PointTitle>Тренер</PointTitle> {coachName}
             </Typography>
           </Grid>
-          <Grid size={12}>
+          <Grid size={6}>
             <Typography variant="body2">
               <PointTitle>Группа</PointTitle> {groupName}
             </Typography>
           </Grid>
-          <Grid size={12} p={0}>
+          <Grid size={6} p={0}>
             <Typography variant="body2">
               <PointTitle>Локация</PointTitle> {campLocationName}
             </Typography>

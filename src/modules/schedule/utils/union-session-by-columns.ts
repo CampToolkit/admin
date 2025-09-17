@@ -5,10 +5,11 @@ type EntityKeys<T> = {
   [K in keyof T]: T[K] extends Entity | Entity[] ? K : never;
 }[keyof T];
 
-export function groupSessionByColumns<K extends EntityKeys<Lesson>>(
+export function unionSessionByColumns<K extends EntityKeys<Lesson>>(
   list: Lesson[],
   key: K,
 ): Record<string, Lesson[]> {
+  // note попробовать поменять string на number
   const grouped: Record<string, Lesson[]> = {};
 
   for (const item of list) {

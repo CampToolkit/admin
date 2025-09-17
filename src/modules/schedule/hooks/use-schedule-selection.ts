@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import type { ViewModeType } from "@/modules/schedule/ui/Schedule.tsx";
+import type { EntitiesKeyType } from "@/modules/schedule/ui/Schedule.tsx";
 
 import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
 import { useCampLocationsByCamp } from "@/pages/camps/hooks/use-camp-locations-by-camp.hook.ts";
@@ -9,7 +9,7 @@ import type { Group } from "@/shared/api/group/GroupApi.type.ts";
 
 interface Args {
   campId: number;
-  initialViewMode: ViewModeType;
+  initialUnionKey: EntitiesKeyType;
 }
 
 export type ScheduleColumns =
@@ -22,39 +22,42 @@ export type ScheduleColumns =
       list: Group[];
     };
 
-type MappingViewModeType = Record<
-  ViewModeType,
-  { list: (Group | CampsLocation)[]; columns: ScheduleColumns }
+type MappingUnionKeyType = Record<
+  EntitiesKeyType,
+  | { filterKey: "groups"; list: Group[]; columns: ScheduleColumns }
+  | { filterKey: "auditorium"; list: CampsLocation[]; columns: ScheduleColumns }
 >;
 
-export function useScheduleSelection({ campId, initialViewMode }: Args) {
-  const [viewMode, setViewMode] = useState<ViewModeType>(initialViewMode);
+export function useScheduleSelection({ campId, initialUnionKey }: Args) {
+  const [unionKey, setUnionKey] = useState<EntitiesKeyType>(initialUnionKey);
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const { state: groups } = useGroupsInCamp(campId);
   const { state: campLocations } = useCampLocationsByCamp(campId);
 
   // todo добавить coach
-  const mapping: MappingViewModeType = {
+  const mapping: MappingUnionKeyType = {
     groups: {
-      list: groups,
-      columns: {
-        type: "campLocation",
-        list: campLocations,
-      },
-    },
-    auditorium: {
+      filterKey: "auditorium",
       list: campLocations,
       columns: {
         type: "group",
         list: groups,
       },
     },
+    auditorium: {
+      filterKey: "groups",
+      list: groups,
+      columns: {
+        type: "campLocation",
+        list: campLocations,
+      },
+    },
   };
 
-  const { list, columns } = useMemo(() => {
-    return mapping[viewMode];
-  }, [viewMode, groups, campLocations]);
+  const { filterKey, list, columns } = useMemo(() => {
+    return mapping[unionKey];
+  }, [unionKey, groups, campLocations]);
 
   useEffect(() => {
     if (list.length > 0) {
@@ -66,12 +69,13 @@ export function useScheduleSelection({ campId, initialViewMode }: Args) {
 
   return {
     view: {
-      current: viewMode,
-      set: setViewMode,
+      current: unionKey,
+      set: setUnionKey,
     },
     selection: {
       currentId: selectedId,
       set: setSelectedId,
+      filterKey,
       list,
       columns: columns,
     },
