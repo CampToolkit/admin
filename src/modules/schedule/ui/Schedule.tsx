@@ -16,18 +16,18 @@ import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.
 import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
 import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
 import type { LessonFormValues } from "./lesson-form/lesson-form.type.ts";
-import { useUnionSessions } from "@/modules/schedule/hooks/use-union-sessions.hook.ts";
+import { useFilterAndUnionSessions } from "@/modules/schedule/hooks/filter-union-sessions/use-filter-union-sessions.hook.ts";
 
-export type EntitiesKeyType = keyof Pick<
-  Lesson,
-  "auditorium" | "groups" | "coaches"
->;
+// todo добавить coach
+export type EntitiesKeyType = keyof Pick<Lesson, "auditorium" | "groups">;
 
 interface ScheduleProps {
   lessons: Lesson[];
   unionKey: EntitiesKeyType;
-  filterKey: EntitiesKeyType;
-  selectedId: number;
+  filter: {
+    key: EntitiesKeyType;
+    value: number;
+  };
   columns: ScheduleColumns;
   openSessionModal: (
     value: {
@@ -42,11 +42,15 @@ const CURRENT_DATE = dayjs();
 export default function Schedule({
   lessons,
   unionKey,
-  selectedId,
+  filter,
   columns,
   openSessionModal,
 }: ScheduleProps) {
-  const groupedSessions = useUnionSessions(lessons, unionKey);
+  const groupedSessions = useFilterAndUnionSessions({
+    list: lessons,
+    unionKey,
+    filter,
+  });
 
   const hourSlots = generateTimeSlots({
     date: CURRENT_DATE,

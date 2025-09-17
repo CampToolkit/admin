@@ -44,6 +44,7 @@ export default function LessonCard(props: Props) {
       <CardContent
         sx={{
           position: "relative",
+          height: "100%",
           p: "0.9em",
           fontSize: "0.9em",
           flexGrow: 2,

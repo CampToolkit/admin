@@ -129,8 +129,10 @@ export default function ScheduleSection() {
         <Schedule
           lessons={lessons}
           unionKey={view.current}
-          filterKey={selection.filterKey}
-          selectedId={selection.currentId}
+          filter={{
+            key: selection.filterKey,
+            value: selection.currentId,
+          }}
           columns={selection.columns}
           openSessionModal={callLessonModal}
         />
