@@ -1,11 +1,8 @@
 import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
-import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
 
-type EntityKeys<T> = {
-  [K in keyof T]: T[K] extends Entity | Entity[] ? K : never;
-}[keyof T];
+import type { EntityKeys } from "@/modules/schedule/hooks/filter-union-sessions/EntityKeys.type.ts";
 
-export function unionSessionByColumns<K extends EntityKeys<Lesson>>(
+export function unionSessions<K extends EntityKeys<Lesson>>(
   list: Lesson[],
   key: K,
 ): Record<string, Lesson[]> {
