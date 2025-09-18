@@ -1,8 +1,8 @@
-import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
 import dayjs from "dayjs";
+import type { Event } from "@/shared/api/event/EventApi.type.ts";
 
-export function overlapEvents(data: Record<string, Lesson[]>) {
-  const newData: Record<string, Lesson[][]> = {};
+export function overlapEvents(data: Record<string, Event[]>) {
+  const newData: Record<string, Event[][]> = {};
 
   for (const [key, value] of Object.entries(data)) {
     newData[key] = [];
@@ -11,7 +11,7 @@ export function overlapEvents(data: Record<string, Lesson[]>) {
       dayjs(a.startDate).diff(dayjs(b.startDate)),
     );
 
-    let currentGroup: Lesson[] = [];
+    let currentGroup: Event[] = [];
 
     for (const event of sorted) {
       if (currentGroup.length === 0) {

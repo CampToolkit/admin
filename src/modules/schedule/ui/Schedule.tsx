@@ -1,4 +1,4 @@
-import type { MouseEvent } from "react";
+import { type MouseEvent } from "react";
 import dayjs, { type Dayjs } from "dayjs";
 import { Grid, Paper, Typography, Box } from "@mui/material";
 
@@ -18,11 +18,13 @@ import type { Event } from "@/shared/api/event/EventApi.type.ts";
 import type { LessonFormValues } from "./lesson-form/lesson-form.type.ts";
 import { useDistributeEvents } from "@/modules/schedule/hooks/distribute-events/use-distribute-events.hook.ts";
 import SchedulePositionWrapper from "@/modules/schedule/ui/SchedulePositionWrapper.tsx";
+import type { SxProps, Theme } from "@mui/system";
 
 // todo добавить coach
 export type EntitiesKeyType = keyof Pick<Event, "auditorium" | "groups">;
 
 interface ScheduleProps {
+  currentDate: Dayjs;
   lessons: Event[];
   unionKey: EntitiesKeyType;
   filter: {
@@ -38,9 +40,8 @@ interface ScheduleProps {
   ) => void;
 }
 
-const CURRENT_DATE = dayjs();
-
 export default function Schedule({
+  currentDate,
   lessons,
   unionKey,
   filter,
@@ -54,7 +55,7 @@ export default function Schedule({
   });
 
   const hourSlots = generateTimeSlots({
-    date: CURRENT_DATE,
+    date: currentDate,
     startHour: START_HOUR,
     endHour: 21,
     step: {
@@ -64,7 +65,7 @@ export default function Schedule({
   });
 
   const minuteSlots = generateTimeSlots({
-    date: CURRENT_DATE,
+    date: currentDate,
     startHour: START_HOUR,
     endHour: 21,
     endMinute: 45,
@@ -73,6 +74,12 @@ export default function Schedule({
       unit: "minute",
     },
   });
+
+  const tableTitleStyles: SxProps<Theme> = {
+    p: 1,
+    textAlign: "center",
+    backgroundColor: "#f5f5f5",
+  };
 
   const createSession = (e: MouseEvent<HTMLDivElement>) => {
     const target = (e.target as HTMLDivElement).closest(
@@ -87,12 +94,12 @@ export default function Schedule({
       endDate: startDate.add(1, "hour"),
     });
   };
-  console.log(distributedEvents);
+
   return (
     <Box sx={{ paddingInline: 2, paddingBlockEnd: 2 }}>
       <Grid container spacing={1}>
         <Grid size={1}>
-          <Paper sx={{ p: 1, textAlign: "center", backgroundColor: "#f5f5f5" }}>
+          <Paper sx={tableTitleStyles}>
             <Typography variant="subtitle1">Time</Typography>
           </Paper>
           {hourSlots.map((time) => (
@@ -111,10 +118,8 @@ export default function Schedule({
         </Grid>
 
         {columns.list.map((column, index) => (
-          <Grid size={10 / columns.list.length} key={index}>
-            <Paper
-              sx={{ p: 1, textAlign: "center", backgroundColor: "#f5f5f5" }}
-            >
+          <Grid size={11 / columns.list.length} key={index}>
+            <Paper sx={tableTitleStyles}>
               <Typography variant="subtitle1">{column.name}</Typography>
             </Paper>
             <Box
