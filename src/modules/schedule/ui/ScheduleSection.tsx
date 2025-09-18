@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useScheduleSelection } from "@/modules/schedule/hooks/use-schedule-selection.ts";
 import { useEventModal } from "@/modules/schedule/hooks/use-event-modal.tsx";
 
-import { Box } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import Schedule, {
   type EntitiesKeyType,
 } from "@/modules/schedule/ui/Schedule.tsx";
@@ -22,6 +22,10 @@ import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts"
 import { useCoach } from "@/pages/camps/hooks/use-coach.ts";
 import { useSelectOptions } from "@/modules/schedule/hooks/use-select-options.ts";
 import { useLessons } from "@/shared/api/event/hooks/use-lessons.ts";
+import DateNavigator from "@/modules/schedule/ui/DateNavigator.tsx";
+import dayjs from "dayjs";
+import { useCamp } from "@/pages/camps/hooks/use-camp.ts";
+import { useCurrentScheduleDate } from "@/modules/schedule/hooks/use-current-schedule-date.hook.ts";
 
 const UNION_OPTIONS: {
   value: EntitiesKeyType;
@@ -41,8 +45,11 @@ const UNION_OPTIONS: {
 ];
 
 export default function ScheduleSection() {
+  // todo убрать в Context
   const { campId } = useParams();
+  const { camp } = useCamp(Number(campId));
 
+  const { currentDate, setCurrentDate } = useCurrentScheduleDate(camp);
   const { state: lessons } = useLessons(Number(campId));
 
   const { view, selection } = useScheduleSelection({
@@ -92,41 +99,58 @@ export default function ScheduleSection() {
   };
 
   return (
-    <div>
+    <>
       <Box
-        display="flex"
-        gap={2}
         sx={{
-          alignItems: "flex-end",
           paddingInline: 2,
-          paddingBlockEnd: 2,
         }}
       >
-        <CustomSelect<EntitiesKeyType>
-          options={UNION_OPTIONS}
-          onChange={(e) => {
-            view.set(e.target.value);
+        <Paper
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            mb: 1,
+            p: 1,
+            backgroundColor: "#f5f5f5",
           }}
-          value={view.current}
-          label={"Вид"}
-          displayEmpty={false}
-        />
-        {selection.currentId && (
-          <CustomSelect<number>
-            options={selection.list.map((item) => ({
-              value: item.id,
-              label: item.name,
-            }))}
-            onChange={(e) => {
-              selection.set(e.target.value);
+        >
+          <Box display="flex" gap={2}>
+            <CustomSelect<EntitiesKeyType>
+              options={UNION_OPTIONS}
+              onChange={(e) => {
+                view.set(e.target.value);
+              }}
+              value={view.current}
+              label={""}
+              displayEmpty={false}
+            />
+            {selection.currentId && (
+              <CustomSelect<number>
+                options={selection.list.map((item) => ({
+                  value: item.id,
+                  label: item.name,
+                }))}
+                onChange={(e) => {
+                  selection.set(e.target.value);
+                }}
+                value={selection.currentId}
+                label={""}
+              />
+            )}
+          </Box>
+          <DateNavigator
+            value={currentDate}
+            minValue={dayjs(camp?.startDate)}
+            maxValue={dayjs(camp?.endDate)}
+            onChange={(value) => {
+              if (value) setCurrentDate(value);
             }}
-            value={selection.currentId}
-            label={""}
           />
-        )}
+        </Paper>
       </Box>
       {selection.currentId && (
         <Schedule
+          currentDate={currentDate}
           lessons={lessons}
           unionKey={view.current}
           filter={{
@@ -137,6 +161,6 @@ export default function ScheduleSection() {
           openSessionModal={callEventModal}
         />
       )}
-    </div>
+    </>
   );
 }
