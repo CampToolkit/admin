@@ -2,7 +2,7 @@ import type { MouseEvent } from "react";
 import dayjs, { type Dayjs } from "dayjs";
 import { Grid, Paper, Typography, Box } from "@mui/material";
 
-import LessonCard from "@/modules/schedule/ui/LessonCard.tsx";
+import EventCard from "@/modules/schedule/ui/EventCard.tsx";
 
 import {
   SLOT_HEIGHT,
@@ -16,7 +16,8 @@ import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.
 import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
 import type { Event } from "@/shared/api/event/EventApi.type.ts";
 import type { LessonFormValues } from "./lesson-form/lesson-form.type.ts";
-import { useFilterAndUnionSessions } from "@/modules/schedule/hooks/filter-union-sessions/use-filter-union-sessions.hook.ts";
+import { useDistributeEvents } from "@/modules/schedule/hooks/distribute-events/use-distribute-events.hook.ts";
+import SchedulePositionWrapper from "@/modules/schedule/ui/SchedulePositionWrapper.tsx";
 
 // todo добавить coach
 export type EntitiesKeyType = keyof Pick<Event, "auditorium" | "groups">;
@@ -46,7 +47,7 @@ export default function Schedule({
   columns,
   openSessionModal,
 }: ScheduleProps) {
-  const groupedSessions = useFilterAndUnionSessions({
+  const distributedEvents = useDistributeEvents({
     list: lessons,
     unionKey,
     filter,
@@ -86,7 +87,7 @@ export default function Schedule({
       endDate: startDate.add(1, "hour"),
     });
   };
-
+  console.log(distributedEvents);
   return (
     <Box sx={{ paddingInline: 2, paddingBlockEnd: 2 }}>
       <Grid container spacing={1}>
@@ -139,17 +140,30 @@ export default function Schedule({
                   data-entity-id={column.id}
                 ></Paper>
               ))}
-              {groupedSessions[column.id]?.map((session) => (
-                <LessonCard
-                  key={session.id}
-                  startDate={dayjs(session.startDate)}
-                  groupName={session.groups.map((item) => item.name).join(", ")}
-                  coachName={session.coaches
-                    .map((item) => item.lastName)
-                    .join(", ")}
-                  campLocationName={session.auditorium.name}
-                  position={calcLessonPosition(session)}
-                />
+              {distributedEvents[column.id]?.map((events) => (
+                <>
+                  {events.map((event, index) => (
+                    <SchedulePositionWrapper
+                      key={event.id}
+                      position={calcLessonPosition({
+                        event,
+                        eventIndex: index,
+                        overlapEventsAmount: events.length,
+                      })}
+                    >
+                      <EventCard
+                        startDate={dayjs(event.startDate)}
+                        groupName={event.groups
+                          .map((item) => item.name)
+                          .join(", ")}
+                        coachName={event.coaches
+                          .map((item) => item.lastName)
+                          .join(", ")}
+                        campLocationName={event.auditorium.name}
+                      />
+                    </SchedulePositionWrapper>
+                  ))}
+                </>
               ))}
             </Box>
           </Grid>

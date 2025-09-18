@@ -1,7 +1,7 @@
 import type { Event } from "@/shared/api/event/EventApi.type.ts";
 import type { EntityKeys } from "@/modules/schedule/hooks/filter-union-sessions/EntityKeys.type.ts";
 
-export function filterSessions<K extends EntityKeys<Event>>(
+export function filterSessions<K extends EntityKeys<Lesson>>(
   list: Event[],
   filter: {
     key: K;

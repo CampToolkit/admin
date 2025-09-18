@@ -58,7 +58,7 @@ export default function LessonForm(props: LessonFormProps) {
 
         <Grid size={6}>
           <FormControl fullWidth>
-            <InputLabel id="session-type-label" sx={inputLabelStyles}>
+            <InputLabel id="events-type-label" sx={inputLabelStyles}>
               тип тренировки
             </InputLabel>
             <CustomSelect
@@ -72,7 +72,7 @@ export default function LessonForm(props: LessonFormProps) {
         </Grid>
         <Grid size={6}>
           <FormControl fullWidth>
-            <InputLabel id="session-type-label" sx={inputLabelStyles}>
+            <InputLabel id="events-type-label" sx={inputLabelStyles}>
               тип активности
             </InputLabel>
             <CustomSelect
@@ -87,7 +87,7 @@ export default function LessonForm(props: LessonFormProps) {
 
         <Grid size={6}>
           <FormControl fullWidth>
-            <InputLabel id="session-type-label" sx={inputLabelStyles}>
+            <InputLabel id="events-type-label" sx={inputLabelStyles}>
               локация
             </InputLabel>
             <CustomSelect
@@ -105,7 +105,7 @@ export default function LessonForm(props: LessonFormProps) {
 
         <Grid size={6}>
           <FormControl fullWidth>
-            <InputLabel id="session-type-label" sx={inputLabelStyles}>
+            <InputLabel id="events-type-label" sx={inputLabelStyles}>
               группа
             </InputLabel>
             <CustomSelect
@@ -120,7 +120,7 @@ export default function LessonForm(props: LessonFormProps) {
         </Grid>
         <Grid size={6}>
           <FormControl fullWidth>
-            <InputLabel id="session-type-label" sx={inputLabelStyles}>
+            <InputLabel id="events-type-label" sx={inputLabelStyles}>
               тренер
             </InputLabel>
             <CustomSelect
