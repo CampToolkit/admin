@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import { useScheduleSelection } from "@/modules/schedule/hooks/use-schedule-selection.ts";
-import { useLessonModal } from "@/modules/schedule/hooks/use-lesson-modal.tsx";
+import { useEventModal } from "@/modules/schedule/hooks/use-event-modal.tsx";
 
 import { Box } from "@mui/material";
 import Schedule, {
@@ -50,7 +50,7 @@ export default function ScheduleSection() {
     initialUnionKey: "groups",
   });
 
-  const { open } = useLessonModal({
+  const { open } = useEventModal({
     campId: Number(campId),
   });
 
@@ -68,7 +68,7 @@ export default function ScheduleSection() {
     coaches,
   });
 
-  const callLessonModal = (data: RareLessonFormValues) => {
+  const callEventModal = (data: RareLessonFormValues) => {
     if (activityTypes.length > 0) {
       data.activityTypeId ??= activityTypes[0].id;
     }
@@ -134,7 +134,7 @@ export default function ScheduleSection() {
             value: selection.currentId,
           }}
           columns={selection.columns}
-          openSessionModal={callLessonModal}
+          openSessionModal={callEventModal}
         />
       )}
     </div>

@@ -37,7 +37,11 @@ export function useSelectOptions(args: Args) {
   );
 
   const coachOptions = useMemo(
-    () => coaches.map((item) => ({ label: item.name, value: item.id })),
+    () =>
+      coaches.map((item) => ({
+        label: `${item.lastName} ${item.firstName.at(0)}.${item.patrName.at(0)}.`,
+        value: item.id,
+      })),
     [coaches],
   );
 

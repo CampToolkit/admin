@@ -20,11 +20,11 @@ type OpenModalParams = {
   options: LessonFormOptions;
 };
 
-export function useLessonModal({ campId, onClose }: UseSessionModalProps) {
+export function useEventModal({ campId, onClose }: UseSessionModalProps) {
   const { openModal, closeModal } = useModal();
 
   const handleSubmit: LessonFormProps["onSubmit"] = async (values) => {
-    const response = await EventApi.create({
+    const newEvent = await EventApi.create({
       campId,
       startDate: values.startDate.toISOString(),
       endDate: values.endDate.toISOString(),
@@ -32,7 +32,22 @@ export function useLessonModal({ campId, onClose }: UseSessionModalProps) {
       activityTypeId: values.activityTypeId,
       auditoriumId: values.auditoriumId,
     });
-    console.log(response);
+
+    if (newEvent && values.coachId) {
+      await EventApi.appointCoach({
+        lessonId: newEvent.id,
+        coachId: values.coachId,
+        role: "PRIMARY",
+      });
+    }
+
+    if (newEvent && values.groupId) {
+      await EventApi.addGroup({
+        lessonId: newEvent.id,
+        groupId: values.groupId,
+      });
+    }
+    // todo сообщение о успешном создании event
     onClose?.();
     closeModal();
   };

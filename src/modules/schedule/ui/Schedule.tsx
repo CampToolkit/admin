@@ -87,7 +87,7 @@ export default function Schedule({
       endDate: startDate.add(1, "hour"),
     });
   };
-  console.log(distributedEvents);
+
   return (
     <Box sx={{ paddingInline: 2, paddingBlockEnd: 2 }}>
       <Grid container spacing={1}>

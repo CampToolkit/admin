@@ -12,6 +12,7 @@ import type {
 export default function LessonForm(props: LessonFormProps) {
   const { formId, initialValues, onSubmit, options } = props;
 
+  console.log(options);
   const formik = useFormik<LessonFormValues>({
     initialValues,
     onSubmit,
