@@ -8,7 +8,7 @@ import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.ty
 import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
 import type { LessonType } from "@/shared/api/lesson-type/LessonTypeApi.type.ts";
 
-export interface Lesson extends Entity {
+export interface Event extends Entity {
   startDate: string;
   endDate: string;
   activityType: ActivityType;
@@ -17,4 +17,20 @@ export interface Lesson extends Entity {
   coaches: (Coach & { lesson_coach: number })[];
   groups: (Group & { lesson_group: number })[];
   sportsmen: (Sportsman & { lesson_sportsman: number })[];
+}
+
+export interface Event_Coach extends Entity {
+  lessonId: number;
+  coachId: number;
+  role: "PRIMARY" | "SECONDARY";
+}
+
+export interface Event_Group extends Entity {
+  lessonId: number;
+  groupId: number;
+}
+
+export interface Event_Sportsman extends Entity {
+  lessonId: number;
+  sportsmanId: number;
 }

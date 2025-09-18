@@ -14,16 +14,16 @@ import { calcLessonPosition } from "@/modules/schedule/utils/calc-lesson-positio
 import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.ts";
 
 import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
-import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
+import type { Event } from "@/shared/api/event/EventApi.type.ts";
 import type { LessonFormValues } from "./lesson-form/lesson-form.type.ts";
 import { useDistributeEvents } from "@/modules/schedule/hooks/distribute-events/use-distribute-events.hook.ts";
 import SchedulePositionWrapper from "@/modules/schedule/ui/SchedulePositionWrapper.tsx";
 
 // todo добавить coach
-export type EntitiesKeyType = keyof Pick<Lesson, "auditorium" | "groups">;
+export type EntitiesKeyType = keyof Pick<Event, "auditorium" | "groups">;
 
 interface ScheduleProps {
-  lessons: Lesson[];
+  lessons: Event[];
   unionKey: EntitiesKeyType;
   filter: {
     key: EntitiesKeyType;

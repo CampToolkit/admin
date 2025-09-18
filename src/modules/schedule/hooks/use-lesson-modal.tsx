@@ -5,7 +5,7 @@ import type {
   LessonFormProps,
   LessonFormValues,
 } from "@/modules/schedule/ui/lesson-form/lesson-form.type.ts";
-import { LessonApi } from "@/shared/api/lesson/LessonApi.ts";
+import { EventApi } from "@/shared/api/event/EventApi.ts";
 
 type UseSessionModalProps = {
   campId: number;
@@ -24,7 +24,7 @@ export function useLessonModal({ campId, onClose }: UseSessionModalProps) {
   const { openModal, closeModal } = useModal();
 
   const handleSubmit: LessonFormProps["onSubmit"] = async (values) => {
-    const response = await LessonApi.create({
+    const response = await EventApi.create({
       campId,
       startDate: values.startDate.toISOString(),
       endDate: values.endDate.toISOString(),

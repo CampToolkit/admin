@@ -1,5 +1,5 @@
 import dayjs, { type Dayjs } from "dayjs";
-import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
+import type { Event } from "@/shared/api/event/EventApi.type.ts";
 import {
   MINUTES_IN_SLOT,
   SLOT_HEIGHT,
@@ -8,7 +8,7 @@ import {
 } from "../constants/time-table.const";
 
 interface Props {
-  event: Lesson;
+  event: Event;
   eventIndex: number;
   overlapEventsAmount: number;
 }

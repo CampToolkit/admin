@@ -1,12 +1,12 @@
-import type { Lesson } from "@/shared/api/lesson/LessonApi.type.ts";
+import type { Event } from "@/shared/api/event/EventApi.type.ts";
 import { useCallback, useEffect, useState } from "react";
-import { LessonApi } from "@/shared/api/lesson/LessonApi.ts";
+import { EventApi } from "@/shared/api/event/EventApi.ts";
 
 export function useLessons(campId: number) {
-  const [state, setState] = useState<Lesson[]>([]);
+  const [state, setState] = useState<Event[]>([]);
 
   const fetch = useCallback(async () => {
-    const data = await LessonApi.getAll({ campId });
+    const data = await EventApi.getAll({ campId });
     setState(data);
   }, []);
 
