@@ -24,7 +24,7 @@ import DateNavigator from "@/modules/schedule/ui/DateNavigator.tsx";
 import dayjs from "dayjs";
 import { useCamp } from "@/pages/camps/hooks/use-camp.ts";
 import { useCurrentScheduleDate } from "@/modules/schedule/hooks/use-current-schedule-date.hook.ts";
-import type { EntitiesKeyType } from "../hooks/distribute-events/use-distribute-events.hook";
+import type { EntitiesKeyType } from "@/modules/schedule/hooks/distribute-events/use-distribute-events.hook";
 
 const UNION_OPTIONS: {
   value: EntitiesKeyType;

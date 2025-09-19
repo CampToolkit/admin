@@ -40,6 +40,7 @@ export default function LessonForm(props: LessonFormProps) {
             }}
             name="startDate"
             value={formik.values.startDate}
+            onChange={(date) => formik.setFieldValue("startDate", date)}
           />
         </Grid>
         <Grid size={6}>
@@ -53,6 +54,7 @@ export default function LessonForm(props: LessonFormProps) {
             }}
             name="endDate"
             value={formik.values.endDate}
+            onChange={(date) => formik.setFieldValue("endDate", date)}
           />
         </Grid>
 

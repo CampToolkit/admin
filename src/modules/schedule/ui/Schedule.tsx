@@ -166,34 +166,31 @@ export default function Schedule({
                   data-table-entity-id={filter.value}
                 ></Paper>
               ))}
-              {distributedEvents[column.id]?.map((events) => {
-                console.log("events", events);
-                return (
-                  <>
-                    {events.map((event, index) => (
-                      <SchedulePositionWrapper
-                        key={event.id}
-                        position={calcLessonPosition({
-                          event,
-                          eventIndex: index,
-                          overlapEventsAmount: events.length,
-                        })}
-                      >
-                        <EventCard
-                          startDate={dayjs(event.startDate)}
-                          groupName={event.groups
-                            .map((item) => item.name)
-                            .join(", ")}
-                          coachName={event.coaches
-                            .map((item) => item.lastName)
-                            .join(", ")}
-                          campLocationName={event.auditorium.name}
-                        />
-                      </SchedulePositionWrapper>
-                    ))}
-                  </>
-                );
-              })}
+              {distributedEvents[column.id]?.map((events) => (
+                <>
+                  {events.map((event, index) => (
+                    <SchedulePositionWrapper
+                      key={event.id}
+                      position={calcLessonPosition({
+                        event,
+                        eventIndex: index,
+                        overlapEventsAmount: events.length,
+                      })}
+                    >
+                      <EventCard
+                        startDate={dayjs(event.startDate)}
+                        groupName={event.groups
+                          .map((item) => item.name)
+                          .join(", ")}
+                        coachName={event.coaches
+                          .map((item) => item.lastName)
+                          .join(", ")}
+                        campLocationName={event.auditorium.name}
+                      />
+                    </SchedulePositionWrapper>
+                  ))}
+                </>
+              ))}
             </Box>
           </Grid>
         ))}
