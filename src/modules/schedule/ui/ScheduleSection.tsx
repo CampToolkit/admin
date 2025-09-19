@@ -158,7 +158,7 @@ export default function ScheduleSection() {
             value: selection.currentId,
           }}
           columns={selection.columns}
-          openSessionModal={callEventModal}
+          onCreateEvent={callEventModal}
         />
       )}
     </>

@@ -32,7 +32,7 @@ interface ScheduleProps {
     value: number;
   };
   columns: ScheduleColumns;
-  openSessionModal: (
+  onCreateEvent: (
     value: {
       startDate: Dayjs;
       endDate: Dayjs;
@@ -46,7 +46,7 @@ export default function Schedule({
   unionKey,
   filter,
   columns,
-  openSessionModal,
+  onCreateEvent,
 }: ScheduleProps) {
   const distributedEvents = useDistributeEvents({
     list: lessons,
@@ -81,15 +81,28 @@ export default function Schedule({
     backgroundColor: "#f5f5f5",
   };
 
-  const createSession = (e: MouseEvent<HTMLDivElement>) => {
+  const createEvent = (e: MouseEvent<HTMLDivElement>) => {
     const target = (e.target as HTMLDivElement).closest(
-      "[data-slot-time]",
+      ".js-time-slot",
     ) as HTMLDivElement;
 
     if (!target) return;
 
     const startDate = dayjs(target.dataset.slotTime);
-    openSessionModal({
+
+    const tableEntityType = target.dataset.tableEntityType
+      ? target.dataset.tableEntityType
+      : "";
+    const tableEntityId = target.dataset.tableEntityId;
+
+    const columnEntityType = target.dataset.columnEntityType
+      ? target.dataset.columnEntityType
+      : "";
+    const columnEntityId = target.dataset.columnEntityId;
+
+    onCreateEvent({
+      [`${tableEntityType}Id`]: tableEntityId,
+      [`${columnEntityType}Id`]: columnEntityId,
       startDate: startDate,
       endDate: startDate.add(1, "hour"),
     });
@@ -100,7 +113,7 @@ export default function Schedule({
       <Grid container spacing={1}>
         <Grid size={1}>
           <Paper sx={tableTitleStyles}>
-            <Typography variant="subtitle1">Time</Typography>
+            <Typography variant="subtitle1">время</Typography>
           </Paper>
           {hourSlots.map((time) => (
             <Paper
@@ -120,13 +133,15 @@ export default function Schedule({
         {columns.list.map((column, index) => (
           <Grid size={11 / columns.list.length} key={index}>
             <Paper sx={tableTitleStyles}>
-              <Typography variant="subtitle1">{column.name}</Typography>
+              <Typography variant="subtitle1">
+                {column.name.toLowerCase()}
+              </Typography>
             </Paper>
             <Box
               sx={{
                 position: "relative",
               }}
-              onClick={createSession}
+              onClick={createEvent}
             >
               {minuteSlots.map((time, index) => (
                 <Paper
@@ -140,9 +155,12 @@ export default function Schedule({
                     borderRadius: 0,
                     cursor: "pointer",
                   }}
+                  className="js-time-slot"
                   data-slot-time={time.toISOString()}
-                  data-entity-type={columns.type}
-                  data-entity-id={column.id}
+                  data-column-entity-type={columns.type}
+                  data-column-entity-id={column.id}
+                  data-table-entity-type={filter.key}
+                  data-table-entity-id={filter.value}
                 ></Paper>
               ))}
               {distributedEvents[column.id]?.map((events) => (

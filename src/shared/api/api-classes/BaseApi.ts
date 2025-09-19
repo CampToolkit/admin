@@ -12,11 +12,9 @@ export class BaseApi<
     this.basePath = basePath;
   }
 
-  // перегрузки (компилятор видит эти сигнатуры)
   async getAll(): Promise<TEntity[]>;
   async getAll(params: Record<string, unknown>): Promise<TEntity[]>;
 
-  // реальная реализация — должна покрывать все перегрузки
   async getAll(params?: Record<string, unknown>): Promise<TEntity[]> {
     const { data } = await axiosConfig.get<TEntity[]>(this.basePath, {
       params: params,
