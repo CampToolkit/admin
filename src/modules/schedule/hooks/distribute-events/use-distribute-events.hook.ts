@@ -5,7 +5,10 @@ import {
 } from "@/modules/schedule/hooks/distribute-events/group-by-entity-key.ts";
 import type { EntityKeys } from "@/modules/schedule/hooks/distribute-events/EntityKeys.type.ts";
 import { matchEntity } from "@/modules/schedule/hooks/distribute-events/filter-by-entity.ts";
-import { overlapEvents } from "@/modules/schedule/hooks/distribute-events/overlap-events.ts";
+import {
+  type DistributedEvent,
+  overlapEvents,
+} from "@/modules/schedule/hooks/distribute-events/overlap-events.ts";
 import type { Event } from "@/shared/api/event/EventApi.type.ts";
 import dayjs, { type Dayjs } from "dayjs";
 import { isSameDay } from "@/modules/schedule/hooks/distribute-events/filter-by-date.ts";
@@ -23,7 +26,7 @@ export function useDistributeEvents<K extends EntityKeys<Event>>(
   params: Params<K>,
 ) {
   const { list, unionKey, currentDate, filter } = params;
-  const [state, setState] = useState<Record<string, Event[][]>>({});
+  const [state, setState] = useState<DistributedEvent>({});
 
   useEffect(() => {
     const acc: AccumulateEvent = {};
