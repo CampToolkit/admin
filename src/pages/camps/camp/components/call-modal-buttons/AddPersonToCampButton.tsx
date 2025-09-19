@@ -13,7 +13,10 @@ import type {
   UniversalFormValues,
 } from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
 import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
-import type { RelatedCampEntityApi } from "@/shared/api/lib/types/BaseApi.type.ts";
+import type {
+  NewEntity,
+  RelatedCampEntityApi,
+} from "@/shared/api/lib/types/BaseApi.type.ts";
 
 const ComponentKeys = {
   DB: "database",
@@ -45,9 +48,10 @@ interface Props<T, D> {
   };
 }
 
-export default function AddPersonToCampButton<T extends Person, D>(
-  props: Props<T, D>,
-) {
+export default function AddPersonToCampButton<
+  T extends Person,
+  D extends Partial<NewEntity<T>>,
+>(props: Props<T, D>) {
   const { openModal, closeModal } = useModal();
   const { campId } = useParams();
 
@@ -82,7 +86,7 @@ export default function AddPersonToCampButton<T extends Person, D>(
       key: ComponentKeys.NEW_ITEM,
       label: "Создать",
       element: (
-        <UniversalTextFieldForm<T>
+        <UniversalTextFieldForm<T, D>
           fields={FIELDS}
           formId={ComponentKeys.NEW_ITEM}
           onSubmit={createPerson}

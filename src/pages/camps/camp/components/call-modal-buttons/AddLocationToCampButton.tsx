@@ -69,7 +69,7 @@ export default function AddLocationToCampButton(props: Props) {
       key: Keys.CREATE_LOCATION,
       label: "Создать",
       element: (
-        <UniversalTextFieldForm<CampsLocation>
+        <UniversalTextFieldForm<CampsLocation, CampsLocation>
           fields={FIELDS}
           formId={Keys.CREATE_LOCATION}
           onSubmit={createNewLocation}
