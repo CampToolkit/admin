@@ -32,6 +32,7 @@ export function useEventModal({ campId, onClose }: UseSessionModalProps) {
       activityTypeId: values.activityTypeId,
       auditoriumId: values.auditoriumId,
     });
+    console.log(newEvent);
 
     if (newEvent && values.coachId) {
       await EventApi.appointCoach({

@@ -13,7 +13,10 @@ import type {
   UniversalFormValues,
 } from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
 import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
-import type { RelatedCampEntityApi } from "@/shared/api/lib/types/BaseApi.type.ts";
+import type {
+  NewEntity,
+  RelatedCampEntityApi,
+} from "@/shared/api/lib/types/BaseApi.type.ts";
 
 const ComponentKeys = {
   DB: "database",
@@ -35,19 +38,20 @@ const FIELDS: Field<Person>[] = [
   },
 ];
 
-interface Props<T> {
+interface Props<T, D> {
   onDone?: (data?: T[]) => Promise<void> | void;
   // todo
-  api: RelatedCampEntityApi<T>;
+  api: RelatedCampEntityApi<T, D>;
   useEntity: () => {
     state: T[];
     fetch: () => Promise<void>;
   };
 }
 
-export default function AddPersonToCampButton<T extends Person>(
-  props: Props<T>,
-) {
+export default function AddPersonToCampButton<
+  T extends Person,
+  D extends Partial<NewEntity<T>>,
+>(props: Props<T, D>) {
   const { openModal, closeModal } = useModal();
   const { campId } = useParams();
 
@@ -60,18 +64,18 @@ export default function AddPersonToCampButton<T extends Person>(
       alert("добавили спортсменов в список участников сбора");
       closeModal();
       props.onDone?.();
-    } catch (e: any) {
+    } catch (e) {
       // todo добавить обработку ошибок
       console.error(e);
     }
   };
 
-  const createPerson = async (values: UniversalFormValues<T>) => {
+  const createPerson = async (values: UniversalFormValues<D>) => {
     try {
       const newPersons = await props.api.createMany(values);
       alert("добавили в базу данных");
       await addToCamp({ items: newPersons.map((person) => person.id) });
-    } catch (e: any) {
+    } catch (e) {
       // todo добавить обработку ошибок
       console.error(e);
     }
@@ -82,7 +86,7 @@ export default function AddPersonToCampButton<T extends Person>(
       key: ComponentKeys.NEW_ITEM,
       label: "Создать",
       element: (
-        <UniversalTextFieldForm<T>
+        <UniversalTextFieldForm<T, D>
           fields={FIELDS}
           formId={ComponentKeys.NEW_ITEM}
           onSubmit={createPerson}

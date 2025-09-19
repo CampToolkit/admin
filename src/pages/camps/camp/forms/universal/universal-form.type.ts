@@ -12,6 +12,6 @@ export interface UniversalFormProps<T extends Entity, V> {
   onSubmit: (values: V) => Promise<void> | void;
 }
 
-export interface UniversalFormValues<T extends Entity> {
-  items: NewEntity<T>[];
+export interface UniversalFormValues<D> {
+  items: D[];
 }

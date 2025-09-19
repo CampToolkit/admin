@@ -4,9 +4,7 @@ import { useScheduleSelection } from "@/modules/schedule/hooks/use-schedule-sele
 import { useEventModal } from "@/modules/schedule/hooks/use-event-modal.tsx";
 
 import { Box, Paper } from "@mui/material";
-import Schedule, {
-  type EntitiesKeyType,
-} from "@/modules/schedule/ui/Schedule.tsx";
+import Schedule from "@/modules/schedule/ui/Schedule.tsx";
 import CustomSelect from "@/modules/schedule/ui/custom-select/CustomSelect.tsx";
 
 import {
@@ -26,6 +24,7 @@ import DateNavigator from "@/modules/schedule/ui/DateNavigator.tsx";
 import dayjs from "dayjs";
 import { useCamp } from "@/pages/camps/hooks/use-camp.ts";
 import { useCurrentScheduleDate } from "@/modules/schedule/hooks/use-current-schedule-date.hook.ts";
+import type { EntitiesKeyType } from "@/modules/schedule/hooks/distribute-events/use-distribute-events.hook";
 
 const UNION_OPTIONS: {
   value: EntitiesKeyType;
@@ -47,7 +46,7 @@ const UNION_OPTIONS: {
 export default function ScheduleSection() {
   // todo убрать в Context
   const { campId } = useParams();
-  const { camp } = useCamp(Number(campId));
+  const { camp, refreshCamp } = useCamp(Number(campId));
 
   const { currentDate, setCurrentDate } = useCurrentScheduleDate(camp);
   const { state: lessons } = useLessons(Number(campId));
@@ -59,6 +58,7 @@ export default function ScheduleSection() {
 
   const { open } = useEventModal({
     campId: Number(campId),
+    onClose: () => refreshCamp(Number(campId)),
   });
 
   const { state: activityTypes } = useActivityType();
