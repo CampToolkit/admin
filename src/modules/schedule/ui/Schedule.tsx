@@ -16,12 +16,14 @@ import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.
 import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
 import type { Event } from "@/shared/api/event/EventApi.type.ts";
 import type { LessonFormValues } from "./lesson-form/lesson-form.type.ts";
-import { useDistributeEvents } from "@/modules/schedule/hooks/distribute-events/use-distribute-events.hook.ts";
+import {
+  useDistributeEvents,
+  type EntitiesKeyType,
+} from "@/modules/schedule/hooks/distribute-events/use-distribute-events.hook.ts";
 import SchedulePositionWrapper from "@/modules/schedule/ui/SchedulePositionWrapper.tsx";
 import type { SxProps, Theme } from "@mui/system";
 
 // todo добавить coach
-export type EntitiesKeyType = keyof Pick<Event, "auditorium" | "groups">;
 
 interface ScheduleProps {
   currentDate: Dayjs;
@@ -51,6 +53,7 @@ export default function Schedule({
   const distributedEvents = useDistributeEvents({
     list: lessons,
     unionKey,
+    currentDate,
     filter,
   });
 
@@ -163,31 +166,34 @@ export default function Schedule({
                   data-table-entity-id={filter.value}
                 ></Paper>
               ))}
-              {distributedEvents[column.id]?.map((events) => (
-                <>
-                  {events.map((event, index) => (
-                    <SchedulePositionWrapper
-                      key={event.id}
-                      position={calcLessonPosition({
-                        event,
-                        eventIndex: index,
-                        overlapEventsAmount: events.length,
-                      })}
-                    >
-                      <EventCard
-                        startDate={dayjs(event.startDate)}
-                        groupName={event.groups
-                          .map((item) => item.name)
-                          .join(", ")}
-                        coachName={event.coaches
-                          .map((item) => item.lastName)
-                          .join(", ")}
-                        campLocationName={event.auditorium.name}
-                      />
-                    </SchedulePositionWrapper>
-                  ))}
-                </>
-              ))}
+              {distributedEvents[column.id]?.map((events) => {
+                console.log("events", events);
+                return (
+                  <>
+                    {events.map((event, index) => (
+                      <SchedulePositionWrapper
+                        key={event.id}
+                        position={calcLessonPosition({
+                          event,
+                          eventIndex: index,
+                          overlapEventsAmount: events.length,
+                        })}
+                      >
+                        <EventCard
+                          startDate={dayjs(event.startDate)}
+                          groupName={event.groups
+                            .map((item) => item.name)
+                            .join(", ")}
+                          coachName={event.coaches
+                            .map((item) => item.lastName)
+                            .join(", ")}
+                          campLocationName={event.auditorium.name}
+                        />
+                      </SchedulePositionWrapper>
+                    ))}
+                  </>
+                );
+              })}
             </Box>
           </Grid>
         ))}
