@@ -14,10 +14,10 @@ import type { NewEntity } from "@/shared/api/lib/types/BaseApi.type.ts";
 const GRIDS_AMOUNT = 12;
 const REMOVE_BUTTON_SIZE = 1;
 
-function createInitialValuesItem<T extends Entity>(
-  keys: Array<keyof NewEntity<T>>,
+function createInitialValuesItem<T, D extends Partial<NewEntity<T>>>(
+  keys: Array<keyof D>,
 ) {
-  const result = {} as NewEntity<T>;
+  const result = {} as D;
   for (const key of keys) {
     result[key] = "" as unknown as any;
   }
@@ -25,16 +25,18 @@ function createInitialValuesItem<T extends Entity>(
 }
 
 // todo добавить валидацию полей
-export default function UniversalTextFieldForm<T extends Entity>(
-  props: UniversalFormProps<T, UniversalFormValues<T>>,
-) {
+export default function UniversalTextFieldForm<
+  T extends Entity,
+  D extends Partial<NewEntity<T>>,
+>(props: UniversalFormProps<T, UniversalFormValues<D>>) {
   const { onSubmit, formId, fields } = props;
   const [fieldSize, setFieldSize] = useState<number>(11);
-  const initialValues = {
-    items: [createInitialValuesItem(fields.map((item) => item.key))],
+
+  const initialValues: UniversalFormValues<D> = {
+    items: [createInitialValuesItem<T, D>(fields.map((item) => item.key))],
   };
 
-  const formik = useFormik<UniversalFormValues<T>>({
+  const formik = useFormik<UniversalFormValues<D>>({
     initialValues,
     onSubmit,
   });

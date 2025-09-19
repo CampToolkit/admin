@@ -35,18 +35,18 @@ const FIELDS: Field<Person>[] = [
   },
 ];
 
-interface Props<T> {
+interface Props<T, D> {
   onDone?: (data?: T[]) => Promise<void> | void;
   // todo
-  api: RelatedCampEntityApi<T>;
+  api: RelatedCampEntityApi<T, D>;
   useEntity: () => {
     state: T[];
     fetch: () => Promise<void>;
   };
 }
 
-export default function AddPersonToCampButton<T extends Person>(
-  props: Props<T>,
+export default function AddPersonToCampButton<T extends Person, D>(
+  props: Props<T, D>,
 ) {
   const { openModal, closeModal } = useModal();
   const { campId } = useParams();
@@ -60,18 +60,18 @@ export default function AddPersonToCampButton<T extends Person>(
       alert("добавили спортсменов в список участников сбора");
       closeModal();
       props.onDone?.();
-    } catch (e: any) {
+    } catch (e) {
       // todo добавить обработку ошибок
       console.error(e);
     }
   };
 
-  const createPerson = async (values: UniversalFormValues<T>) => {
+  const createPerson = async (values: UniversalFormValues<D>) => {
     try {
       const newPersons = await props.api.createMany(values);
       alert("добавили в базу данных");
       await addToCamp({ items: newPersons.map((person) => person.id) });
-    } catch (e: any) {
+    } catch (e) {
       // todo добавить обработку ошибок
       console.error(e);
     }
