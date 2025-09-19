@@ -76,8 +76,6 @@ export default function ScheduleSection() {
   });
 
   const callEventModal = (data: RareLessonFormValues) => {
-    console.log("data", data);
-    // console.log("selection", selection);
     if (activityTypes.length > 0) {
       data.activityTypeId ??= activityTypes[0].id;
     }
