@@ -27,6 +27,7 @@ import type {
   LessonFormValues,
 } from "@/modules/schedule/ui/lesson-form/lesson-form.type.ts";
 import { EventApi } from "@/shared/api/event/EventApi.ts";
+import type { Event } from "@/shared/api/event/EventApi.type.ts";
 
 const UNION_OPTIONS: {
   value: EntitiesKeyType;
@@ -58,10 +59,7 @@ export default function ScheduleSection() {
     initialUnionKey: "groups",
   });
 
-  const { open } = useEventModal({
-    campId: Number(campId),
-    onClose: () => refreshEvents(Number(campId)),
-  });
+  const { open, close } = useEventModal();
 
   const { state: activityTypes } = useActivityType();
   const { state: lessonTypes } = useLessonType();
@@ -77,33 +75,6 @@ export default function ScheduleSection() {
     coaches,
   });
 
-  const handleSubmit: LessonFormProps["onSubmit"] = async (values) => {
-    const newEvent = await EventApi.create({
-      campId: Number(campId),
-      startDate: values.startDate.toISOString(),
-      endDate: values.endDate.toISOString(),
-      lessonTypeId: values.lessonTypeId,
-      activityTypeId: values.activityTypeId,
-      auditoriumId: values.auditoriumId,
-    });
-
-    if (newEvent && values.coachId) {
-      await EventApi.appointCoach({
-        lessonId: newEvent.id,
-        coachId: values.coachId,
-        role: "PRIMARY",
-      });
-    }
-
-    if (newEvent && values.groupId) {
-      await EventApi.addGroup({
-        lessonId: newEvent.id,
-        groupId: values.groupId,
-      });
-    }
-    // todo сообщение о успешном создании event
-  };
-
   const callEventModal = ({
     values,
     eventId,
@@ -114,23 +85,52 @@ export default function ScheduleSection() {
     } & Partial<Omit<LessonFormValues, "startDate" | "endDate">>;
     eventId?: number;
   }) => {
-    if (eventId) {
-      console.log("eventId", eventId);
-    }
+    const handleSubmit: LessonFormProps["onSubmit"] = async (values) => {
+      let savedEvent: Event;
 
-    if (activityTypes.length > 0) {
-      values.activityTypeId ??= activityTypes[0].id;
-    }
+      const apiDto = {
+        campId: Number(campId),
+        startDate: values.startDate.toISOString(),
+        endDate: values.endDate.toISOString(),
+        lessonTypeId: values.lessonTypeId,
+        activityTypeId: values.activityTypeId,
+        auditoriumId: values.auditoriumId,
+      };
 
-    if (lessonTypes.length > 0) {
-      values.lessonTypeId ??= lessonTypes[0].id;
-    }
+      if (eventId) {
+        savedEvent = await EventApi.update(eventId, apiDto);
+      } else {
+        savedEvent = await EventApi.create(apiDto);
+      }
 
-    if (campLocations.length > 0) {
-      values.auditoriumId ??= campLocations[0].id;
-    }
+      if (savedEvent && values.coachId) {
+        await EventApi.appointCoach({
+          lessonId: savedEvent.id,
+          coachId: values.coachId,
+          role: "PRIMARY",
+        });
+      }
 
-    const formInitialValues = prepareLessonFormValues(values);
+      if (savedEvent && values.groupId) {
+        await EventApi.addGroup({
+          lessonId: savedEvent.id,
+          groupId: values.groupId,
+        });
+      }
+
+      await refreshEvents(Number(campId));
+      close();
+    };
+
+    const formInitialValues = prepareLessonFormValues({
+      values,
+      options: {
+        activityTypes,
+        lessonTypes,
+        campLocations,
+      },
+    });
+
     open({
       options,
       formData: {
