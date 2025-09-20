@@ -7,10 +7,7 @@ import { Box, Paper } from "@mui/material";
 import Schedule from "@/modules/schedule/ui/Schedule.tsx";
 import CustomSelect from "@/modules/schedule/ui/custom-select/CustomSelect.tsx";
 
-import {
-  prepareLessonFormValues,
-  type RareLessonFormValues,
-} from "@/modules/schedule/utils/prepareLessonFormValues.ts";
+import { prepareLessonFormValues } from "@/modules/schedule/utils/prepareLessonFormValues.ts";
 
 import { useActivityType } from "@/pages/camps/hooks/use-activity-type.ts";
 import { useLessonType } from "@/modules/schedule/hooks/use-lesson-type.ts";
@@ -21,10 +18,15 @@ import { useCoach } from "@/pages/camps/hooks/use-coach.ts";
 import { useSelectOptions } from "@/modules/schedule/hooks/use-select-options.ts";
 import { useLessons } from "@/shared/api/event/hooks/use-lessons.ts";
 import DateNavigator from "@/modules/schedule/ui/DateNavigator.tsx";
-import dayjs from "dayjs";
+import dayjs, { type Dayjs } from "dayjs";
 import { useCamp } from "@/pages/camps/hooks/use-camp.ts";
 import { useCurrentScheduleDate } from "@/modules/schedule/hooks/use-current-schedule-date.hook.ts";
 import type { EntitiesKeyType } from "@/modules/schedule/hooks/distribute-events/use-distribute-events.hook";
+import type {
+  LessonFormProps,
+  LessonFormValues,
+} from "@/modules/schedule/ui/lesson-form/lesson-form.type.ts";
+import { EventApi } from "@/shared/api/event/EventApi.ts";
 
 const UNION_OPTIONS: {
   value: EntitiesKeyType;
@@ -75,26 +77,67 @@ export default function ScheduleSection() {
     coaches,
   });
 
-  const callEventModal = (data: RareLessonFormValues) => {
+  const handleSubmit: LessonFormProps["onSubmit"] = async (values) => {
+    const newEvent = await EventApi.create({
+      campId: Number(campId),
+      startDate: values.startDate.toISOString(),
+      endDate: values.endDate.toISOString(),
+      lessonTypeId: values.lessonTypeId,
+      activityTypeId: values.activityTypeId,
+      auditoriumId: values.auditoriumId,
+    });
+
+    if (newEvent && values.coachId) {
+      await EventApi.appointCoach({
+        lessonId: newEvent.id,
+        coachId: values.coachId,
+        role: "PRIMARY",
+      });
+    }
+
+    if (newEvent && values.groupId) {
+      await EventApi.addGroup({
+        lessonId: newEvent.id,
+        groupId: values.groupId,
+      });
+    }
+    // todo сообщение о успешном создании event
+  };
+
+  const callEventModal = ({
+    values,
+    eventId,
+  }: {
+    values: {
+      startDate: Dayjs;
+      endDate: Dayjs;
+    } & Partial<Omit<LessonFormValues, "startDate" | "endDate">>;
+    eventId?: number;
+  }) => {
+    if (eventId) {
+      console.log("eventId", eventId);
+    }
+
     if (activityTypes.length > 0) {
-      data.activityTypeId ??= activityTypes[0].id;
+      values.activityTypeId ??= activityTypes[0].id;
     }
 
     if (lessonTypes.length > 0) {
-      data.lessonTypeId ??= lessonTypes[0].id;
+      values.lessonTypeId ??= lessonTypes[0].id;
     }
 
     if (campLocations.length > 0) {
-      data.auditoriumId ??= campLocations[0].id;
+      values.auditoriumId ??= campLocations[0].id;
     }
 
-    const formInitialValues = prepareLessonFormValues(data);
+    const formInitialValues = prepareLessonFormValues(values);
     open({
       options,
       formData: {
         formId: "createAndEditLessonFormId",
         initialValues: formInitialValues,
       },
+      onSubmit: handleSubmit,
     });
   };
 
@@ -158,7 +201,7 @@ export default function ScheduleSection() {
             value: selection.currentId,
           }}
           columns={selection.columns}
-          onCreateEvent={callEventModal}
+          onOpenEventModal={callEventModal}
         />
       )}
     </>

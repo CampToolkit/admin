@@ -19,6 +19,8 @@ interface Props {
   groupName: string;
   coachName: string;
   campLocationName: string;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
 const PointTitle = ({ children }: { children: string }) => (
@@ -26,7 +28,14 @@ const PointTitle = ({ children }: { children: string }) => (
 );
 
 export default function EventCard(props: Props) {
-  const { startDate, coachName, campLocationName, groupName } = props;
+  const {
+    startDate,
+    coachName,
+    campLocationName,
+    groupName,
+    onEdit,
+    onDelete,
+  } = props;
 
   return (
     <Card variant="elevation" sx={{ height: "100%" }}>
@@ -48,11 +57,11 @@ export default function EventCard(props: Props) {
             right: "0.1em",
           }}
         >
-          <IconButton size="small">
+          <IconButton size="small" onClick={onEdit}>
             <EditIcon fontSize="small" />
           </IconButton>
           <IconButton size="small">
-            <DeleteIcon fontSize="small" />
+            <DeleteIcon fontSize="small" onClick={onDelete} />
           </IconButton>
         </Box>
         <Grid container spacing={0.3}>

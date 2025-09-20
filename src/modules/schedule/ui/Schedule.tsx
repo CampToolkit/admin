@@ -34,12 +34,13 @@ interface ScheduleProps {
     value: number;
   };
   columns: ScheduleColumns;
-  onCreateEvent: (
-    value: {
+  onOpenEventModal: (data: {
+    values: {
       startDate: Dayjs;
       endDate: Dayjs;
-    } & Partial<Omit<LessonFormValues, "startDate" | "endDate">>,
-  ) => void;
+    } & Partial<Omit<LessonFormValues, "startDate" | "endDate">>;
+    eventId?: number;
+  }) => void;
 }
 
 export default function Schedule({
@@ -48,7 +49,7 @@ export default function Schedule({
   unionKey,
   filter,
   columns,
-  onCreateEvent,
+  onOpenEventModal,
 }: ScheduleProps) {
   const distributedEvents = useDistributeEvents({
     list: lessons,
@@ -103,11 +104,13 @@ export default function Schedule({
       : "";
     const columnEntityId = target.dataset.columnEntityId;
 
-    onCreateEvent({
-      [`${tableEntityType}Id`]: tableEntityId,
-      [`${columnEntityType}Id`]: columnEntityId,
-      startDate: startDate,
-      endDate: startDate.add(1, "hour"),
+    onOpenEventModal({
+      values: {
+        [`${tableEntityType}Id`]: tableEntityId,
+        [`${columnEntityType}Id`]: columnEntityId,
+        startDate: startDate,
+        endDate: startDate.add(1, "hour"),
+      },
     });
   };
 
@@ -178,6 +181,16 @@ export default function Schedule({
                       })}
                     >
                       <EventCard
+                        onEdit={() =>
+                          onOpenEventModal({
+                            values: {
+                              ...event,
+                              startDate: dayjs(event.startDate),
+                              endDate: dayjs(event.endDate),
+                            },
+                            eventId: event.id,
+                          })
+                        }
                         startDate={dayjs(event.startDate)}
                         groupName={event.groups
                           .map((item) => item.name)
