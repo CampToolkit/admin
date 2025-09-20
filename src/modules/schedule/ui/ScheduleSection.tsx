@@ -46,10 +46,10 @@ const UNION_OPTIONS: {
 export default function ScheduleSection() {
   // todo убрать в Context
   const { campId } = useParams();
-  const { camp, refreshCamp } = useCamp(Number(campId));
+  const { camp } = useCamp(Number(campId));
 
   const { currentDate, setCurrentDate } = useCurrentScheduleDate(camp);
-  const { state: lessons } = useLessons(Number(campId));
+  const { state: lessons, fetch: refreshEvents } = useLessons(Number(campId));
 
   const { view, selection } = useScheduleSelection({
     campId: Number(campId),
@@ -58,7 +58,7 @@ export default function ScheduleSection() {
 
   const { open } = useEventModal({
     campId: Number(campId),
-    onClose: () => refreshCamp(Number(campId)),
+    onClose: () => refreshEvents(Number(campId)),
   });
 
   const { state: activityTypes } = useActivityType();
