@@ -75,6 +75,7 @@ export default function ScheduleSection() {
     coaches,
   });
 
+  // note ПРИ ДОБАВЛЕНИИ ВОЗМОЖНОСТИ НАЗНАЧАТЬ НЕСКОЛЬКО ТРЕНЕРОВ НА EVENT: в values принимать coach[]
   const callEventModal = ({
     values,
     eventId,

@@ -182,11 +182,20 @@ export default function Schedule({
                     >
                       <EventCard
                         onEdit={() =>
+                          // note ПРИ ДОБАВЛЕНИИ ВОЗМОЖНОСТИ НАЗНАЧАТЬ НЕСКОЛЬКО ТРЕНЕРОВ НА EVENT: передавать event.coaches
                           onOpenEventModal({
                             values: {
                               ...event,
                               startDate: dayjs(event.startDate),
                               endDate: dayjs(event.endDate),
+                              coachId:
+                                event.coaches.length > 0
+                                  ? event.coaches[0].id
+                                  : undefined,
+                              groupId:
+                                event.groups.length > 0
+                                  ? event.groups[0].id
+                                  : undefined,
                             },
                             eventId: event.id,
                           })

@@ -4,14 +4,6 @@ import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.ty
 import type { LessonType } from "@/shared/api/lesson-type/LessonTypeApi.type.ts";
 import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
 
-const DEFAULT_VALUES = {
-  lessonTypeId: 0,
-  activityTypeId: 0,
-  auditoriumId: 0,
-  coachId: 0,
-  groupId: 0,
-};
-
 export type RareLessonFormValues = {
   startDate: Dayjs;
 } & Partial<Omit<LessonFormValues, "startDate">>;
@@ -29,6 +21,7 @@ export function prepareLessonFormValues({
   values,
   options,
 }: Props): LessonFormValues {
+  console.log("BEFORE prepareLessonFormValues", values);
   if (options.activityTypes.length > 0) {
     values.activityTypeId ??= options.activityTypes[0].id;
   }
@@ -39,9 +32,14 @@ export function prepareLessonFormValues({
     values.auditoriumId ??= options.campLocations[0].id;
   }
   const endDate = values.startDate.clone().add(1, "hour");
+
   return {
     endDate,
-    ...DEFAULT_VALUES,
     ...values,
+    lessonTypeId: values.lessonTypeId ? values.lessonTypeId : 0,
+    activityTypeId: values.activityTypeId ? values.activityTypeId : 0,
+    auditoriumId: values.auditoriumId ? values.auditoriumId : 0,
+    coachId: values.coachId ? values.coachId : 0,
+    groupId: values.groupId ? values.groupId : 0,
   };
 }
