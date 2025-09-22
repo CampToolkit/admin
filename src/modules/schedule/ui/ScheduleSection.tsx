@@ -27,6 +27,7 @@ import type {
   LessonFormValues,
 } from "@/modules/schedule/ui/lesson-form/lesson-form.type.ts";
 import { EventApi } from "@/shared/api/event/EventApi.ts";
+import type { CreateLessonDto } from "@/shared/api/event/EventApi.dto.ts";
 
 const UNION_OPTIONS: {
   value: EntitiesKeyType;
@@ -86,15 +87,24 @@ export default function ScheduleSection() {
     eventId?: number;
   }) => {
     const handleSubmit: LessonFormProps["onSubmit"] = async (values) => {
-      const apiDto = {
+      const apiDto: CreateLessonDto = {
         campId: Number(campId),
         startDate: values.startDate.toISOString(),
         endDate: values.endDate.toISOString(),
         lessonTypeId: values.lessonTypeId,
         activityTypeId: values.activityTypeId,
         auditoriumId: values.auditoriumId,
+        coaches:
+          values.coachId > 0
+            ? [
+                {
+                  coachId: values.coachId,
+                  role: "PRIMARY",
+                },
+              ]
+            : [],
+        groupIds: values.groupId > 0 ? [values.groupId] : [],
       };
-
       if (eventId) {
         await EventApi.update(eventId, apiDto);
       } else {
@@ -102,6 +112,7 @@ export default function ScheduleSection() {
       }
 
       await refreshEvents(Number(campId));
+
       // todo сообщение о сохранении
       close();
     };
