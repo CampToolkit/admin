@@ -7,10 +7,7 @@ import { Box, Paper } from "@mui/material";
 import Schedule from "@/modules/schedule/ui/Schedule.tsx";
 import CustomSelect from "@/modules/schedule/ui/custom-select/CustomSelect.tsx";
 
-import {
-  prepareLessonFormValues,
-  type RareLessonFormValues,
-} from "@/modules/schedule/utils/prepareLessonFormValues.ts";
+import { prepareLessonFormValues } from "@/modules/schedule/utils/prepare-lesson-form-values.ts";
 
 import { useActivityType } from "@/pages/camps/hooks/use-activity-type.ts";
 import { useLessonType } from "@/modules/schedule/hooks/use-lesson-type.ts";
@@ -21,10 +18,15 @@ import { useCoach } from "@/pages/camps/hooks/use-coach.ts";
 import { useSelectOptions } from "@/modules/schedule/hooks/use-select-options.ts";
 import { useLessons } from "@/shared/api/event/hooks/use-lessons.ts";
 import DateNavigator from "@/modules/schedule/ui/DateNavigator.tsx";
-import dayjs from "dayjs";
+import dayjs, { type Dayjs } from "dayjs";
 import { useCamp } from "@/pages/camps/hooks/use-camp.ts";
 import { useCurrentScheduleDate } from "@/modules/schedule/hooks/use-current-schedule-date.hook.ts";
 import type { EntitiesKeyType } from "@/modules/schedule/hooks/distribute-events/use-distribute-events.hook";
+import type {
+  LessonFormProps,
+  LessonFormValues,
+} from "@/modules/schedule/ui/lesson-form/lesson-form.type.ts";
+import { EventApi } from "@/shared/api/event/EventApi.ts";
 
 const UNION_OPTIONS: {
   value: EntitiesKeyType;
@@ -46,20 +48,17 @@ const UNION_OPTIONS: {
 export default function ScheduleSection() {
   // todo убрать в Context
   const { campId } = useParams();
-  const { camp, refreshCamp } = useCamp(Number(campId));
+  const { camp } = useCamp(Number(campId));
 
   const { currentDate, setCurrentDate } = useCurrentScheduleDate(camp);
-  const { state: lessons } = useLessons(Number(campId));
+  const { state: lessons, fetch: refreshEvents } = useLessons(Number(campId));
 
   const { view, selection } = useScheduleSelection({
     campId: Number(campId),
     initialUnionKey: "groups",
   });
 
-  const { open } = useEventModal({
-    campId: Number(campId),
-    onClose: () => refreshCamp(Number(campId)),
-  });
+  const { open, close } = useEventModal();
 
   const { state: activityTypes } = useActivityType();
   const { state: lessonTypes } = useLessonType();
@@ -75,27 +74,62 @@ export default function ScheduleSection() {
     coaches,
   });
 
-  const callEventModal = (data: RareLessonFormValues) => {
-    if (activityTypes.length > 0) {
-      data.activityTypeId ??= activityTypes[0].id;
-    }
+  // note ПРИ ДОБАВЛЕНИИ ВОЗМОЖНОСТИ НАЗНАЧАТЬ НЕСКОЛЬКО ТРЕНЕРОВ НА EVENT: в values принимать coach[]
+  const callEventModal = ({
+    values,
+    eventId,
+  }: {
+    values: {
+      startDate: Dayjs;
+      endDate: Dayjs;
+    } & Partial<Omit<LessonFormValues, "startDate" | "endDate">>;
+    eventId?: number;
+  }) => {
+    const handleSubmit: LessonFormProps["onSubmit"] = async (values) => {
+      const apiDto = {
+        campId: Number(campId),
+        startDate: values.startDate.toISOString(),
+        endDate: values.endDate.toISOString(),
+        lessonTypeId: values.lessonTypeId,
+        activityTypeId: values.activityTypeId,
+        auditoriumId: values.auditoriumId,
+      };
 
-    if (lessonTypes.length > 0) {
-      data.lessonTypeId ??= lessonTypes[0].id;
-    }
+      if (eventId) {
+        await EventApi.update(eventId, apiDto);
+      } else {
+        await EventApi.create(apiDto);
+      }
 
-    if (campLocations.length > 0) {
-      data.auditoriumId ??= campLocations[0].id;
-    }
+      await refreshEvents(Number(campId));
+      // todo сообщение о сохранении
+      close();
+    };
 
-    const formInitialValues = prepareLessonFormValues(data);
+    const formInitialValues = prepareLessonFormValues({
+      values,
+      options: {
+        activityTypes,
+        lessonTypes,
+        campLocations,
+      },
+    });
+
     open({
       options,
       formData: {
         formId: "createAndEditLessonFormId",
         initialValues: formInitialValues,
       },
+      onSubmit: handleSubmit,
     });
+  };
+
+  const onDeleteEvent = async (eventId: number) => {
+    // todo сделать подтверждение
+    await EventApi.delete(eventId);
+    // todo сообщение о удалении
+    await refreshEvents(Number(campId));
   };
 
   return (
@@ -158,7 +192,8 @@ export default function ScheduleSection() {
             value: selection.currentId,
           }}
           columns={selection.columns}
-          onCreateEvent={callEventModal}
+          onOpenEventModal={callEventModal}
+          onDeleteEvent={onDeleteEvent}
         />
       )}
     </>

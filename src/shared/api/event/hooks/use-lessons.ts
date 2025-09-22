@@ -5,13 +5,13 @@ import { EventApi } from "@/shared/api/event/EventApi.ts";
 export function useLessons(campId: number) {
   const [state, setState] = useState<Event[]>([]);
 
-  const fetch = useCallback(async () => {
+  const fetch = useCallback(async (campId: number) => {
     const data = await EventApi.getAll({ campId });
     setState(data);
   }, []);
 
   useEffect(() => {
-    fetch();
+    fetch(campId);
   }, []);
 
   return { state, fetch };

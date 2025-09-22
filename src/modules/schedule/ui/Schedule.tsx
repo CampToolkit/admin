@@ -34,12 +34,14 @@ interface ScheduleProps {
     value: number;
   };
   columns: ScheduleColumns;
-  onCreateEvent: (
-    value: {
+  onOpenEventModal: (data: {
+    values: {
       startDate: Dayjs;
       endDate: Dayjs;
-    } & Partial<Omit<LessonFormValues, "startDate" | "endDate">>,
-  ) => void;
+    } & Partial<Omit<LessonFormValues, "startDate" | "endDate">>;
+    eventId?: number;
+  }) => void;
+  onDeleteEvent: (evenId: number) => void;
 }
 
 export default function Schedule({
@@ -48,7 +50,8 @@ export default function Schedule({
   unionKey,
   filter,
   columns,
-  onCreateEvent,
+  onOpenEventModal,
+  onDeleteEvent,
 }: ScheduleProps) {
   const distributedEvents = useDistributeEvents({
     list: lessons,
@@ -103,11 +106,13 @@ export default function Schedule({
       : "";
     const columnEntityId = target.dataset.columnEntityId;
 
-    onCreateEvent({
-      [`${tableEntityType}Id`]: tableEntityId,
-      [`${columnEntityType}Id`]: columnEntityId,
-      startDate: startDate,
-      endDate: startDate.add(1, "hour"),
+    onOpenEventModal({
+      values: {
+        [`${tableEntityType}Id`]: tableEntityId,
+        [`${columnEntityType}Id`]: columnEntityId,
+        startDate: startDate,
+        endDate: startDate.add(1, "hour"),
+      },
     });
   };
 
@@ -166,31 +171,49 @@ export default function Schedule({
                   data-table-entity-id={filter.value}
                 ></Paper>
               ))}
-              {distributedEvents[column.id]?.map((events) => (
-                <>
-                  {events.map((event, index) => (
-                    <SchedulePositionWrapper
-                      key={event.id}
-                      position={calcLessonPosition({
-                        event,
-                        eventIndex: index,
-                        overlapEventsAmount: events.length,
-                      })}
-                    >
-                      <EventCard
-                        startDate={dayjs(event.startDate)}
-                        groupName={event.groups
-                          .map((item) => item.name)
-                          .join(", ")}
-                        coachName={event.coaches
-                          .map((item) => item.lastName)
-                          .join(", ")}
-                        campLocationName={event.auditorium.name}
-                      />
-                    </SchedulePositionWrapper>
-                  ))}
-                </>
-              ))}
+              {distributedEvents[column.id]?.map((events) => {
+                return events.map((event, index) => (
+                  <SchedulePositionWrapper
+                    key={event.id}
+                    position={calcLessonPosition({
+                      event,
+                      eventIndex: index,
+                      overlapEventsAmount: events.length,
+                    })}
+                  >
+                    <EventCard
+                      onEdit={() =>
+                        // note ПРИ ДОБАВЛЕНИИ ВОЗМОЖНОСТИ НАЗНАЧАТЬ НЕСКОЛЬКО ТРЕНЕРОВ НА EVENT: передавать event.coaches
+                        onOpenEventModal({
+                          values: {
+                            ...event,
+                            startDate: dayjs(event.startDate),
+                            endDate: dayjs(event.endDate),
+                            coachId:
+                              event.coaches.length > 0
+                                ? event.coaches[0].id
+                                : undefined,
+                            groupId:
+                              event.groups.length > 0
+                                ? event.groups[0].id
+                                : undefined,
+                          },
+                          eventId: event.id,
+                        })
+                      }
+                      onDelete={() => onDeleteEvent(event.id)}
+                      startDate={dayjs(event.startDate)}
+                      groupName={event.groups
+                        .map((item) => item.name)
+                        .join(", ")}
+                      coachName={event.coaches
+                        .map((item) => item.lastName)
+                        .join(", ")}
+                      campLocationName={event.auditorium.name}
+                    />
+                  </SchedulePositionWrapper>
+                ));
+              })}
             </Box>
           </Grid>
         ))}

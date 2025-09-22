@@ -2,15 +2,8 @@ import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.t
 import LessonForm from "@/modules/schedule/ui/lesson-form/LessonForm.tsx";
 import type {
   LessonFormOptions,
-  LessonFormProps,
   LessonFormValues,
 } from "@/modules/schedule/ui/lesson-form/lesson-form.type.ts";
-import { EventApi } from "@/shared/api/event/EventApi.ts";
-
-type UseSessionModalProps = {
-  campId: number;
-  onClose?: () => void;
-};
 
 type OpenModalParams = {
   formData: {
@@ -18,44 +11,15 @@ type OpenModalParams = {
     initialValues: LessonFormValues;
   };
   options: LessonFormOptions;
+  onSubmit: (values: LessonFormValues) => void;
 };
 
-export function useEventModal({ campId, onClose }: UseSessionModalProps) {
+export function useEventModal() {
   const { openModal, closeModal } = useModal();
 
-  const handleSubmit: LessonFormProps["onSubmit"] = async (values) => {
-    const newEvent = await EventApi.create({
-      campId,
-      startDate: values.startDate.toISOString(),
-      endDate: values.endDate.toISOString(),
-      lessonTypeId: values.lessonTypeId,
-      activityTypeId: values.activityTypeId,
-      auditoriumId: values.auditoriumId,
-    });
-    console.log(newEvent);
-
-    if (newEvent && values.coachId) {
-      await EventApi.appointCoach({
-        lessonId: newEvent.id,
-        coachId: values.coachId,
-        role: "PRIMARY",
-      });
-    }
-
-    if (newEvent && values.groupId) {
-      await EventApi.addGroup({
-        lessonId: newEvent.id,
-        groupId: values.groupId,
-      });
-    }
-    // todo сообщение о успешном создании event
-    onClose?.();
-    closeModal();
-  };
-
-  const open = ({ formData, options }: OpenModalParams) => {
+  const open = ({ formData, options, onSubmit }: OpenModalParams) => {
     const content = () => (
-      <LessonForm {...formData} options={options} onSubmit={handleSubmit} />
+      <LessonForm {...formData} options={options} onSubmit={onSubmit} />
     );
 
     openModal({
@@ -66,5 +30,5 @@ export function useEventModal({ campId, onClose }: UseSessionModalProps) {
     });
   };
 
-  return { open };
+  return { open, close: closeModal };
 }
