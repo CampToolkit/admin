@@ -6,48 +6,56 @@ import ScheduleSection from "@/modules/schedule/ui/ScheduleSection.tsx";
 import ExampleSection from "@/pages/camps/camp/sections/ExampleSection.tsx";
 import { useCampTabs } from "@/pages/camps/hooks/use-camp-tabs.hook.ts";
 import PageTitle from "@/shared/components/PageTitle.tsx";
-import { Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
+import type { ComponentType } from "react";
+import CoachesSection from "@/modules/coaches/ui/CoachesSection.tsx";
 
-const TABS = [
+interface CampTab {
+  name: string;
+  path: string;
+  component: ComponentType;
+}
+
+const TABS: CampTab[] = [
   {
-    index: 0,
     name: "Общая информация",
     path: "base-info",
-    component: <BaseInfoSection />,
+    component: BaseInfoSection,
   },
   {
-    index: 1,
+    name: "Тренеры",
+    path: "coaches",
+    component: CoachesSection,
+  },
+  {
     name: "Спортсмены",
     path: "sportsmen",
-    component: <SportsmenSection />,
+    component: SportsmenSection,
   },
   {
-    index: 2,
     name: "Группы",
     path: "groups",
-    component: <GroupsSection />,
+    component: GroupsSection,
   },
   {
-    index: 3,
     name: "Локации",
     path: "locations",
-    component: <LocationsSection />,
+    component: LocationsSection,
   },
   {
-    index: 4,
     name: "Расписание",
     path: "schedule",
-    component: <ScheduleSection />,
+    component: ScheduleSection,
   },
   {
-    index: 5,
     name: "Example",
     path: "example",
-    component: <ExampleSection />,
+    component: ExampleSection,
   },
 ];
 export default function Camp() {
   const { currentTabIndex, handleSwitchTabs } = useCampTabs();
+  const CurrentComponent = TABS[currentTabIndex].component;
 
   return (
     <div>
@@ -57,7 +65,9 @@ export default function Camp() {
           <Tab key={tab.name} label={tab.name} value={index} />
         ))}
       </Tabs>
-      <div>{TABS[currentTabIndex].component}</div>
+      <Box>
+        <CurrentComponent />
+      </Box>
     </div>
   );
 }
