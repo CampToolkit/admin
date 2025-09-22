@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useCampSportsmen } from "@/pages/camps/hooks/use-camp-sportsmen.hook.ts";
 
-import SportsmanTable from "@/pages/camps/camp/components/SportsmanTable.tsx";
+import PersonEntityTable from "@/pages/camps/camp/components/PersonEntityTable.tsx";
 import TabHeader from "@/pages/camps/camp/components/TabHeader.tsx";
 
 import AddPersonToCampButton from "@/pages/camps/camp/components/call-modal-buttons/AddPersonToCampButton.tsx";
@@ -15,6 +15,12 @@ export default function SportsmenSection() {
     Number(campId),
   );
 
+  const onRemoveFromCamp = async (sportsmanId: number) => {
+    await SportsmanApi.removeManyFromCamp(Number(campId), {
+      items: [sportsmanId],
+    });
+  };
+
   const onAdd = async () => {
     await refreshSportsmen(Number(campId));
   };
@@ -26,16 +32,16 @@ export default function SportsmenSection() {
   return (
     <div>
       <TabHeader>
-        <AddPersonToCampButton<Sportsman>
+        <AddPersonToCampButton<Sportsman, Sportsman>
           api={SportsmanApi}
           onDone={onAdd}
           useEntity={useAllSportsmen}
         />
       </TabHeader>
 
-      <SportsmanTable
-        campId={Number(campId)}
-        sportsmen={sportsmen}
+      <PersonEntityTable
+        persons={sportsmen}
+        onRemoveFromCamp={onRemoveFromCamp}
         onDone={onSportsmanTableAction}
       />
     </div>

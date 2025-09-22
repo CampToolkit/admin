@@ -10,31 +10,21 @@ import {
   Paper,
   IconButton,
 } from "@mui/material";
-import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
+
 import EditSportsmanButton from "@/pages/camps/camp/components/call-modal-buttons/EditSportsmanButton.tsx";
+import type { Person } from "@/shared/api/lib/types/Person.type.ts";
 
-type Sportsman = {
-  id: number;
-  lastName: string;
-  firstName: string;
-  patrName: string;
-};
-
-interface Props {
-  campId: number;
-  sportsmen: Sportsman[];
+interface Props<T extends Person> {
+  persons: T[];
+  onRemoveFromCamp: (personId: number) => void;
   onDone?: () => Promise<void> | void;
 }
 
-export default function SportsmanTable({ campId, sportsmen, onDone }: Props) {
-  const removeFromCamp = async (sportsmanId: number) => {
-    const response = await SportsmanApi.removeManyFromCamp(campId, {
-      items: [sportsmanId],
-    });
-    console.log(response);
-    onDone?.();
-  };
-
+export default function PersonEntityTable<T extends Person>({
+  persons,
+  onRemoveFromCamp,
+  onDone,
+}: Props<T>) {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -48,14 +38,14 @@ export default function SportsmanTable({ campId, sportsmen, onDone }: Props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {sportsmen.map((s) => (
-            <TableRow key={s.id}>
-              <TableCell>{s.lastName}</TableCell>
-              <TableCell>{s.firstName}</TableCell>
-              <TableCell>{s.patrName}</TableCell>
+          {persons.map((p) => (
+            <TableRow key={p.id}>
+              <TableCell>{p.lastName}</TableCell>
+              <TableCell>{p.firstName}</TableCell>
+              <TableCell>{p.patrName}</TableCell>
               <TableCell>
                 <IconButton
-                  onClick={() => removeFromCamp(s.id)}
+                  onClick={() => onRemoveFromCamp(p.id)}
                   sx={{
                     color: "error.main",
                     "&:hover": {
@@ -68,8 +58,8 @@ export default function SportsmanTable({ campId, sportsmen, onDone }: Props) {
               </TableCell>
               <TableCell>
                 <EditSportsmanButton
-                  sportsmanId={s.id}
-                  initialValues={s}
+                  sportsmanId={p.id}
+                  initialValues={p}
                   onDone={onDone}
                 />
               </TableCell>
