@@ -125,6 +125,13 @@ export default function ScheduleSection() {
     });
   };
 
+  const onDeleteEvent = async (eventId: number) => {
+    // todo сделать подтверждение
+    await EventApi.delete(eventId);
+    // todo сообщение о удалении
+    await refreshEvents(Number(campId));
+  };
+
   return (
     <>
       <Box
@@ -186,6 +193,7 @@ export default function ScheduleSection() {
           }}
           columns={selection.columns}
           onOpenEventModal={callEventModal}
+          onDeleteEvent={onDeleteEvent}
         />
       )}
     </>

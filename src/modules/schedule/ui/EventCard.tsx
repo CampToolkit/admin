@@ -19,8 +19,8 @@ interface Props {
   groupName: string;
   coachName: string;
   campLocationName: string;
-  onEdit?: () => void;
-  onDelete?: () => void;
+  onEdit: () => void;
+  onDelete: () => void;
 }
 
 const PointTitle = ({ children }: { children: string }) => (

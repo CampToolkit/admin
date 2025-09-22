@@ -41,6 +41,7 @@ interface ScheduleProps {
     } & Partial<Omit<LessonFormValues, "startDate" | "endDate">>;
     eventId?: number;
   }) => void;
+  onDeleteEvent: (evenId: number) => void;
 }
 
 export default function Schedule({
@@ -50,6 +51,7 @@ export default function Schedule({
   filter,
   columns,
   onOpenEventModal,
+  onDeleteEvent,
 }: ScheduleProps) {
   const distributedEvents = useDistributeEvents({
     list: lessons,
@@ -199,6 +201,7 @@ export default function Schedule({
                           eventId: event.id,
                         })
                       }
+                      onDelete={() => onDeleteEvent(event.id)}
                       startDate={dayjs(event.startDate)}
                       groupName={event.groups
                         .map((item) => item.name)

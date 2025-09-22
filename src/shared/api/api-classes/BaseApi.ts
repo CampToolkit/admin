@@ -48,6 +48,7 @@ export class BaseApi<
     return data;
   }
 
+  // todo возвращать результат
   async delete(id: number): Promise<void> {
     await axiosConfig.delete(`${this.basePath}/${id}`);
   }
