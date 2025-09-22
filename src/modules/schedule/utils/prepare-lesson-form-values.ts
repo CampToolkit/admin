@@ -21,7 +21,6 @@ export function prepareLessonFormValues({
   values,
   options,
 }: Props): LessonFormValues {
-  console.log("BEFORE prepareLessonFormValues", values);
   if (options.activityTypes.length > 0) {
     values.activityTypeId ??= options.activityTypes[0].id;
   }

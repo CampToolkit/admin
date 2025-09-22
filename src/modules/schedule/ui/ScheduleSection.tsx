@@ -7,7 +7,7 @@ import { Box, Paper } from "@mui/material";
 import Schedule from "@/modules/schedule/ui/Schedule.tsx";
 import CustomSelect from "@/modules/schedule/ui/custom-select/CustomSelect.tsx";
 
-import { prepareLessonFormValues } from "@/modules/schedule/utils/prepareLessonFormValues.ts";
+import { prepareLessonFormValues } from "@/modules/schedule/utils/prepare-lesson-form-values.ts";
 
 import { useActivityType } from "@/pages/camps/hooks/use-activity-type.ts";
 import { useLessonType } from "@/modules/schedule/hooks/use-lesson-type.ts";
@@ -27,7 +27,6 @@ import type {
   LessonFormValues,
 } from "@/modules/schedule/ui/lesson-form/lesson-form.type.ts";
 import { EventApi } from "@/shared/api/event/EventApi.ts";
-import type { Event } from "@/shared/api/event/EventApi.type.ts";
 
 const UNION_OPTIONS: {
   value: EntitiesKeyType;
@@ -87,8 +86,6 @@ export default function ScheduleSection() {
     eventId?: number;
   }) => {
     const handleSubmit: LessonFormProps["onSubmit"] = async (values) => {
-      let savedEvent: Event;
-
       const apiDto = {
         campId: Number(campId),
         startDate: values.startDate.toISOString(),
@@ -99,27 +96,13 @@ export default function ScheduleSection() {
       };
 
       if (eventId) {
-        savedEvent = await EventApi.update(eventId, apiDto);
+        await EventApi.update(eventId, apiDto);
       } else {
-        savedEvent = await EventApi.create(apiDto);
-      }
-
-      if (savedEvent && values.coachId) {
-        await EventApi.appointCoach({
-          lessonId: savedEvent.id,
-          coachId: values.coachId,
-          role: "PRIMARY",
-        });
-      }
-
-      if (savedEvent && values.groupId) {
-        await EventApi.addGroup({
-          lessonId: savedEvent.id,
-          groupId: values.groupId,
-        });
+        await EventApi.create(apiDto);
       }
 
       await refreshEvents(Number(campId));
+      // todo сообщение о сохранении
       close();
     };
 
