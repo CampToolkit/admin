@@ -5,6 +5,9 @@ export interface CreateLessonDto {
   activityTypeId: number;
   auditoriumId: number;
   lessonTypeId: number;
+  coaches?: CoachWithRoleDto[];
+  groupIds?: number[];
+  sportsmanIds?: number[];
 }
 
 // eslint-disable-next-line
@@ -19,11 +22,16 @@ export interface GetLessonDto extends Record<string, unknown> {
   lessonTypeId?: number;
 }
 
+export type LessonCoachRole = "PRIMARY" | "SECONDARY";
+
 // coach
-export interface AppointCoachDto {
-  lessonId: number;
+export interface CoachWithRoleDto {
   coachId: number;
-  role: "PRIMARY" | "SECONDARY";
+  role: LessonCoachRole;
+}
+
+export interface AppointCoachDto extends CoachWithRoleDto {
+  lessonId: number;
 }
 
 // eslint-disable-next-line
