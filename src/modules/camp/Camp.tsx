@@ -1,5 +1,5 @@
 import BaseInfoSection from "@/pages/camps/camp/sections/BaseInfoSection.tsx";
-import SportsmenSection from "@/pages/camps/camp/sections/SportsmenSection.tsx";
+import SportsmenSection from "@/modules/sportsmen/ui/SportsmenSection.tsx";
 import GroupsSection from "@/pages/camps/camp/sections/GroupsSection.tsx";
 import LocationsSection from "@/pages/camps/camp/sections/LocationsSection.tsx";
 import ScheduleSection from "@/modules/schedule/ui/ScheduleSection.tsx";

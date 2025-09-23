@@ -4,23 +4,23 @@ import Grid from "@mui/material/Grid";
 import { TextField } from "@mui/material";
 import LeftLayoutItem from "@/pages/camps/camp/components/forms-layouts/LeftLayoutItem.tsx";
 import RightLayoutItem from "@/pages/camps/camp/components/forms-layouts/RightLayoutItem.tsx";
-import TabLayout from "../components/forms-layouts/TabLayout.tsx";
+import TabLayout from "../../../pages/camps/camp/components/forms-layouts/TabLayout.tsx";
 import FormActions from "@/pages/camps/camp/components/forms-layouts/FormActions.tsx";
 
-export interface SportsmanFormValues {
+export interface PersonBaseFormValues {
   firstName: string;
   lastName: string;
   patrName: string;
 }
 
-export type SportsmanFormPropsType = {
-  initialValues: SportsmanFormValues;
-  onSubmit: (values: SportsmanFormValues) => void;
+export type PersonBaseFormPropsType = {
+  initialValues: PersonBaseFormValues;
+  onSubmit: (values: PersonBaseFormValues) => void;
 };
 
-export default function SportsmanForm(props: SportsmanFormPropsType) {
+export default function PersonBaseForm(props: PersonBaseFormPropsType) {
   const { initialValues, onSubmit } = props;
-  const formik = useFormik<SportsmanFormValues>({
+  const formik = useFormik<PersonBaseFormValues>({
     enableReinitialize: true,
     initialValues,
     onSubmit,

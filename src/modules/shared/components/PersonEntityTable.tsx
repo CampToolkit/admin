@@ -11,18 +11,21 @@ import {
   IconButton,
 } from "@mui/material";
 
-import EditSportsmanButton from "@/pages/camps/camp/components/call-modal-buttons/EditSportsmanButton.tsx";
 import type { Person } from "@/shared/api/lib/types/Person.type.ts";
+import type { ComponentType } from "react";
+import type { EditPersonButtonPropsType } from "@/modules/shared/types/edit-person-button-props.type.ts";
 
 interface Props<T extends Person> {
   persons: T[];
   onRemoveFromCamp: (personId: number) => void;
+  EditPersonButton: ComponentType<EditPersonButtonPropsType>;
   onDone?: () => Promise<void> | void;
 }
 
 export default function PersonEntityTable<T extends Person>({
   persons,
   onRemoveFromCamp,
+  EditPersonButton,
   onDone,
 }: Props<T>) {
   return (
@@ -57,8 +60,8 @@ export default function PersonEntityTable<T extends Person>({
                 </IconButton>
               </TableCell>
               <TableCell>
-                <EditSportsmanButton
-                  sportsmanId={p.id}
+                <EditPersonButton
+                  personId={p.id}
                   initialValues={p}
                   onDone={onDone}
                 />

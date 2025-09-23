@@ -1,10 +1,11 @@
 import { Box } from "@mui/material";
 import { useCoach } from "@/pages/camps/hooks/use-coach.ts";
 import { useParams } from "react-router-dom";
-import PersonEntityTable from "@/pages/camps/camp/components/PersonEntityTable.tsx";
+import PersonEntityTable from "@/modules/shared/components/PersonEntityTable.tsx";
 import TabHeader from "@/pages/camps/camp/components/TabHeader";
 import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
 import { CoachApi } from "@/shared/api/coach/CoachApi.ts";
+import EditCoachButton from "@/modules/coaches/ui/EditCoachButton.tsx";
 
 export default function CoachesSection() {
   const { campId } = useParams();
@@ -21,6 +22,7 @@ export default function CoachesSection() {
       {coaches && (
         <PersonEntityTable<Coach>
           persons={coaches}
+          EditPersonButton={EditCoachButton}
           onRemoveFromCamp={onRemoveFromCamp}
         />
       )}
