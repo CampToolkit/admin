@@ -4,34 +4,29 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
 
 import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
-import SportsmanForm, {
-  type SportsmanFormValues,
-} from "../../forms/SportsmanForm.tsx";
+import PersonBaseForm, {
+  type PersonBaseFormValues,
+} from "../../shared/components/PersonBaseForm.tsx";
 import type { UpdateSportsmanDto } from "@/shared/api/sportsman/SportsmanApi.dto.ts";
+import type { EditPersonButtonPropsType } from "@/modules/shared/types/edit-person-button-props.type.ts";
 
-type PropsType = {
-  sportsmanId: number;
-  initialValues: SportsmanFormValues;
-  onDone?: () => Promise<void> | void;
-};
-
-export default function EditSportsmanButton(props: PropsType) {
-  const { initialValues, sportsmanId, onDone } = props;
+export default function EditSportsmanButton(props: EditPersonButtonPropsType) {
+  const { initialValues, personId, onDone } = props;
   const { openModal, closeModal } = useModal();
 
-  const onSubmit = async (data: SportsmanFormValues) => {
+  const onSubmit = async (data: PersonBaseFormValues) => {
     const dto: UpdateSportsmanDto = {
       lastName: data.lastName,
       firstName: data.firstName,
       patrName: data.patrName,
     };
-    await SportsmanApi.update(sportsmanId, dto);
+    await SportsmanApi.update(personId, dto);
     closeModal();
     onDone?.();
   };
 
   const form = () => (
-    <SportsmanForm onSubmit={onSubmit} initialValues={initialValues} />
+    <PersonBaseForm onSubmit={onSubmit} initialValues={initialValues} />
   );
 
   const onButtonClick = () => {

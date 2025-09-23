@@ -39,6 +39,7 @@ const FIELDS: Field<Person>[] = [
 ];
 
 interface Props<T, D> {
+  buttonText: string;
   onDone?: (data?: T[]) => Promise<void> | void;
   // todo
   api: RelatedCampEntityApi<T, D>;
@@ -61,7 +62,7 @@ export default function AddPersonToCampButton<
   const addToCamp = async (values: CheckFormValues) => {
     try {
       await props.api.addManyToCamp(Number(campId), values);
-      alert("добавили спортсменов в список участников сбора");
+      alert("добавили в списко сбора");
       closeModal();
       props.onDone?.();
     } catch (e) {
@@ -124,7 +125,7 @@ export default function AddPersonToCampButton<
       sx={{ fontSize: 16 }}
       onClick={onButtonClick}
     >
-      Добавить участника
+      {props.buttonText}
     </Button>
   );
 }

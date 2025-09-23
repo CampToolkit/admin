@@ -28,7 +28,6 @@ export const CoachApi: RelatedCampEntityApi<Coach, CreateCoachDto> = {
   },
 
   createMany: async (dto: CreateCoachBulkDto) => {
-    console.log("createMany", dto);
     const { data } = await axiosConfig.post<Coach[]>(`/coach/bulk/`, dto);
     return data;
   },
