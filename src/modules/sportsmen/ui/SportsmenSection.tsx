@@ -34,6 +34,7 @@ export default function SportsmenSection() {
     <div>
       <TabHeader>
         <AddPersonToCampButton<Sportsman, Sportsman>
+          buttonText="Добавить участника"
           api={SportsmanApi}
           onDone={onAdd}
           useEntity={useAllSportsmen}
