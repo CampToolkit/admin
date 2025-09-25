@@ -11,7 +11,7 @@ import {
 } from "../constants/time-table.const.ts";
 import { calcLessonPosition } from "@/modules/schedule/utils/calc-lesson-position.ts";
 
-import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.ts";
+import { generateTimeSlots } from "../../../../../front/src/modules/calendar/utils/generate-time-slots.ts";
 
 import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
 import type { Event } from "@/shared/api/event/EventApi.type.ts";
