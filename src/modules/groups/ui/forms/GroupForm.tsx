@@ -5,7 +5,7 @@ import RightLayoutItem from "@/pages/camps/camp/components/forms-layouts/RightLa
 import FormActions from "@/pages/camps/camp/components/forms-layouts/FormActions.tsx";
 import TabLayout from "@/pages/camps/camp/components/forms-layouts/TabLayout.tsx";
 import { useFormik } from "formik";
-import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
+import type { SelectOption } from "@/modules/groups/ui/forms/select-options.type.ts";
 
 export interface GroupFormValues {
   id: number;

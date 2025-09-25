@@ -9,8 +9,8 @@ import {
 } from "@mui/material";
 
 import type { Group } from "@/common/api/group/GroupApi.type.ts";
-import GroupRow from "@/pages/camps/camp/components/groups-table/GroupRow.tsx";
-import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
+import GroupRow from "@/modules/groups/ui/groups-table/GroupRow.tsx";
+import type { SelectOption } from "@/modules/groups/ui/forms/select-options.type.ts";
 
 interface Props {
   list: Group[];

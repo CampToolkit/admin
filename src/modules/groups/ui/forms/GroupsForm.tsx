@@ -1,19 +1,12 @@
-import {
-  Button,
-  Stack,
-  Grid,
-  TextField,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Button, Grid, TextField, Select, MenuItem } from "@mui/material";
 
 import { FieldArray, FormikProvider, useFormik } from "formik";
 
-import TabLayout from "../../components/forms-layouts/TabLayout.tsx";
+import TabLayout from "../../../../pages/camps/camp/components/forms-layouts/TabLayout.tsx";
 import LeftLayoutItem from "@/pages/camps/camp/components/forms-layouts/LeftLayoutItem.tsx";
 import RightLayoutItem from "@/pages/camps/camp/components/forms-layouts/RightLayoutItem.tsx";
 import FormActions from "@/pages/camps/camp/components/forms-layouts/FormActions.tsx";
-import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
+import type { SelectOption } from "@/modules/groups/ui/forms/select-options.type.ts";
 
 export interface GroupsFormValues {
   groups: {
@@ -111,9 +104,6 @@ export default function GroupsForm(props: Props) {
 
         <RightLayoutItem>
           <>
-            <Stack gap={1} mb={3}>
-              <Button variant="outlined">Загрузить из базы данных</Button>
-            </Stack>
             <FormActions
               saveCallback={formik.handleSubmit}
               clearCallback={formik.handleReset}
