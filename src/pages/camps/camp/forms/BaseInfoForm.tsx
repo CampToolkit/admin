@@ -6,12 +6,7 @@ import RightLayoutItem from "@/pages/camps/camp/components/forms-layouts/RightLa
 import FormActions from "@/pages/camps/camp/components/forms-layouts/FormActions.tsx";
 import { useFormik } from "formik";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs, { Dayjs } from "dayjs";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-
-import "dayjs/locale/ru";
-
-dayjs.locale("ru");
+import type { Dayjs } from "dayjs";
 
 export interface BaseInfoFormValues {
   name: string;
