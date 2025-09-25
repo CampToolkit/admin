@@ -4,6 +4,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditGroupButton from "@/modules/groups/ui/EditGroupButton.tsx";
 import type { SelectOption } from "@/modules/groups/ui/forms/select-options.type.ts";
 import { GroupApi } from "@/common/api/group/GroupApi.ts";
+import AddPersonToEntityButton from "@/common/components/buttons/AddPersonToEntityButton.tsx";
+import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type";
+import { useCampSportsmen } from "@/pages/camps/hooks/use-camp-sportsmen.hook.ts";
+import { useParams } from "react-router-dom";
 
 interface Props {
   item: Group;
@@ -18,6 +22,7 @@ export default function GroupRow({
   selectOptions,
   onDone,
 }: Props) {
+  const { campId } = useParams();
   const removeFromCamp = async (id: number) => {
     try {
       await GroupApi.delete(id);
@@ -26,6 +31,11 @@ export default function GroupRow({
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const { state: sportsmen } = useCampSportsmen(Number(campId));
+  const addSportsmanToGroup = (values: CheckFormValues) => {
+    console.log(values);
   };
 
   return (
@@ -37,6 +47,14 @@ export default function GroupRow({
           }}
         >
           {item.name}
+        </TableCell>
+        <TableCell>
+          {level === 1 && (
+            <AddPersonToEntityButton
+              entities={sportsmen}
+              onSubmit={addSportsmanToGroup}
+            />
+          )}
         </TableCell>
         <TableCell>
           <IconButton

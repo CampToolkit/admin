@@ -29,6 +29,7 @@ export default function GroupsTable(props: Props) {
             <TableCell sx={{ fontWeight: 900 }}>Название</TableCell>
             <TableCell width={"1%"}></TableCell>
             <TableCell width={"1%"}></TableCell>
+            <TableCell width={"1%"}></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

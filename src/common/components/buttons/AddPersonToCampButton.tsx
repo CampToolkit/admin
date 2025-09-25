@@ -8,35 +8,18 @@ import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalChec
 import UniversalTextFieldForm from "@/pages/camps/camp/forms/universal/UniversalTextFieldForm.tsx";
 
 import type { Person } from "@/common/api/lib/types/Person.type.ts";
-import type {
-  Field,
-  UniversalFormValues,
-} from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
+import type { UniversalFormValues } from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
 import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
 import type {
   NewEntity,
   RelatedCampEntityApi,
 } from "@/common/api/lib/types/BaseApi.type.ts";
+import { PERSON_FIELDS } from "@/common/components/buttons/consts/person-fields.const.ts";
 
 const ComponentKeys = {
   DB: "database",
   NEW_ITEM: "newItem",
 };
-
-const FIELDS: Field<Person>[] = [
-  {
-    key: "lastName",
-    label: "Фамилия",
-  },
-  {
-    key: "firstName",
-    label: "Имя",
-  },
-  {
-    key: "patrName",
-    label: "Отчество",
-  },
-];
 
 interface Props<T, D> {
   buttonText: string;
@@ -88,7 +71,7 @@ export default function AddPersonToCampButton<
       label: "Создать",
       element: (
         <UniversalTextFieldForm<T, D>
-          fields={FIELDS}
+          fields={PERSON_FIELDS}
           formId={ComponentKeys.NEW_ITEM}
           onSubmit={createPerson}
         />
@@ -99,7 +82,7 @@ export default function AddPersonToCampButton<
       label: "Загрузить из базы данных",
       element: (
         <UniversalCheckForm<T>
-          fields={FIELDS}
+          fields={PERSON_FIELDS}
           onSubmit={addToCamp}
           entities={persons}
           formId={ComponentKeys.DB}
