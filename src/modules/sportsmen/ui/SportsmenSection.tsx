@@ -6,8 +6,8 @@ import TabHeader from "@/pages/camps/camp/components/TabHeader.tsx";
 
 import AddPersonToCampButton from "@/pages/camps/camp/components/call-modal-buttons/AddPersonToCampButton.tsx";
 import { useAllSportsmen } from "@/pages/camps/hooks/use-all-sportsmen.hook.ts";
-import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
-import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
+import type { Sportsman } from "@/common/api/sportsman/SportsmanApi.type.ts";
+import { SportsmanApi } from "@/common/api/sportsman/SportsmanApi.ts";
 import EditSportsmanButton from "@/modules/sportsmen/ui/EditSportsmanButton.tsx";
 
 export default function SportsmenSection() {

@@ -1,6 +1,6 @@
-import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
+import type { CampsLocation } from "@/common/api/location/LocationApi.type.ts";
 import { useCallback, useEffect, useState } from "react";
-import { LocationApi } from "@/shared/api/location/LocationApi.ts";
+import { LocationApi } from "@/common/api/location/LocationApi.ts";
 
 export function useCampLocationsByCamp(campId: number) {
   const [state, setState] = useState<CampsLocation[]>([]);

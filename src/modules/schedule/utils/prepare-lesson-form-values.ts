@@ -1,8 +1,8 @@
 import { type Dayjs } from "dayjs";
 import type { LessonFormValues } from "@/modules/schedule/ui/lesson-form/lesson-form.type.ts";
-import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type.ts";
-import type { LessonType } from "@/shared/api/lesson-type/LessonTypeApi.type.ts";
-import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
+import type { ActivityType } from "@/common/api/activity-type/ActivityTypeApi.type.ts";
+import type { LessonType } from "@/common/api/lesson-type/LessonTypeApi.type.ts";
+import type { CampsLocation } from "@/common/api/location/LocationApi.type.ts";
 
 export type RareLessonFormValues = {
   startDate: Dayjs;

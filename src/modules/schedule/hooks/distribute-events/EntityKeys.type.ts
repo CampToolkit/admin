@@ -1,4 +1,4 @@
-import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
+import type { Entity } from "@/common/api/lib/types/Entity.type.ts";
 
 export type EntityKeys<T> = {
   [K in keyof T]: T[K] extends Entity | Entity[] ? K : never;

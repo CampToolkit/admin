@@ -7,7 +7,7 @@ import FormSwitcherLayout from "@/pages/camps/camp/components/forms-layouts/Form
 import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalCheckForm.tsx";
 import UniversalTextFieldForm from "@/pages/camps/camp/forms/universal/UniversalTextFieldForm.tsx";
 
-import type { Person } from "@/shared/api/lib/types/Person.type.ts";
+import type { Person } from "@/common/api/lib/types/Person.type.ts";
 import type {
   Field,
   UniversalFormValues,
@@ -16,7 +16,7 @@ import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-f
 import type {
   NewEntity,
   RelatedCampEntityApi,
-} from "@/shared/api/lib/types/BaseApi.type.ts";
+} from "@/common/api/lib/types/BaseApi.type.ts";
 
 const ComponentKeys = {
   DB: "database",

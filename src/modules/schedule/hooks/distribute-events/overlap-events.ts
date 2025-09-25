@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import type { Event } from "@/shared/api/event/EventApi.type.ts";
+import type { Event } from "@/common/api/event/EventApi.type.ts";
 
 export type DistributedEvent = Record<string, Event[][]>;
 export function overlapEvents(data: Record<string, Event[]>) {

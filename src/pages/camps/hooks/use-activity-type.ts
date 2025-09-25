@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type.ts";
-import { ActivityTypeApi } from "@/shared/api/activity-type/ActivityTypeApi";
+import type { ActivityType } from "@/common/api/activity-type/ActivityTypeApi.type.ts";
+import { ActivityTypeApi } from "@/common/api/activity-type/ActivityTypeApi";
 
 export function useActivityType() {
   const [state, setState] = useState<ActivityType[]>([]);

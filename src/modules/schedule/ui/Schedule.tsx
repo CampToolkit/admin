@@ -14,7 +14,7 @@ import { calcLessonPosition } from "@/modules/schedule/utils/calc-lesson-positio
 import { generateTimeSlots } from "@/modules/schedule/utils/generate-time-slots.ts";
 
 import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
-import type { Event } from "@/shared/api/event/EventApi.type.ts";
+import type { Event } from "@/common/api/event/EventApi.type.ts";
 import type { LessonFormValues } from "./lesson-form/lesson-form.type.ts";
 import {
   useDistributeEvents,

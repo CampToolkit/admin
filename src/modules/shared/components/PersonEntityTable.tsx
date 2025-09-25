@@ -11,7 +11,7 @@ import {
   IconButton,
 } from "@mui/material";
 
-import type { Person } from "@/shared/api/lib/types/Person.type.ts";
+import type { Person } from "@/common/api/lib/types/Person.type.ts";
 import type { ComponentType } from "react";
 import type { EditPersonButtonPropsType } from "@/modules/shared/types/edit-person-button-props.type.ts";
 

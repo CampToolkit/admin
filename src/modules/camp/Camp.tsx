@@ -8,7 +8,7 @@ import LocationsSection from "@/pages/camps/camp/sections/LocationsSection.tsx";
 import ScheduleSection from "@/modules/schedule/ui/ScheduleSection.tsx";
 import CoachesSection from "@/modules/coaches/ui/CoachesSection.tsx";
 
-import PageTitle from "@/shared/components/PageTitle.tsx";
+import PageTitle from "@/common/components/PageTitle.tsx";
 import type { ComponentType } from "react";
 
 interface CampTab {

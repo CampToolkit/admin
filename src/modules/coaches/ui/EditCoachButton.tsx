@@ -6,8 +6,8 @@ import PersonBaseForm, {
   type PersonBaseFormValues,
 } from "@/modules/shared/components/PersonBaseForm.tsx";
 
-import { CoachApi } from "@/shared/api/coach/CoachApi.ts";
-import type { UpdateCoachDto } from "@/shared/api/coach/CoachApi.dto.ts";
+import { CoachApi } from "@/common/api/coach/CoachApi.ts";
+import type { UpdateCoachDto } from "@/common/api/coach/CoachApi.dto.ts";
 
 export default function EditCoachButton(props: EditPersonButtonPropsType) {
   const { personId, initialValues, onDone } = props;

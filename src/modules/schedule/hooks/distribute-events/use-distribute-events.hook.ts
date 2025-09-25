@@ -9,7 +9,7 @@ import {
   type DistributedEvent,
   overlapEvents,
 } from "@/modules/schedule/hooks/distribute-events/overlap-events.ts";
-import type { Event } from "@/shared/api/event/EventApi.type.ts";
+import type { Event } from "@/common/api/event/EventApi.type.ts";
 import dayjs, { type Dayjs } from "dayjs";
 import { isSameDay } from "@/modules/schedule/hooks/distribute-events/filter-by-date.ts";
 

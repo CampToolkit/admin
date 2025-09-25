@@ -1,4 +1,4 @@
-import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
+import type { Entity } from "@/common/api/lib/types/Entity.type.ts";
 import type { UniversalFormProps } from "./universal-form.type.ts";
 
 export interface CheckFormValues {

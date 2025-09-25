@@ -13,7 +13,7 @@ import type {
   CheckFormProps,
   CheckFormValues,
 } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
-import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
+import type { Entity } from "@/common/api/lib/types/Entity.type.ts";
 
 const theadStyles = {
   fontWeight: "bold",

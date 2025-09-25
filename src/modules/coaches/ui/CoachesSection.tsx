@@ -6,8 +6,8 @@ import PersonEntityTable from "@/modules/shared/components/PersonEntityTable.tsx
 import TabHeader from "@/pages/camps/camp/components/TabHeader";
 import EditCoachButton from "@/modules/coaches/ui/EditCoachButton.tsx";
 import AddPersonToCampButton from "@/pages/camps/camp/components/call-modal-buttons/AddPersonToCampButton.tsx";
-import { CoachApi } from "@/shared/api/coach/CoachApi.ts";
-import type { Coach } from "@/shared/api/coach/CoachApi.type.ts";
+import { CoachApi } from "@/common/api/coach/CoachApi.ts";
+import type { Coach } from "@/common/api/coach/CoachApi.type.ts";
 
 export default function CoachesSection() {
   const { campId } = useParams();

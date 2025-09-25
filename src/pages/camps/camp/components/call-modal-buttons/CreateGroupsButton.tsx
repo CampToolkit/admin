@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import GroupsForm, {
   type GroupsFormValues,
 } from "@/pages/camps/camp/forms/group/GroupsForm.tsx";
-import { GroupApi } from "@/shared/api/group/GroupApi.ts";
+import { GroupApi } from "@/common/api/group/GroupApi.ts";
 import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
 
 interface Props {

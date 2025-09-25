@@ -7,8 +7,8 @@ import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.t
 import GroupForm, {
   type GroupFormValues,
 } from "@/pages/camps/camp/forms/group/GroupForm.tsx";
-import type { UpdateGroupDto } from "@/shared/api/group/GroupApi.dto.ts";
-import { GroupApi } from "@/shared/api/group/GroupApi.ts";
+import type { UpdateGroupDto } from "@/common/api/group/GroupApi.dto.ts";
+import { GroupApi } from "@/common/api/group/GroupApi.ts";
 import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
 
 type PropsType = {

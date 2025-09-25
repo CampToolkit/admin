@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import CreateGroupsButton from "@/pages/camps/camp/components/call-modal-buttons/CreateGroupsButton.tsx";
 import TabHeader from "@/pages/camps/camp/components/TabHeader.tsx";
 import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
-import type { Group } from "@/shared/api/group/GroupApi.type.ts";
+import type { Group } from "@/common/api/group/GroupApi.type.ts";
 import { useEffect, useState } from "react";
 import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
 

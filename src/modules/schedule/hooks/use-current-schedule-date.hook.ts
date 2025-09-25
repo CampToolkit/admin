@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import dayjs, { type Dayjs } from "dayjs";
-import type { Camp } from "@/shared/api/camp/CampApi.type.ts";
+import type { Camp } from "@/common/api/camp/CampApi.type.ts";
 
 export function useCurrentScheduleDate(camp: Camp | null) {
   const [currentDate, setCurrentDate] = useState<Dayjs>(dayjs());

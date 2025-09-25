@@ -1,9 +1,9 @@
-import type { Group } from "@/shared/api/group/GroupApi.type.ts";
+import type { Group } from "@/common/api/group/GroupApi.type.ts";
 import { IconButton, TableCell, TableRow } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditGroupButton from "@/pages/camps/camp/components/call-modal-buttons/EditGroupButton.tsx";
 import type { SelectOption } from "@/pages/camps/camp/forms/group/select-options.type.ts";
-import { GroupApi } from "@/shared/api/group/GroupApi";
+import { GroupApi } from "@/common/api/group/GroupApi";
 
 interface Props {
   item: Group;

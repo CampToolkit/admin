@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import HomePage from "@/pages/home/HomePage.tsx";
-import MainLayout from "@/shared/components/layouts/MainLayout.tsx";
+import MainLayout from "@/common/components/layouts/MainLayout.tsx";
 import CampsPage from "@/pages/camps/CampsPage";
 import CampPage from "@/pages/camps/CampPage.tsx";
 

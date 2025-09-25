@@ -16,7 +16,7 @@ import { useCampLocationsByCamp } from "@/pages/camps/hooks/use-camp-locations-b
 import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
 import { useCoach } from "@/pages/camps/hooks/use-coach.ts";
 import { useSelectOptions } from "@/modules/schedule/hooks/use-select-options.ts";
-import { useLessons } from "@/shared/api/event/hooks/use-lessons.ts";
+import { useLessons } from "@/common/api/event/hooks/use-lessons.ts";
 import DateNavigator from "@/modules/schedule/ui/DateNavigator.tsx";
 import dayjs, { type Dayjs } from "dayjs";
 import { useCamp } from "@/pages/camps/hooks/use-camp.ts";
@@ -26,8 +26,8 @@ import type {
   LessonFormProps,
   LessonFormValues,
 } from "@/modules/schedule/ui/lesson-form/lesson-form.type.ts";
-import { EventApi } from "@/shared/api/event/EventApi.ts";
-import type { CreateLessonDto } from "@/shared/api/event/EventApi.dto.ts";
+import { EventApi } from "@/common/api/event/EventApi.ts";
+import type { CreateLessonDto } from "@/common/api/event/EventApi.dto.ts";
 
 const UNION_OPTIONS: {
   value: EntitiesKeyType;

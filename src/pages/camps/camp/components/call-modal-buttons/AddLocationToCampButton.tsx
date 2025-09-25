@@ -3,9 +3,9 @@ import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.t
 import { Button } from "@mui/material";
 import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
 
-import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
+import type { Sportsman } from "@/common/api/sportsman/SportsmanApi.type.ts";
 
-import { LocationApi } from "@/shared/api/location/LocationApi.ts";
+import { LocationApi } from "@/common/api/location/LocationApi.ts";
 import { useAllLocations } from "@/pages/camps/hooks/use-all-locations.hook.ts";
 import FormSwitcherLayout, {
   type FormSwitcherComponent,
@@ -13,7 +13,7 @@ import FormSwitcherLayout, {
 import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalCheckForm.tsx";
 
 import UniversalTextFieldForm from "@/pages/camps/camp/forms/universal/UniversalTextFieldForm.tsx";
-import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
+import type { CampsLocation } from "@/common/api/location/LocationApi.type.ts";
 import type {
   Field,
   UniversalFormValues,
