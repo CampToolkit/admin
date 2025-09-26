@@ -31,6 +31,7 @@ interface ScheduleProps {
   unionKey: EntitiesKeyType;
   filter: {
     key: EntitiesKeyType;
+    type: string;
     value: number;
   };
   columns: ScheduleColumns;
@@ -100,7 +101,11 @@ export default function Schedule({
       ? target.dataset.tableEntityType
       : "";
     const tableEntityId = target.dataset.tableEntityId;
-
+    console.log("target.dataset.tableEntityId", target.dataset.tableEntityId);
+    console.log(
+      "target.dataset.tableEntityType",
+      target.dataset.tableEntityType,
+    );
     const columnEntityType = target.dataset.columnEntityType
       ? target.dataset.columnEntityType
       : "";
@@ -167,7 +172,7 @@ export default function Schedule({
                   data-slot-time={time.toISOString()}
                   data-column-entity-type={columns.type}
                   data-column-entity-id={column.id}
-                  data-table-entity-type={filter.key}
+                  data-table-entity-type={filter.type}
                   data-table-entity-id={filter.value}
                 ></Paper>
               ))}

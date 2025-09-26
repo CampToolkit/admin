@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { LocationApi } from "@/common/api/location/LocationApi.ts";
-import type { CampsLocation } from "@/common/api/location/LocationApi.type.ts";
+import type { Auditorium } from "@/common/api/location/LocationApi.type.ts";
 
 export function useAllLocations() {
-  const [state, setState] = useState<CampsLocation[]>([]);
+  const [state, setState] = useState<Auditorium[]>([]);
 
   const fetch = useCallback(async () => {
     const response = await LocationApi.getAll();

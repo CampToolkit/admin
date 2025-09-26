@@ -1,4 +1,4 @@
-export interface CampsLocation {
+export interface Auditorium {
   id: number;
   name: string;
   createdAt: string;

@@ -5,14 +5,14 @@ import type { Sportsman } from "@/common/api/sportsman/SportsmanApi.type.ts";
 
 import type { Coach } from "@/common/api/coach/CoachApi.type.ts";
 import type { ActivityType } from "@/common/api/activity-type/ActivityTypeApi.type.ts";
-import type { CampsLocation } from "@/common/api/location/LocationApi.type.ts";
+import type { Auditorium } from "@/common/api/location/LocationApi.type.ts";
 import type { LessonType } from "@/common/api/lesson-type/LessonTypeApi.type.ts";
 
 export interface Event extends Entity {
   startDate: string;
   endDate: string;
   activityType: ActivityType;
-  auditorium: CampsLocation;
+  auditorium: Auditorium;
   lessonType: LessonType;
   coaches: (Coach & { lesson_coach: number })[];
   groups: (Group & { lesson_group: number })[];

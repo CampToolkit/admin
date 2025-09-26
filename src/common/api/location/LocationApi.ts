@@ -7,27 +7,27 @@ import type {
   RemoveLocationFromCampDto,
   UpdateLocationDto,
 } from "@/common/api/location/LocationApi.dto.ts";
-import type { CampsLocation } from "@/common/api/location/LocationApi.type.ts";
+import type { Auditorium } from "@/common/api/location/LocationApi.type.ts";
 import { customDelete } from "@/common/api/lib/utils/custom-delete.ts";
 
 export const LocationApi = {
   getAll: async () => {
-    const { data } = await axiosConfig.get<CampsLocation[]>("/auditorium");
+    const { data } = await axiosConfig.get<Auditorium[]>("/auditorium");
     return data;
   },
 
   getOne: async (id: number) => {
-    const { data } = await axiosConfig.get<CampsLocation>(`/auditorium/${id}`);
+    const { data } = await axiosConfig.get<Auditorium>(`/auditorium/${id}`);
     return data;
   },
 
   create: async (dto: CreateLocationDto) => {
-    const { data } = await axiosConfig.post<CampsLocation>("/auditorium", dto);
+    const { data } = await axiosConfig.post<Auditorium>("/auditorium", dto);
     return data;
   },
 
   createMany: async (dto: CreateManyLocationDto) => {
-    const { data } = await axiosConfig.post<CampsLocation[]>(
+    const { data } = await axiosConfig.post<Auditorium[]>(
       `/auditorium/bulk/`,
       dto,
     );
@@ -35,7 +35,7 @@ export const LocationApi = {
   },
 
   update: async (id: number, dto: UpdateLocationDto) => {
-    const { data } = await axiosConfig.patch<CampsLocation>(
+    const { data } = await axiosConfig.patch<Auditorium>(
       `/auditorium/${id}`,
       dto,
     );
@@ -43,14 +43,14 @@ export const LocationApi = {
   },
 
   async getByCamp(campId: number) {
-    const { data } = await axiosConfig.get<CampsLocation[]>(
+    const { data } = await axiosConfig.get<Auditorium[]>(
       `/camp/${campId}/auditorium`,
     );
     return data;
   },
 
   addManyToCamp: async (campId: number, dto: AddManyLocationToCampDto) => {
-    const { data } = await axiosConfig.post<CampsLocation>(
+    const { data } = await axiosConfig.post<Auditorium>(
       `/camp/${campId}/auditorium`,
       dto,
     );
@@ -58,7 +58,7 @@ export const LocationApi = {
   },
 
   removeFromCamp: async (campId: number, dto: RemoveLocationFromCampDto) => {
-    return await customDelete<CampsLocation, RemoveLocationFromCampDto>({
+    return await customDelete<Auditorium, RemoveLocationFromCampDto>({
       path: `/camp/${campId}/auditorium`,
       dto,
     });

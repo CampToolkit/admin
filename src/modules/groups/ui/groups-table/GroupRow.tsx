@@ -59,6 +59,7 @@ export default function GroupRow({
         </TableCell>
         <TableCell>
           {level === 1 && (
+            //   /*  note отдавать только спортсменов без группы */
             <AddPersonToEntityButton
               entities={sportsmen}
               onSubmit={(values) => addSportsmanToGroup(item.id, values)}

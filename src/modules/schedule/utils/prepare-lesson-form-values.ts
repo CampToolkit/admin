@@ -2,7 +2,7 @@ import { type Dayjs } from "dayjs";
 import type { LessonFormValues } from "@/modules/schedule/ui/lesson-form/lesson-form.type.ts";
 import type { ActivityType } from "@/common/api/activity-type/ActivityTypeApi.type.ts";
 import type { LessonType } from "@/common/api/lesson-type/LessonTypeApi.type.ts";
-import type { CampsLocation } from "@/common/api/location/LocationApi.type.ts";
+import type { Auditorium } from "@/common/api/location/LocationApi.type.ts";
 
 export type RareLessonFormValues = {
   startDate: Dayjs;
@@ -13,7 +13,7 @@ interface Props {
   options: {
     activityTypes: ActivityType[];
     lessonTypes: LessonType[];
-    campLocations: CampsLocation[];
+    campLocations: Auditorium[];
   };
 }
 
@@ -21,6 +21,7 @@ export function prepareLessonFormValues({
   values,
   options,
 }: Props): LessonFormValues {
+  console.log("before", values);
   if (options.activityTypes.length > 0) {
     values.activityTypeId ??= options.activityTypes[0].id;
   }
