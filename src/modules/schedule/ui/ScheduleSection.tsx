@@ -12,7 +12,7 @@ import { prepareLessonFormValues } from "@/modules/schedule/utils/prepare-lesson
 import { useActivityType } from "@/pages/camps/hooks/use-activity-type.ts";
 import { useLessonType } from "@/modules/schedule/hooks/use-lesson-type.ts";
 
-import { useCampLocationsByCamp } from "@/pages/camps/hooks/use-camp-locations-by-camp.hook.ts";
+import { useCampLocationsByCamp } from "@/shared/api/location/hooks/use-camp-locations-by-camp.hook.ts";
 import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
 import { useCoach } from "@/pages/camps/hooks/use-coach.ts";
 import { useSelectOptions } from "@/modules/schedule/hooks/use-select-options.ts";
