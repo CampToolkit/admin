@@ -13,7 +13,7 @@ import { Form, FormikProvider, useFormik } from "formik";
 import type {
   CheckFormProps,
   CheckFormValues,
-} from "@/pages/camps/camp/forms/universal/check-form.type.ts";
+} from "@/pages/camp/forms/universal/check-form.type.ts";
 import type { Entity } from "@/common/api/lib/types/Entity.type.ts";
 import { scrollStyleChild } from "@/styles/scroll.ts";
 

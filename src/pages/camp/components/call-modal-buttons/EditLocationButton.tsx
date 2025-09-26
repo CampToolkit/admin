@@ -6,7 +6,7 @@ import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.t
 
 import LocationForm, {
   type LocationFormValues,
-} from "@/pages/camps/camp/forms/LocationForm.tsx";
+} from "@/pages/camp/forms/LocationForm.tsx";
 import type { UpdateLocationDto } from "@/common/api/location/LocationApi.dto.ts";
 
 interface Props {

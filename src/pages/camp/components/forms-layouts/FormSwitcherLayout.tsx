@@ -1,6 +1,6 @@
 import { Button, Grid, Stack } from "@mui/material";
 import { type ReactNode, useState } from "react";
-import FormActions from "@/pages/camps/camp/components/forms-layouts/FormActions.tsx";
+import FormActions from "@/pages/camp/components/forms-layouts/FormActions.tsx";
 
 export interface FormSwitcherComponent {
   key: string;

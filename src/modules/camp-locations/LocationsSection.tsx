@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import { useCampLocations } from "@/shared/api/location/hooks/use-camp-locations.hook.ts";
-import LocationsTable from "@/pages/camps/camp/components/LocationsTable.tsx";
+import { useCampLocations } from "@/common/api/location/hooks/use-camp-locations.hook.ts";
+import LocationsTable from "@/pages/camp/components/LocationsTable.tsx";
 
-import TabHeader from "@/pages/camps/camp/components/TabHeader.tsx";
-import AddLocationToCampButton from "@/pages/camps/camp/components/call-modal-buttons/AddLocationToCampButton.tsx";
+import TabHeader from "@/pages/camp/components/TabHeader.tsx";
+import AddLocationToCampButton from "@/pages/camp/components/call-modal-buttons/AddLocationToCampButton.tsx";
 
 export default function LocationsSection() {
   const { campId } = useParams();

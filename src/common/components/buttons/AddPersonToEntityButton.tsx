@@ -1,6 +1,6 @@
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
-import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalCheckForm.tsx";
-import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
+import UniversalCheckForm from "@/pages/camp/forms/universal/UniversalCheckForm.tsx";
+import type { CheckFormValues } from "@/pages/camp/forms/universal/check-form.type.ts";
 import type { Person } from "@/common/api/lib/types/Person.type.ts";
 import { PERSON_FIELDS } from "@/common/components/buttons/consts/person-fields.const.ts";
 import { Button } from "@mui/material";

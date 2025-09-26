@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import { useCoach } from "@/pages/camps/hooks/use-coach.ts";
+import { useCoach } from "@/pages/camp/hooks/use-coach.ts";
 
 import { Box } from "@mui/material";
 import PersonEntityTable from "@/modules/shared/components/PersonEntityTable.tsx";
-import TabHeader from "@/pages/camps/camp/components/TabHeader";
+import TabHeader from "@/pages/camp/components/TabHeader";
 import EditCoachButton from "@/modules/coaches/ui/EditCoachButton.tsx";
 import AddPersonToCampButton from "@/common/components/buttons/AddPersonToCampButton.tsx";
 import { CoachApi } from "@/common/api/coach/CoachApi.ts";

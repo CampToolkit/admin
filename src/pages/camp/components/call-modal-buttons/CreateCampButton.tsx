@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 
 import BaseInfoForm, {
   type BaseInfoFormValues,
-} from "@/pages/camps/camp/forms/BaseInfoForm.tsx";
+} from "@/pages/camp/forms/BaseInfoForm.tsx";
 
 import type { CreateCampDto } from "@/common/api/camp/CampApi.dto.ts";
 

@@ -1,8 +1,8 @@
 import GroupsTable from "@/modules/groups/ui/groups-table/GroupsTable.tsx";
 import { useParams } from "react-router-dom";
 import CreateGroupsButton from "@/modules/groups/ui/CreateGroupsButton.tsx";
-import TabHeader from "@/pages/camps/camp/components/TabHeader.tsx";
-import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
+import TabHeader from "@/pages/camp/components/TabHeader.tsx";
+import { useGroupsInCamp } from "@/pages/camp/hooks/use-groups-in-camp.hook.ts";
 import type { Group } from "@/common/api/group/GroupApi.type.ts";
 import { useEffect, useState } from "react";
 import type { SelectOption } from "@/modules/groups/ui/forms/select-options.type.ts";

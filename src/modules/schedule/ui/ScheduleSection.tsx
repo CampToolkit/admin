@@ -9,17 +9,17 @@ import CustomSelect from "@/modules/schedule/ui/custom-select/CustomSelect.tsx";
 
 import { prepareLessonFormValues } from "@/modules/schedule/utils/prepare-lesson-form-values.ts";
 
-import { useActivityType } from "@/pages/camps/hooks/use-activity-type.ts";
+import { useActivityType } from "@/pages/camp/hooks/use-activity-type.ts";
 import { useLessonType } from "@/modules/schedule/hooks/use-lesson-type.ts";
 
-import { useCampLocationsByCamp } from "@/shared/api/location/hooks/use-camp-locations-by-camp.hook.ts";
-import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
-import { useCoach } from "@/pages/camps/hooks/use-coach.ts";
+import { useCampLocationsByCamp } from "@/common/api/location/hooks/use-camp-locations-by-camp.hook.ts";
+import { useGroupsInCamp } from "@/pages/camp/hooks/use-groups-in-camp.hook.ts";
+import { useCoach } from "@/pages/camp/hooks/use-coach.ts";
 import { useSelectOptions } from "@/modules/schedule/hooks/use-select-options.ts";
 import { useLessons } from "@/common/api/event/hooks/use-lessons.ts";
 import DateNavigator from "@/modules/schedule/ui/DateNavigator.tsx";
 import dayjs, { type Dayjs } from "dayjs";
-import { useCamp } from "@/pages/camps/hooks/use-camp.ts";
+import { useCamp } from "@/common/api/camp/hooks/use-camp.ts";
 import { useCurrentScheduleDate } from "@/modules/schedule/hooks/use-current-schedule-date.hook.ts";
 import type { EntitiesKeyType } from "@/modules/schedule/hooks/distribute-events/use-distribute-events.hook";
 import type {
