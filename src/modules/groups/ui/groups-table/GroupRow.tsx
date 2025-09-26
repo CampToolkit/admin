@@ -8,6 +8,7 @@ import AddPersonToEntityButton from "@/common/components/buttons/AddPersonToEnti
 import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type";
 import { useCampSportsmen } from "@/pages/camps/hooks/use-camp-sportsmen.hook.ts";
 import { useParams } from "react-router-dom";
+import type { AddSportsmenToGroupDto } from "@/common/api/group/GroupApi.dto.ts";
 
 interface Props {
   item: Group;
@@ -34,8 +35,16 @@ export default function GroupRow({
   };
 
   const { state: sportsmen } = useCampSportsmen(Number(campId));
-  const addSportsmanToGroup = (values: CheckFormValues) => {
-    console.log(values);
+  const addSportsmanToGroup = async (
+    groupId: number,
+    values: CheckFormValues,
+  ) => {
+    const dto: AddSportsmenToGroupDto = {
+      campId: Number(campId),
+      items: values.items,
+    };
+    await GroupApi.addSportsmen(groupId, dto);
+    onDone();
   };
 
   return (
@@ -52,7 +61,7 @@ export default function GroupRow({
           {level === 1 && (
             <AddPersonToEntityButton
               entities={sportsmen}
-              onSubmit={addSportsmanToGroup}
+              onSubmit={(values) => addSportsmanToGroup(item.id, values)}
             />
           )}
         </TableCell>

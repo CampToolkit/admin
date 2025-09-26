@@ -12,3 +12,8 @@ export interface UpdateGroupDto {
 export interface CreateGroupBulkDto {
   items: CreateGroupDto[];
 }
+
+export interface AddSportsmenToGroupDto {
+  campId: number;
+  items: number[];
+}

@@ -7,7 +7,7 @@ import { Button } from "@mui/material";
 
 export interface AddPersonToEntityButtonProps<T extends Person> {
   entities: T[];
-  onSubmit: (values: CheckFormValues) => void;
+  onSubmit: (values: CheckFormValues) => Promise<void> | void;
   onDone?: () => void;
 }
 
@@ -17,7 +17,12 @@ export default function AddPersonToEntityButton<T extends Person>(
   props: AddPersonToEntityButtonProps<T>,
 ) {
   const { entities, onSubmit } = props;
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
+
+  const handleSubmit = async (values: CheckFormValues) => {
+    await onSubmit(values);
+    closeModal();
+  };
 
   const content = () => {
     return (
@@ -25,7 +30,7 @@ export default function AddPersonToEntityButton<T extends Person>(
         entities={entities}
         fields={PERSON_FIELDS}
         formId={FORM_ID}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
       />
     );
   };
