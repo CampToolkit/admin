@@ -1,5 +1,6 @@
 import type { ChangeEvent } from "react";
 import {
+  Box,
   Checkbox,
   Table,
   TableBody,
@@ -14,6 +15,7 @@ import type {
   CheckFormValues,
 } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
 import type { Entity } from "@/common/api/lib/types/Entity.type.ts";
+import { scrollStyleChild } from "@/styles/scroll.ts";
 
 const theadStyles = {
   fontWeight: "bold",
@@ -45,44 +47,46 @@ export default function UniversalCheckForm<T extends Entity>(
   };
 
   return (
-    <FormikProvider value={formik}>
-      <Form id={formId}>
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
-              {fields.map((field) => (
-                <TableCell
-                  key={field.key as string}
-                  sx={{
-                    ...theadStyles,
-                  }}
-                >
-                  {field.label}
-                </TableCell>
-              ))}
-              <TableCell sx={theadStyles} width={"1%"}>
-                Добавить
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {entities.map((entity) => (
-              <TableRow key={entity.id}>
+    <Box sx={scrollStyleChild}>
+      <FormikProvider value={formik}>
+        <Form id={formId}>
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
                 {fields.map((field) => (
-                  <TableCell>{entity[field.key] as string}</TableCell>
+                  <TableCell
+                    key={field.key as string}
+                    sx={{
+                      ...theadStyles,
+                    }}
+                  >
+                    {field.label}
+                  </TableCell>
                 ))}
-                <TableCell align={"center"}>
-                  <Checkbox
-                    key={`${entity.id}${entity.id}`}
-                    checked={formik.values.items.includes(entity.id)}
-                    onChange={(e) => onChange(e, entity.id)}
-                  />
+                <TableCell sx={theadStyles} width={"1%"}>
+                  Добавить
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Form>
-    </FormikProvider>
+            </TableHead>
+            <TableBody>
+              {entities.map((entity) => (
+                <TableRow key={entity.id}>
+                  {fields.map((field) => (
+                    <TableCell>{entity[field.key] as string}</TableCell>
+                  ))}
+                  <TableCell align={"center"}>
+                    <Checkbox
+                      key={`${entity.id}${entity.id}`}
+                      checked={formik.values.items.includes(entity.id)}
+                      onChange={(e) => onChange(e, entity.id)}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Form>
+      </FormikProvider>
+    </Box>
   );
 }

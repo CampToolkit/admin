@@ -42,7 +42,9 @@ export default function FormSwitcherLayout(props: Props) {
           ))}
         </Stack>
       </Grid>
-      <Grid size={8}>{currentComponent?.element}</Grid>
+      <Grid height="100%" size={8}>
+        {currentComponent?.element}
+      </Grid>
       <Grid size={2}>
         <FormActions formId={activeKey} />
       </Grid>

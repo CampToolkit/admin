@@ -6,7 +6,7 @@ import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-f
 import type { Sportsman } from "@/common/api/sportsman/SportsmanApi.type.ts";
 
 import { LocationApi } from "@/common/api/location/LocationApi.ts";
-import { useAllLocations } from "@/pages/camps/hooks/use-all-locations.hook.ts";
+
 import FormSwitcherLayout, {
   type FormSwitcherComponent,
 } from "@/pages/camps/camp/components/forms-layouts/FormSwitcherLayout.tsx";
@@ -18,6 +18,7 @@ import type {
   Field,
   UniversalFormValues,
 } from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
+import { useAllLocations } from "@/shared/api/location/hooks/use-all-locations.hook.ts";
 
 interface Props {
   onDone?: (data?: Sportsman[]) => Promise<void> | void;
