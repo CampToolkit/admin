@@ -1,13 +1,13 @@
 import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
-import { LocationApi } from "@/shared/api/location/LocationApi.ts";
+import { LocationApi } from "@/common/api/location/LocationApi.ts";
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
 
 import LocationForm, {
   type LocationFormValues,
 } from "@/pages/camps/camp/forms/LocationForm.tsx";
-import type { UpdateLocationDto } from "@/shared/api/location/LocationApi.dto.ts";
+import type { UpdateLocationDto } from "@/common/api/location/LocationApi.dto.ts";
 
 interface Props {
   itemId: number;

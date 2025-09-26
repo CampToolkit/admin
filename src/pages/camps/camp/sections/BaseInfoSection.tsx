@@ -4,7 +4,7 @@ import BaseInfoForm, {
 import { useParams } from "react-router-dom";
 import { useCamp } from "@/pages/camps/hooks/use-camp.ts";
 import dayjs from "dayjs";
-import { CampApi } from "@/shared/api/camp/CampApi.ts";
+import { CampApi } from "@/common/api/camp/CampApi.ts";
 
 export default function BaseInfoSection() {
   const { campId } = useParams();

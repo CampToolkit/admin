@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Group } from "@/shared/api/group/GroupApi.type.ts";
-import { GroupApi } from "@/shared/api/group/GroupApi.ts";
+import type { Group } from "@/common/api/group/GroupApi.type.ts";
+import { GroupApi } from "@/common/api/group/GroupApi.ts";
 
 export function useGroupsInCamp(campId: number) {
   const [state, setState] = useState<Group[]>([]);

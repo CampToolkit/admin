@@ -10,14 +10,14 @@ import {
   CardActionArea,
 } from "@mui/material";
 
-import PageTitle from "@/shared/components/PageTitle";
+import PageTitle from "@/common/components/PageTitle";
 
 import CreateCampButton from "./camp/components/call-modal-buttons/CreateCampButton.tsx";
 
 import { useCamps } from "@/pages/camps/hooks/use-camps.hook.ts";
-import BaseAspectCard from "@/shared/components/BaseAspectCard.tsx";
+import BaseAspectCard from "@/common/components/BaseAspectCard.tsx";
 
-import { formatDate } from "@/shared/utils/formatDate.ts";
+import { formatDate } from "@/common/utils/formatDate.ts";
 import { Link } from "react-router-dom";
 
 const CAMP_FILTER_OPTIONS = [

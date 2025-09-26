@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { LocationApi } from "@/shared/api/location/LocationApi.ts";
+import { LocationApi } from "@/common/api/location/LocationApi.ts";
 import EditLocationButton from "@/pages/camps/camp/components/call-modal-buttons/EditLocationButton.tsx";
 
 interface Props {

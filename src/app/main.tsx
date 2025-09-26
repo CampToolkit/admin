@@ -7,6 +7,10 @@ import { router } from "@/app/providers/router";
 import AppThemeProvider from "./providers/theme/ThemeProvider";
 import { ModalProvider } from "@/app/providers/contexts/global-modal/ModalProvider.tsx";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+
+import "dayjs/locale/ru";
+dayjs.locale("ru");
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

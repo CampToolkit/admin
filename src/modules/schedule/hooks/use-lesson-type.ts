@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import type { LessonType } from "@/shared/api/lesson-type/LessonTypeApi.type.ts";
-import { LessonTypeApi } from "@/shared/api/lesson-type/LessonTypeApi.ts";
+import type { LessonType } from "@/common/api/lesson-type/LessonTypeApi.type.ts";
+import { LessonTypeApi } from "@/common/api/lesson-type/LessonTypeApi.ts";
 
 export function useLessonType() {
   const [state, setState] = useState<LessonType[]>([]);

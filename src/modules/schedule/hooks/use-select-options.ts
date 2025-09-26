@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 
-import type { CampsLocation } from "@/shared/api/location/LocationApi.type";
-import type { LessonType } from "@/shared/api/lesson-type/LessonTypeApi.type";
-import type { ActivityType } from "@/shared/api/activity-type/ActivityTypeApi.type";
-import type { Group } from "@/shared/api/group/GroupApi.type";
-import type { Coach } from "@/shared/api/coach/CoachApi.type";
+import type { CampsLocation } from "@/common/api/location/LocationApi.type";
+import type { LessonType } from "@/common/api/lesson-type/LessonTypeApi.type";
+import type { ActivityType } from "@/common/api/activity-type/ActivityTypeApi.type";
+import type { Group } from "@/common/api/group/GroupApi.type";
+import type { Coach } from "@/common/api/coach/CoachApi.type";
 
 interface Args {
   activityTypes: ActivityType[];

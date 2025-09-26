@@ -66,28 +66,40 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
               maxHeight: "90vh",
               overflow: "hidden",
 
+              p: 4,
               bgcolor: "background.paper",
               boxShadow: 24,
-              p: 4,
               borderRadius: 2,
             }}
           >
+            {/* note заголовок */}
             {modalOptions.title && (
-              <Typography id="global-modal-title" variant="h6" gutterBottom>
+              <Typography
+                id="global-modal-title"
+                variant="h6"
+                gutterBottom
+                sx={{ flex: "0 0 auto" }}
+              >
                 {modalOptions.title}
               </Typography>
             )}
+            {/* note тело */}
             <Stack
               id="global-modal-content"
               sx={{
-                // mb: 3,
-                flexGrow: 2,
+                flex: "1 1 auto",
+                minHeight: 0,
               }}
             >
               {modalOptions?.content && modalOptions.content()}
             </Stack>
 
-            <Stack direction="row" spacing={2} justifyContent="flex-end">
+            {/* note подвал */}
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{ flex: "0 0 auto", justifyContent: "flex-end" }}
+            >
               {modalOptions.showCancelButton !== false && (
                 <Button variant="outlined" onClick={handleCancel}>
                   Отмена

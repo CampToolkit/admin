@@ -10,3 +10,11 @@ export const scrollStyleChild = {
   scrollbarWidth: "none",
   paddingBottom: "30px",
 };
+
+export const scrollStyleBase = {
+  height: "100%",
+  overflowY: "auto",
+  scrollBehavior: "smooth",
+  scrollbarWidth: "none",
+  paddingBottom: "30px",
+};

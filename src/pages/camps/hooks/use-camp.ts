@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Camp } from "@/shared/api/camp/CampApi.type.ts";
-import { CampApi } from "@/shared/api/camp/CampApi.ts";
+import type { Camp } from "@/common/api/camp/CampApi.type.ts";
+import { CampApi } from "@/common/api/camp/CampApi.ts";
 
 export function useCamp(id: number) {
   const [state, setState] = useState<Camp | null>(null);

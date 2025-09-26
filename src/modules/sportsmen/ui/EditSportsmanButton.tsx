@@ -3,11 +3,11 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
 
-import { SportsmanApi } from "@/shared/api/sportsman/SportsmanApi.ts";
+import { SportsmanApi } from "@/common/api/sportsman/SportsmanApi.ts";
 import PersonBaseForm, {
   type PersonBaseFormValues,
 } from "../../shared/components/PersonBaseForm.tsx";
-import type { UpdateSportsmanDto } from "@/shared/api/sportsman/SportsmanApi.dto.ts";
+import type { UpdateSportsmanDto } from "@/common/api/sportsman/SportsmanApi.dto.ts";
 import type { EditPersonButtonPropsType } from "@/modules/shared/types/edit-person-button-props.type.ts";
 
 export default function EditSportsmanButton(props: EditPersonButtonPropsType) {

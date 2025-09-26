@@ -4,8 +4,8 @@ import type { EntitiesKeyType } from "@/modules/schedule/ui/Schedule.tsx";
 import { useGroupsInCamp } from "@/pages/camps/hooks/use-groups-in-camp.hook.ts";
 import { useCampLocationsByCamp } from "@/shared/api/location/hooks/use-camp-locations-by-camp.hook.ts";
 
-import type { CampsLocation } from "@/shared/api/location/LocationApi.type.ts";
-import type { Group } from "@/shared/api/group/GroupApi.type.ts";
+import type { CampsLocation } from "@/common/api/location/LocationApi.type.ts";
+import type { Group } from "@/common/api/group/GroupApi.type.ts";
 
 interface Args {
   campId: number;

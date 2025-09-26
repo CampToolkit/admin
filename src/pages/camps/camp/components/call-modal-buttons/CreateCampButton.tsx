@@ -1,5 +1,5 @@
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
-import { CampApi } from "@/shared/api/camp/CampApi.ts";
+import { CampApi } from "@/common/api/camp/CampApi.ts";
 import dayjs from "dayjs";
 
 import { Button } from "@mui/material";
@@ -8,7 +8,7 @@ import BaseInfoForm, {
   type BaseInfoFormValues,
 } from "@/pages/camps/camp/forms/BaseInfoForm.tsx";
 
-import type { CreateCampDto } from "@/shared/api/camp/CampApi.dto.ts";
+import type { CreateCampDto } from "@/common/api/camp/CampApi.dto.ts";
 
 const initialValues = {
   name: "",

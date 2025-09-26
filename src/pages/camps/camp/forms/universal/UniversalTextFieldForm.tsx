@@ -8,8 +8,8 @@ import { FieldArray, FormikProvider, useFormik } from "formik";
 
 import { Box, Button, Grid, TextField } from "@mui/material";
 
-import type { Entity } from "@/shared/api/lib/types/Entity.type.ts";
-import type { NewEntity } from "@/shared/api/lib/types/BaseApi.type.ts";
+import type { Entity } from "@/common/api/lib/types/Entity.type.ts";
+import type { NewEntity } from "@/common/api/lib/types/BaseApi.type.ts";
 
 const GRIDS_AMOUNT = 12;
 const REMOVE_BUTTON_SIZE = 1;
