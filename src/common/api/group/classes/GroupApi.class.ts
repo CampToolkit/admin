@@ -1,6 +1,7 @@
 import type { Group } from "@/common/api/group/GroupApi.type.ts";
 import type {
   AddSportsmenToGroupDto,
+  CreateGroupBulkDto,
   CreateGroupDto,
 } from "@/common/api/group/GroupApi.dto.ts";
 import { CampEntityApi } from "@/common/api/api-classes/CampEntityApi.ts";
@@ -10,7 +11,8 @@ import { axiosConfig } from "@/common/api/axios-config.ts";
 export class ClassGroupApi extends CampEntityApi<
   Group,
   CreateGroupDto,
-  UpdateGroupDto
+  UpdateGroupDto,
+  CreateGroupBulkDto
 > {
   async addSportsmen(id: number, dto: AddSportsmenToGroupDto) {
     const { data } = await axiosConfig.post(

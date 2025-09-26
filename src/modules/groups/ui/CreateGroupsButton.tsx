@@ -7,6 +7,7 @@ import GroupsForm, {
 } from "@/modules/groups/ui/forms/GroupsForm.tsx";
 import { GroupApi } from "@/common/api/group/GroupApi.ts";
 import type { SelectOption } from "@/modules/groups/ui/forms/select-options.type.ts";
+import type { CreateGroupBulkDto } from "@/common/api/group/GroupApi.dto.ts";
 
 interface Props {
   campId: number;
@@ -20,7 +21,7 @@ export default function CreateGroupsButton(props: Props) {
   const { openModal, closeModal } = useModal();
 
   const onSubmit = async (campId: number, values: GroupsFormValues) => {
-    const dto = {
+    const dto: CreateGroupBulkDto = {
       items: values.groups.map((item) => ({
         campId,
         name: item.name,

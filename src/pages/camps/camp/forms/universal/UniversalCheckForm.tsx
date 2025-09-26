@@ -72,7 +72,9 @@ export default function UniversalCheckForm<T extends Entity>(
               {entities.map((entity) => (
                 <TableRow key={entity.id}>
                   {fields.map((field) => (
-                    <TableCell>{entity[field.key] as string}</TableCell>
+                    <TableCell key={field.key as string}>
+                      {entity[field.key] as string}
+                    </TableCell>
                   ))}
                   <TableCell align={"center"}>
                     <Checkbox
