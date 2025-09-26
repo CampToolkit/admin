@@ -15,10 +15,10 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import dayjs, { Dayjs } from "dayjs";
 
 import TabLayout from "../components/forms-layouts/TabLayout.tsx";
-import LeftLayoutItem from "@/pages/camps/camp/components/forms-layouts/LeftLayoutItem.tsx";
-import RightLayoutItem from "@/pages/camps/camp/components/forms-layouts/RightLayoutItem.tsx";
+import LeftLayoutItem from "@/pages/camp/components/forms-layouts/LeftLayoutItem.tsx";
+import RightLayoutItem from "@/pages/camp/components/forms-layouts/RightLayoutItem.tsx";
 
-import FormActions from "@/pages/camps/camp/components/forms-layouts/FormActions.tsx";
+import FormActions from "@/pages/camp/components/forms-layouts/FormActions.tsx";
 
 const auditoriums = [
   { value: 1, label: "Лед" },

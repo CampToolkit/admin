@@ -3,13 +3,13 @@ import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.t
 
 import { Button } from "@mui/material";
 
-import FormSwitcherLayout from "@/pages/camps/camp/components/forms-layouts/FormSwitcherLayout.tsx";
-import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalCheckForm.tsx";
-import UniversalTextFieldForm from "@/pages/camps/camp/forms/universal/UniversalTextFieldForm.tsx";
+import FormSwitcherLayout from "@/pages/camp/components/forms-layouts/FormSwitcherLayout.tsx";
+import UniversalCheckForm from "@/pages/camp/forms/universal/UniversalCheckForm.tsx";
+import UniversalTextFieldForm from "@/pages/camp/forms/universal/UniversalTextFieldForm.tsx";
 
 import type { Person } from "@/common/api/lib/types/Person.type.ts";
-import type { UniversalFormValues } from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
-import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
+import type { UniversalFormValues } from "@/pages/camp/forms/universal/universal-form.type.ts";
+import type { CheckFormValues } from "@/pages/camp/forms/universal/check-form.type.ts";
 import type {
   NewEntity,
   RelatedCampEntityApi,

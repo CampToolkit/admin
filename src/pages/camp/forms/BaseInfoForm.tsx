@@ -1,9 +1,9 @@
 import { Box, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import TabLayout from "../components/forms-layouts/TabLayout.tsx";
-import LeftLayoutItem from "@/pages/camps/camp/components/forms-layouts/LeftLayoutItem.tsx";
-import RightLayoutItem from "@/pages/camps/camp/components/forms-layouts/RightLayoutItem.tsx";
-import FormActions from "@/pages/camps/camp/components/forms-layouts/FormActions.tsx";
+import LeftLayoutItem from "@/pages/camp/components/forms-layouts/LeftLayoutItem.tsx";
+import RightLayoutItem from "@/pages/camp/components/forms-layouts/RightLayoutItem.tsx";
+import FormActions from "@/pages/camp/components/forms-layouts/FormActions.tsx";
 import { useFormik } from "formik";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import type { Dayjs } from "dayjs";

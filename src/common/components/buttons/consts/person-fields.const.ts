@@ -1,4 +1,4 @@
-import type { Field } from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
+import type { Field } from "@/pages/camp/forms/universal/universal-form.type.ts";
 import type { Person } from "@/common/api/lib/types/Person.type.ts";
 
 export const PERSON_FIELDS: Field<Person>[] = [

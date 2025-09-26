@@ -12,9 +12,9 @@ import {
 
 import PageTitle from "@/common/components/PageTitle";
 
-import CreateCampButton from "./camp/components/call-modal-buttons/CreateCampButton.tsx";
+import CreateCampButton from "@/pages/camp/components/call-modal-buttons/CreateCampButton.tsx";
 
-import { useCamps } from "@/pages/camps/hooks/use-camps.hook.ts";
+import { useCamps } from "@/pages/camp/hooks/use-camps.hook.ts";
 import BaseAspectCard from "@/common/components/BaseAspectCard.tsx";
 
 import { formatDate } from "@/common/utils/formatDate.ts";

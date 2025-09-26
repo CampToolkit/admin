@@ -1,7 +1,7 @@
 import { useModal } from "@/app/providers/contexts/global-modal/use-modal.hook.ts";
 
 import { Button } from "@mui/material";
-import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type.ts";
+import type { CheckFormValues } from "@/pages/camp/forms/universal/check-form.type.ts";
 
 import type { Sportsman } from "@/common/api/sportsman/SportsmanApi.type.ts";
 
@@ -9,16 +9,16 @@ import { LocationApi } from "@/common/api/location/LocationApi.ts";
 
 import FormSwitcherLayout, {
   type FormSwitcherComponent,
-} from "@/pages/camps/camp/components/forms-layouts/FormSwitcherLayout.tsx";
-import UniversalCheckForm from "@/pages/camps/camp/forms/universal/UniversalCheckForm.tsx";
+} from "@/pages/camp/components/forms-layouts/FormSwitcherLayout.tsx";
+import UniversalCheckForm from "@/pages/camp/forms/universal/UniversalCheckForm.tsx";
 
-import UniversalTextFieldForm from "@/pages/camps/camp/forms/universal/UniversalTextFieldForm.tsx";
+import UniversalTextFieldForm from "@/pages/camp/forms/universal/UniversalTextFieldForm.tsx";
 import type { CampsLocation } from "@/common/api/location/LocationApi.type.ts";
 import type {
   Field,
   UniversalFormValues,
-} from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
-import { useAllLocations } from "@/shared/api/location/hooks/use-all-locations.hook.ts";
+} from "@/pages/camp/forms/universal/universal-form.type.ts";
+import { useAllLocations } from "@/common/api/location/hooks/use-all-locations.hook.ts";
 
 interface Props {
   onDone?: (data?: Sportsman[]) => Promise<void> | void;

@@ -1,9 +1,9 @@
-import LeftLayoutItem from "@/pages/camps/camp/components/forms-layouts/LeftLayoutItem.tsx";
+import LeftLayoutItem from "@/pages/camp/components/forms-layouts/LeftLayoutItem.tsx";
 import Grid from "@mui/material/Grid";
 import { MenuItem, Select, TextField } from "@mui/material";
-import RightLayoutItem from "@/pages/camps/camp/components/forms-layouts/RightLayoutItem.tsx";
-import FormActions from "@/pages/camps/camp/components/forms-layouts/FormActions.tsx";
-import TabLayout from "@/pages/camps/camp/components/forms-layouts/TabLayout.tsx";
+import RightLayoutItem from "@/pages/camp/components/forms-layouts/RightLayoutItem.tsx";
+import FormActions from "@/pages/camp/components/forms-layouts/FormActions.tsx";
+import TabLayout from "@/pages/camp/components/forms-layouts/TabLayout.tsx";
 import { useFormik } from "formik";
 import type { SelectOption } from "@/modules/groups/ui/forms/select-options.type.ts";
 

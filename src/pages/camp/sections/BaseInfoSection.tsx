@@ -1,8 +1,8 @@
 import BaseInfoForm, {
   type BaseInfoFormValues,
-} from "@/pages/camps/camp/forms/BaseInfoForm.tsx";
+} from "@/pages/camp/forms/BaseInfoForm.tsx";
 import { useParams } from "react-router-dom";
-import { useCamp } from "@/pages/camps/hooks/use-camp.ts";
+import { useCamp } from "@/common/api/camp/hooks/use-camp.ts";
 import dayjs from "dayjs";
 import { CampApi } from "@/common/api/camp/CampApi.ts";
 

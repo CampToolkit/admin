@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type {
   UniversalFormProps,
   UniversalFormValues,
-} from "@/pages/camps/camp/forms/universal/universal-form.type.ts";
+} from "@/pages/camp/forms/universal/universal-form.type.ts";
 
 import { FieldArray, FormikProvider, useFormik } from "formik";
 

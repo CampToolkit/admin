@@ -5,8 +5,8 @@ import EditGroupButton from "@/modules/groups/ui/EditGroupButton.tsx";
 import type { SelectOption } from "@/modules/groups/ui/forms/select-options.type.ts";
 import { GroupApi } from "@/common/api/group/GroupApi.ts";
 import AddPersonToEntityButton from "@/common/components/buttons/AddPersonToEntityButton.tsx";
-import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-form.type";
-import { useCampSportsmen } from "@/pages/camps/hooks/use-camp-sportsmen.hook.ts";
+import type { CheckFormValues } from "@/pages/camp/forms/universal/check-form.type";
+import { useCampSportsmen } from "@/pages/camp/hooks/use-camp-sportsmen.hook.ts";
 import { useParams } from "react-router-dom";
 import type { AddSportsmenToGroupDto } from "@/common/api/group/GroupApi.dto.ts";
 
