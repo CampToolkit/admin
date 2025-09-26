@@ -13,7 +13,10 @@ import { calcLessonPosition } from "@/modules/schedule/utils/calc-lesson-positio
 
 import { generateTimeSlots } from "../../../../../front/src/modules/calendar/utils/generate-time-slots.ts";
 
-import type { ScheduleColumns } from "@/modules/schedule/hooks/use-schedule-selection.ts";
+import type {
+  LessonFormKeys,
+  ScheduleColumns,
+} from "@/modules/schedule/hooks/use-schedule-selection.ts";
 import type { Event } from "@/common/api/event/EventApi.type.ts";
 import type { LessonFormValues } from "./lesson-form/lesson-form.type.ts";
 import {
@@ -31,7 +34,7 @@ interface ScheduleProps {
   unionKey: EntitiesKeyType;
   filter: {
     key: EntitiesKeyType;
-    type: string;
+    type: LessonFormKeys;
     value: number;
   };
   columns: ScheduleColumns;
@@ -101,11 +104,7 @@ export default function Schedule({
       ? target.dataset.tableEntityType
       : "";
     const tableEntityId = target.dataset.tableEntityId;
-    console.log("target.dataset.tableEntityId", target.dataset.tableEntityId);
-    console.log(
-      "target.dataset.tableEntityType",
-      target.dataset.tableEntityType,
-    );
+
     const columnEntityType = target.dataset.columnEntityType
       ? target.dataset.columnEntityType
       : "";
@@ -113,7 +112,7 @@ export default function Schedule({
 
     onOpenEventModal({
       values: {
-        [`${tableEntityType}Id`]: tableEntityId,
+        [`${tableEntityType}`]: tableEntityId,
         [`${columnEntityType}Id`]: columnEntityId,
         startDate: startDate,
         endDate: startDate.add(1, "hour"),

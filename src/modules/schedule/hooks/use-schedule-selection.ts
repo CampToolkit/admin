@@ -6,6 +6,7 @@ import { useCampLocationsByCamp } from "@/common/api/location/hooks/use-camp-loc
 import type { Auditorium } from "@/common/api/location/LocationApi.type.ts";
 import type { Group } from "@/common/api/group/GroupApi.type.ts";
 import type { EntitiesKeyType } from "./distribute-events/use-distribute-events.hook";
+import type { LessonFormValues } from "@/modules/schedule/ui/lesson-form/lesson-form.type.ts";
 
 interface Args {
   campId: number;
@@ -22,17 +23,22 @@ export type ScheduleColumns =
       list: Group[];
     };
 
+export type LessonFormKeyG = keyof Pick<LessonFormValues, "groupId">;
+export type LessonFormKeyA = keyof Pick<LessonFormValues, "auditoriumId">;
+
+export type LessonFormKeys = LessonFormKeyG | LessonFormKeyA;
+
 type MappingUnionKeyType = Record<
   EntitiesKeyType,
   | {
       filterKey: "groups";
-      filterType: "group";
+      filterType: LessonFormKeyG;
       list: Group[];
       columns: ScheduleColumns;
     }
   | {
       filterKey: "auditorium";
-      filterType: "auditorium";
+      filterType: LessonFormKeyA;
       list: Auditorium[];
       columns: ScheduleColumns;
     }
@@ -49,7 +55,7 @@ export function useScheduleSelection({ campId, initialUnionKey }: Args) {
   const mapping: MappingUnionKeyType = {
     groups: {
       filterKey: "auditorium",
-      filterType: "auditorium",
+      filterType: "auditoriumId",
       list: auditoriums,
       columns: {
         type: "group",
@@ -58,7 +64,7 @@ export function useScheduleSelection({ campId, initialUnionKey }: Args) {
     },
     auditorium: {
       filterKey: "groups",
-      filterType: "group",
+      filterType: "groupId",
       list: groups,
       columns: {
         type: "auditorium",
