@@ -6,7 +6,7 @@ import type { CheckFormValues } from "@/pages/camps/camp/forms/universal/check-f
 import type { Sportsman } from "@/shared/api/sportsman/SportsmanApi.type.ts";
 
 import { LocationApi } from "@/shared/api/location/LocationApi.ts";
-import { useAllLocations } from "@/pages/camps/hooks/use-all-locations.hook.ts";
+import { useAllLocations } from "@/shared/api/location/hooks/use-all-locations.hook.ts";
 import FormSwitcherLayout, {
   type FormSwitcherComponent,
 } from "@/pages/camps/camp/components/forms-layouts/FormSwitcherLayout.tsx";
