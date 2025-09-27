@@ -14,6 +14,13 @@ export class ClassGroupApi extends CampEntityApi<
   UpdateGroupDto,
   CreateGroupBulkDto
 > {
+  async getSportsmen(groupId: number) {
+    const { data } = await axiosConfig.post(
+      `/practice-group/${groupId}/sportsman`,
+    );
+    return data;
+  }
+
   async addSportsmen(id: number, dto: AddSportsmenToGroupDto) {
     const { data } = await axiosConfig.post(
       `/practice-group/${id}/sportsman`,
