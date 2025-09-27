@@ -36,7 +36,7 @@ export default function CoachesSection() {
         <PersonEntityTable<Coach>
           persons={coaches}
           EditPersonButton={EditCoachButton}
-          onRemoveFromCamp={onRemoveFromCamp}
+          onRemoveFrom={onRemoveFromCamp}
         />
       )}
     </Box>

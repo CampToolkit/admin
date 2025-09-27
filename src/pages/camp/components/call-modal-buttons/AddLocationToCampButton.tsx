@@ -13,7 +13,7 @@ import FormSwitcherLayout, {
 import UniversalCheckForm from "@/pages/camp/forms/universal/UniversalCheckForm.tsx";
 
 import UniversalTextFieldForm from "@/pages/camp/forms/universal/UniversalTextFieldForm.tsx";
-import type { CampsLocation } from "@/common/api/location/LocationApi.type.ts";
+import type { Auditorium } from "@/common/api/location/LocationApi.type.ts";
 import type {
   Field,
   UniversalFormValues,
@@ -25,7 +25,7 @@ interface Props {
   campId: number;
 }
 
-const FIELDS: Field<CampsLocation>[] = [
+const FIELDS: Field<Auditorium>[] = [
   {
     key: "name",
     label: "Название",
@@ -43,9 +43,7 @@ export default function AddLocationToCampButton(props: Props) {
     props.onDone?.();
   };
 
-  const createNewLocation = async (
-    values: UniversalFormValues<CampsLocation>,
-  ) => {
+  const createNewLocation = async (values: UniversalFormValues<Auditorium>) => {
     try {
       const result = await LocationApi.createMany({
         items: values.items.map((item) => ({ name: item.name })),
@@ -70,7 +68,7 @@ export default function AddLocationToCampButton(props: Props) {
       key: Keys.CREATE_LOCATION,
       label: "Создать",
       element: (
-        <UniversalTextFieldForm<CampsLocation, CampsLocation>
+        <UniversalTextFieldForm<Auditorium, Auditorium>
           fields={FIELDS}
           formId={Keys.CREATE_LOCATION}
           onSubmit={createNewLocation}

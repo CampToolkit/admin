@@ -24,7 +24,7 @@ export default function EditGroupButton(props: PropsType) {
   const onSubmit = async (data: GroupFormValues) => {
     const dto: UpdateGroupDto = {
       name: data.name,
-      parentId: data.parentId ?? undefined,
+      parentId: data.parentId ?? null,
     };
     await GroupApi.update(initialValues.id, dto);
     closeModal();

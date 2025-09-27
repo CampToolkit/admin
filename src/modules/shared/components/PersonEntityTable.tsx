@@ -9,35 +9,39 @@ import {
   TableRow,
   Paper,
   IconButton,
+  Box,
 } from "@mui/material";
 
 import type { Person } from "@/common/api/lib/types/Person.type.ts";
 import type { ComponentType } from "react";
 import type { EditPersonButtonPropsType } from "@/modules/shared/types/edit-person-button-props.type.ts";
+import { scrollStyleChild } from "@/styles/scroll.ts";
 
 interface Props<T extends Person> {
   persons: T[];
-  onRemoveFromCamp: (personId: number) => void;
-  EditPersonButton: ComponentType<EditPersonButtonPropsType>;
+  onRemoveFrom?: (personId: number) => void;
+  EditPersonButton?: ComponentType<EditPersonButtonPropsType>;
   onDone?: () => Promise<void> | void;
 }
 
 export default function PersonEntityTable<T extends Person>({
   persons,
-  onRemoveFromCamp,
+  onRemoveFrom,
   EditPersonButton,
   onDone,
 }: Props<T>) {
   return (
-    <TableContainer component={Paper}>
-      <Table>
+    <Box sx={scrollStyleChild}>
+      {/* todo выяснить что дает TableContainer. Закоментил, чтобы работал stickyHeader */}
+      {/*<TableContainer component={Paper}>*/}
+      <Table stickyHeader>
         <TableHead>
           <TableRow>
             <TableCell>Фамилия</TableCell>
             <TableCell>Имя</TableCell>
             <TableCell>Отчество</TableCell>
-            <TableCell width={"1%"}></TableCell>
-            <TableCell width={"1%"}></TableCell>
+            {onRemoveFrom && <TableCell width={"1%"}></TableCell>}
+            {EditPersonButton && <TableCell width={"1%"}></TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -46,30 +50,36 @@ export default function PersonEntityTable<T extends Person>({
               <TableCell>{p.lastName}</TableCell>
               <TableCell>{p.firstName}</TableCell>
               <TableCell>{p.patrName}</TableCell>
-              <TableCell>
-                <IconButton
-                  onClick={() => onRemoveFromCamp(p.id)}
-                  sx={{
-                    color: "error.main",
-                    "&:hover": {
-                      backgroundColor: "error.light",
-                    },
-                  }}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </TableCell>
-              <TableCell>
-                <EditPersonButton
-                  personId={p.id}
-                  initialValues={p}
-                  onDone={onDone}
-                />
-              </TableCell>
+              {onRemoveFrom && (
+                <TableCell>
+                  <IconButton
+                    onClick={() => onRemoveFrom(p.id)}
+                    sx={{
+                      color: "error.main",
+                      "&:hover": {
+                        backgroundColor: "error.light",
+                      },
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              )}
+
+              {EditPersonButton && (
+                <TableCell>
+                  <EditPersonButton
+                    personId={p.id}
+                    initialValues={p}
+                    onDone={onDone}
+                  />
+                </TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+      {/*</TableContainer>*/}
+    </Box>
   );
 }

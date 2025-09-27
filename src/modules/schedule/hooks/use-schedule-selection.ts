@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import type { EntitiesKeyType } from "@/modules/schedule/ui/Schedule.tsx";
 
 import { useGroupsInCamp } from "@/pages/camp/hooks/use-groups-in-camp.hook.ts";
 import { useCampLocationsByCamp } from "@/common/api/location/hooks/use-camp-locations-by-camp.hook.ts";
 
-import type { CampsLocation } from "@/common/api/location/LocationApi.type.ts";
+import type { Auditorium } from "@/common/api/location/LocationApi.type.ts";
 import type { Group } from "@/common/api/group/GroupApi.type.ts";
+import type { EntitiesKeyType } from "./distribute-events/use-distribute-events.hook";
+import type { LessonFormValues } from "@/modules/schedule/ui/lesson-form/lesson-form.type.ts";
 
 interface Args {
   campId: number;
@@ -14,18 +15,33 @@ interface Args {
 
 export type ScheduleColumns =
   | {
-      type: "campLocation";
-      list: CampsLocation[];
+      type: "auditorium";
+      list: Auditorium[];
     }
   | {
       type: "group";
       list: Group[];
     };
 
+export type LessonFormKeyG = keyof Pick<LessonFormValues, "groupId">;
+export type LessonFormKeyA = keyof Pick<LessonFormValues, "auditoriumId">;
+
+export type LessonFormKeys = LessonFormKeyG | LessonFormKeyA;
+
 type MappingUnionKeyType = Record<
   EntitiesKeyType,
-  | { filterKey: "groups"; list: Group[]; columns: ScheduleColumns }
-  | { filterKey: "auditorium"; list: CampsLocation[]; columns: ScheduleColumns }
+  | {
+      filterKey: "groups";
+      filterType: LessonFormKeyG;
+      list: Group[];
+      columns: ScheduleColumns;
+    }
+  | {
+      filterKey: "auditorium";
+      filterType: LessonFormKeyA;
+      list: Auditorium[];
+      columns: ScheduleColumns;
+    }
 >;
 
 export function useScheduleSelection({ campId, initialUnionKey }: Args) {
@@ -33,13 +49,14 @@ export function useScheduleSelection({ campId, initialUnionKey }: Args) {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const { state: groups } = useGroupsInCamp(campId);
-  const { state: campLocations } = useCampLocationsByCamp(campId);
+  const { state: auditoriums } = useCampLocationsByCamp(campId);
 
   // todo добавить coach
   const mapping: MappingUnionKeyType = {
     groups: {
       filterKey: "auditorium",
-      list: campLocations,
+      filterType: "auditoriumId",
+      list: auditoriums,
       columns: {
         type: "group",
         list: groups,
@@ -47,17 +64,18 @@ export function useScheduleSelection({ campId, initialUnionKey }: Args) {
     },
     auditorium: {
       filterKey: "groups",
+      filterType: "groupId",
       list: groups,
       columns: {
-        type: "campLocation",
-        list: campLocations,
+        type: "auditorium",
+        list: auditoriums,
       },
     },
   };
 
-  const { filterKey, list, columns } = useMemo(() => {
+  const { filterKey, filterType, list, columns } = useMemo(() => {
     return mapping[unionKey];
-  }, [unionKey, groups, campLocations]);
+  }, [unionKey, groups, auditoriums]);
 
   useEffect(() => {
     if (list.length > 0) {
@@ -76,6 +94,7 @@ export function useScheduleSelection({ campId, initialUnionKey }: Args) {
       currentId: selectedId,
       set: setSelectedId,
       filterKey,
+      filterType,
       list,
       columns: columns,
     },

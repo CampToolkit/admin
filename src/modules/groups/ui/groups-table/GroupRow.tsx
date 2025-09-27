@@ -9,6 +9,7 @@ import type { CheckFormValues } from "@/pages/camp/forms/universal/check-form.ty
 import { useCampSportsmen } from "@/pages/camp/hooks/use-camp-sportsmen.hook.ts";
 import { useParams } from "react-router-dom";
 import type { AddSportsmenToGroupDto } from "@/common/api/group/GroupApi.dto.ts";
+import ShowSportsmanListButton from "@/modules/groups/ui/ShowSportsmanListButton.tsx";
 
 interface Props {
   item: Group;
@@ -58,7 +59,11 @@ export default function GroupRow({
           {item.name}
         </TableCell>
         <TableCell>
+          <ShowSportsmanListButton groupId={item.id} />
+        </TableCell>
+        <TableCell>
           {level === 1 && (
+            //   /*  note отдавать только спортсменов без группы */
             <AddPersonToEntityButton
               entities={sportsmen}
               onSubmit={(values) => addSportsmanToGroup(item.id, values)}

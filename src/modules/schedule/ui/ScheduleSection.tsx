@@ -98,12 +98,12 @@ export default function ScheduleSection() {
           values.coachId > 0
             ? [
                 {
-                  coachId: values.coachId,
+                  coachId: Number(values.coachId),
                   role: "PRIMARY",
                 },
               ]
             : [],
-        groupIds: values.groupId > 0 ? [values.groupId] : [],
+        groupIds: values.groupId > 0 ? [Number(values.groupId)] : [],
       };
       if (eventId) {
         await EventApi.update(eventId, apiDto);
@@ -200,6 +200,7 @@ export default function ScheduleSection() {
           unionKey={view.current}
           filter={{
             key: selection.filterKey,
+            type: selection.filterType,
             value: selection.currentId,
           }}
           columns={selection.columns}
