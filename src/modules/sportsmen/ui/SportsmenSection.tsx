@@ -43,7 +43,7 @@ export default function SportsmenSection() {
 
       <PersonEntityTable
         persons={sportsmen}
-        onRemoveFromCamp={onRemoveFromCamp}
+        onRemoveFrom={onRemoveFromCamp}
         EditPersonButton={EditSportsmanButton}
         onDone={onSportsmanTableAction}
       />

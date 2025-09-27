@@ -30,6 +30,7 @@ export default function GroupsTable(props: Props) {
             <TableCell width={"1%"}></TableCell>
             <TableCell width={"1%"}></TableCell>
             <TableCell width={"1%"}></TableCell>
+            <TableCell width={"1%"}></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

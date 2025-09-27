@@ -4,6 +4,7 @@ import type { CheckFormValues } from "@/pages/camp/forms/universal/check-form.ty
 import type { Person } from "@/common/api/lib/types/Person.type.ts";
 import { PERSON_FIELDS } from "@/common/components/buttons/consts/person-fields.const.ts";
 import { Button } from "@mui/material";
+import { textNoWrapStyle } from "@/styles/text-no-wrap.ts";
 
 export interface AddPersonToEntityButtonProps<T extends Person> {
   entities: T[];
@@ -47,7 +48,7 @@ export default function AddPersonToEntityButton<T extends Person>(
 
   return (
     <Button variant="outlined" onClick={onClick}>
-      <span style={{ whiteSpace: "nowrap" }}>Добавить спортсменов</span>
+      <span style={textNoWrapStyle}>Добавить спортсменов</span>
     </Button>
   );
 }
